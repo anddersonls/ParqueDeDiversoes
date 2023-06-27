@@ -1,10 +1,11 @@
 package parque;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class ParqueDiversoes {
 	private HashMap<String, Float> brinquedos;
-	private HashMap<String, Float> estabelecimentos;
+	private ArrayList<String> estabelecimentos;
 	
 	public ParqueDiversoes(){}
 	
@@ -12,16 +13,11 @@ public class ParqueDiversoes {
 		return brinquedos.get(brinquedo);
 	}
 	
-	public float getValorEstabelecimento(String estabelecimento){
-		return estabelecimentos.get(estabelecimento);
-	}
-
-	
 	public void addBrinquedo(String brinquedo, float valor) {
 		brinquedos.put(brinquedo, valor);
 	}
 	
-	public void addEstabelecimento(String estabelecimento, float valor) {
-		brinquedos.put(estabelecimento, valor);
+	public void addEstabelecimento(String estabelecimento) {
+		estabelecimentos.add(estabelecimento);
 	}
 }

@@ -6,4 +6,5 @@
  *
  */
 module DemocracyPark {
+	requires java.desktop;
 }
