@@ -1,75 +1,48 @@
 package parque;
 
 import javax.swing.JFrame;
-import java.awt.Dimension;
+import java.awt.*;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import java.awt.FlowLayout;
 import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Font;
+import javax.swing.BoxLayout;
+import javax.swing.Box;
 
-public class UserInterface extends JFrame {
-	private JPanel contentPane; 
-	
+
+public class UserInterface extends Interface {
+	private JPanel contentPane;
+    private Dimension buttonSize;
+    private Font fontText;
+    private Font fontButton;
+    private Font fontTitle;
+
     public UserInterface() {
-    	interfaceInicial();
-    }
-    
-    public void interfaceInicial() {
-    	setTitle("Minha Interface Gráfica");
+        this.buttonSize = new Dimension(400, 50);
+        this.fontText = new Font("Arial", Font.PLAIN, 14);
+        this.fontTitle = new Font("Arial", Font.PLAIN, 20);
+        this.fontButton = new Font("Arial", Font.PLAIN, 15);
+        setTitle("Minha Interface Gráfica");
         setSize(1080, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        Dimension size = new Dimension(200, 100);
-        
+
         contentPane = new JPanel();
         setContentPane(contentPane);
-        
-        JLabel label = new JLabel("Bem-Vindo ao sistema do Democracy Park!");
-        
-        JButton adm_button = new JButton("Administrador");
-        JButton cliente_button = new JButton("Cliente");
-        adm_button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	removeAllComponents();
-                novaInterface(); 
-            }
-        });
-        
-        cliente_button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	removeAllComponents();
-                novaInterface(); 
-            }
-        });
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
+        setLocationRelativeTo(null);
 
-        contentPane.add(label);
-        contentPane.add(adm_button);
-        contentPane.add(cliente_button);
-
-
-        contentPane.setLayout(new FlowLayout());
-
-        setVisible(true);
-
-    }
-    
-    private void removeAllComponents() {
-        contentPane.removeAll();
-        contentPane.revalidate();
-        contentPane.repaint();
+        interfaceInicial();
     }
 
     void novaInterface() {
-         setTitle("Nova Interface");
+         setTitle("Cliente");
          setSize(1080, 700);
          setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
          setLocationRelativeTo(null);
          JButton voltar_button = new JButton("Voltar");
-         JLabel novoLabel = new JLabel("Será se dá certo agora?");
+         JLabel novoLabel = new JLabel("SOCORRO");
          contentPane.add(novoLabel);
          contentPane.add(voltar_button);
          voltar_button.addActionListener(new ActionListener() {
@@ -79,8 +52,7 @@ public class UserInterface extends JFrame {
              }
          });
 
-         Font font = new Font(novoLabel.getFont().getName(), Font.PLAIN, 20);
-         novoLabel.setFont(font);
+         novoLabel.setFont(fontTitle);
          setVisible(true);
     }
 }

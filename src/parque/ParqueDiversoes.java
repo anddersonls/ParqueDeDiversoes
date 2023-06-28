@@ -4,20 +4,20 @@ import java.util.HashMap;
 import java.util.ArrayList;
 
 public class ParqueDiversoes {
-	private HashMap<String, Float> brinquedos;
-	private ArrayList<String> estabelecimentos;
+	private HashMap<Brinquedos, Float> brinquedos;
+	private ArrayList<Alimentacao> estabelecimentos;
 	
 	public ParqueDiversoes(){}
-	
-	public float getValorBrinquedo(String brinquedo){
+
+	public float getValorBrinquedo(Brinquedos brinquedo){
 		return brinquedos.get(brinquedo);
 	}
 	
-	public void addBrinquedo(String brinquedo, float valor) {
+	public void addBrinquedo(Brinquedos brinquedo, float valor) {
 		brinquedos.put(brinquedo, valor);
 	}
 	
-	public void addEstabelecimento(String estabelecimento) {
+	public void addEstabelecimento(Alimentacao estabelecimento) {
 		estabelecimentos.add(estabelecimento);
 	}
 }

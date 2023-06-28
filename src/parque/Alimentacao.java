@@ -7,8 +7,8 @@ public abstract class Alimentacao extends Atracoes implements InterfaceAlimentac
 	private HashMap<String, Float> cardapio;
 
 	
-	public Alimentacao(int capacidade, HashMap<String, Float> cardapio){
-		super(capacidade);
+	public Alimentacao(int capacidade, HashMap<String, Float> cardapio, String nome){
+		super(capacidade, nome);
 		this.cardapio = cardapio;
 	}
 	

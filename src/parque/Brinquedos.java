@@ -4,8 +4,8 @@ public class Brinquedos extends Atracoes{
 	  private float alturaMin;
 	  private int idadeMin;
 	  
-	  public Brinquedos(int capacidade, float alturaMin, int idadeMin) {
-		  super(capacidade);
+	  public Brinquedos(int capacidade, float alturaMin, int idadeMin, String nome) {
+		  super(capacidade, nome);
 		  this.alturaMin = alturaMin;
 		  this.idadeMin = idadeMin;
 	  }
