@@ -21,30 +21,40 @@ public class AdmInterface extends Interface{
         setContentPane(contentPane);
         telaLogin();
     }
+@Override
+    public void removeAllComponents(){
+    contentPane.removeAll();
+    contentPane.revalidate();
+    contentPane.repaint();
+}
 
     public void telaLogin(){
         setTitle("Administrador");
-        setSize(300, 350);
+        setSize(600, 350);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
         JButton botaoVoltar = new JButton("Voltar");
         JButton botaoCadastrar = new JButton("Cadastrar");
 
-        JPanel painelNome = new JPanel();
+        JPanel painelCpf = new JPanel();
         JPanel painelSenha = new JPanel();
-        JLabel labelNome = new JLabel("Nome: ");
+        JPanel painelBotoes = new JPanel();
+        JLabel labelNome = new JLabel("CPF: ");
         JLabel labelSenha = new JLabel("Senha: ");
         JTextField textNome = new JTextField(20);
         JTextField textSenha = new JTextField(20);
 
-        painelNome.add(labelNome);
-        painelNome.add(textNome);
+        painelCpf.add(labelNome);
+        painelCpf.add(textNome);
         painelSenha.add(labelSenha);
         painelSenha.add(textSenha);
+        painelBotoes.add(botaoVoltar);
+        painelBotoes.add(botaoCadastrar);
 
-        painelNome.setLayout(new FlowLayout());
-        painelSenha.setLayout(new FlowLayout());
+        painelCpf.setLayout(new FlowLayout(FlowLayout.CENTER));
+        painelSenha.setLayout(new FlowLayout(FlowLayout.CENTER));
+        painelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -57,20 +67,68 @@ public class AdmInterface extends Interface{
         botaoCadastrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
-                dispose();
-                interfaceInicial();
+                repaint();
+                telaOpcoes();
             }
         });
 
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(Box.createVerticalStrut(0));
-        contentPane.add(painelNome);
-        contentPane.add(Box.createVerticalStrut(0));
+        contentPane.add(Box.createVerticalStrut(30));
+        contentPane.add(painelCpf);
         contentPane.add(painelSenha);
-        contentPane.add(Box.createVerticalStrut(0));
-        contentPane.add(botaoVoltar);
+        contentPane.add(painelBotoes);
         contentPane.add(Box.createVerticalStrut(15));
-        contentPane.add(botaoCadastrar);
+        //pack();
+        setVisible(true);
+    }
+
+    public void telaOpcoes(){
+        setTitle("Administrador");
+        setSize(600, 350);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+
+        JButton botaoAdicionar = new JButton("Adicionar Atração");
+        JButton botaoRemover = new JButton("Remover Atração");
+        JButton botaoVoltar = new JButton("Voltar");
+
+        JPanel painelBotoes = new JPanel();
+        JPanel painelVoltar = new JPanel();
+
+        painelBotoes.add(botaoAdicionar);
+        painelBotoes.add(botaoRemover);
+        painelVoltar.add(botaoVoltar);
+
+        painelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER));
+        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                //dispose();
+                telaLogin();
+            }
+        });
+
+        botaoAdicionar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //removeAllComponents();
+                //dispose();
+                //interfaceInicial();
+            }
+        });
+        botaoRemover.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //removeAllComponents();
+                //dispose();
+                //interfaceInicial();
+            }
+        });
+
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(Box.createVerticalStrut(50));
+        contentPane.add(painelBotoes);
+        contentPane.add(painelVoltar);
         //pack();
         setVisible(true);
     }
