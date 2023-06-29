@@ -5,6 +5,9 @@ import javax.swing.text.PlainDocument;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 public class AdmInterface extends Interface {
     private JPanel contentPane;
@@ -98,8 +101,18 @@ public class AdmInterface extends Interface {
 
         botaoEntrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                telaOpcoes();
+                String cpfDigitado = textCpf.getText();
+                String senhaDigitada = textSenha.getText();
+
+                if (verificarLogin(cpfDigitado, senhaDigitada)) {
+                    JOptionPane.showMessageDialog(AdmInterface.this, "Login bem-sucedido!");
+                    removeAllComponents();
+                    telaOpcoes();
+                } else {
+                    JOptionPane.showMessageDialog(AdmInterface.this, "CPF ou senha incorretos!");
+                    removeAllComponents();
+                    telaLogin();
+                }
             }
         });
 
@@ -108,6 +121,20 @@ public class AdmInterface extends Interface {
         contentPane.add(painel);
         contentPane.add(Box.createVerticalStrut(15));
         setVisible(true);
+    }
+    private boolean verificarLogin(String cpfDigitado, String senhaDigitada) {
+        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoAdm.txt";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            String cpfArquivo = br.readLine();
+            String senhaArquivo = br.readLine();
+
+            return cpfArquivo.equals(cpfDigitado) && senhaArquivo.equals(senhaDigitada);
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo: " + e.getMessage());
+        }
+
+        return false;
     }
 
     public void telaOpcoes() {
