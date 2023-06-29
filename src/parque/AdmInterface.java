@@ -6,14 +6,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AdmInterface extends Interface{
-   private JPanel contentPane;
+public class AdmInterface extends Interface {
+    private JPanel contentPane;
     private Dimension buttonSize;
     private Font fontText;
     private Font fontButton;
     private Font fontTitle;
 
-    public AdmInterface(){
+    public AdmInterface() {
         this.buttonSize = new Dimension(100, 25);
         this.fontText = new Font("Arial", Font.PLAIN, 14);
         this.fontTitle = new Font("Arial", Font.PLAIN, 20);
@@ -22,14 +22,15 @@ public class AdmInterface extends Interface{
         setContentPane(contentPane);
         telaLogin();
     }
-@Override
-    public void removeAllComponents(){
-    contentPane.removeAll();
-    contentPane.revalidate();
-    contentPane.repaint();
-}
 
-    public void telaLogin(){
+    @Override
+    public void removeAllComponents() {
+        contentPane.removeAll();
+        contentPane.revalidate();
+        contentPane.repaint();
+    }
+
+    public void telaLogin() {
         setTitle("Administrador");
         setSize(600, 350);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -81,7 +82,7 @@ public class AdmInterface extends Interface{
         setVisible(true);
     }
 
-    public void telaOpcoes(){
+    public void telaOpcoes() {
         JButton botaoAdicionar = new JButton("Adicionar Atração");
         JButton botaoRemover = new JButton("Remover Atração");
         JButton botaoVoltar = new JButton("Voltar");
@@ -124,7 +125,7 @@ public class AdmInterface extends Interface{
         setVisible(true);
     }
 
-    public void opcoesDeCadastro(){
+    public void opcoesDeCadastro() {
         JButton botaoCadastroBrinquedo = new JButton("Cadastrar Brinquedo");
         JButton botaoCadastroEstabelecimento = new JButton("Cadastrar Estabelecimento");
         JButton botaoVoltar = new JButton("Voltar");
@@ -166,50 +167,7 @@ public class AdmInterface extends Interface{
         setVisible(true);
     }
 
-    public void removerAtracoes () {
-        JButton botaoRemoverBrinquedo = new JButton("Remover Brinquedo");
-        JButton botaoRemoverAtracao = new JButton("Remover Estabelecimento");
-        JButton botaoVoltar = new JButton("Voltar");
-
-        JPanel painelBotoes = new JPanel();
-        JPanel painelVoltar = new JPanel();
-
-        painelBotoes.add(botaoRemoverAtracao);
-        painelBotoes.add(botaoRemoverBrinquedo);
-        painelVoltar.add(botaoVoltar);
-
-        painelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER));
-        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        botaoVoltar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                telaOpcoes();
-            }
-        });
-
-        botaoRemoverAtracao.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //carregar a proxima pagina
-            }
-        });
-
-        botaoRemoverBrinquedo.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //carregar a proxima pagina
-            }
-        });
-
-        contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
-        contentPane.add(Box.createVerticalStrut(50));
-        contentPane.add(painelBotoes);
-        contentPane.add(painelVoltar);
-        setVisible(true);
-
-    }
-
-
-    public void telaCadastrarBrinquedo(){
+    public void telaCadastrarBrinquedo() {
         JPanel painel = new JPanel(new GridLayout(7, 2, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -220,8 +178,7 @@ public class AdmInterface extends Interface{
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
-                dispose();
-                interfaceInicial();
+                telaOpcoes();
             }
         });
 
@@ -257,7 +214,7 @@ public class AdmInterface extends Interface{
         setVisible(true);
     }
 
-    public void telaCadastrarEstabelecimento(){
+    public void telaCadastrarEstabelecimento() {
         JPanel panel = new JPanel(new GridLayout(8, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -283,6 +240,25 @@ public class AdmInterface extends Interface{
         JButton botaoVoltar = new JButton("Voltar");
         JButton botaoCadastrar = new JButton("Cadastrar");
 
+        botaoCadastrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                JOptionPane.showMessageDialog(contentPane, "Cadastro Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                opcoesDeCadastro();
+            }
+        });
+        botaoSalvar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(contentPane, "Item Adicionado ao Menu!", "Cadastro de Item do Menu", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                opcoesDeCadastro();
+            }
+        });
+
         panel.add(labelNome);
         panel.add(campoNome);
         panel.add(labelCapacidade);
@@ -306,4 +282,48 @@ public class AdmInterface extends Interface{
         setVisible(true);
 
     }
+
+    public void removerAtracoes() {
+        JButton botaoRemoverBrinquedo = new JButton("Remover Brinquedo");
+        JButton botaoRemoverAtracao = new JButton("Remover Estabelecimento");
+        JButton botaoVoltar = new JButton("Voltar");
+
+        JPanel painelBotoes = new JPanel();
+        JPanel painelVoltar = new JPanel();
+
+        painelBotoes.add(botaoRemoverAtracao);
+        painelBotoes.add(botaoRemoverBrinquedo);
+        painelVoltar.add(botaoVoltar);
+
+        painelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER));
+        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                opcoesDeCadastro();
+            }
+        });
+
+        botaoRemoverAtracao.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //carregar a proxima pagina
+            }
+        });
+
+        botaoRemoverBrinquedo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //carregar a proxima pagina
+            }
+        });
+
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.add(Box.createVerticalStrut(50));
+        contentPane.add(painelBotoes);
+        contentPane.add(painelVoltar);
+        setVisible(true);
+
+    }
 }
+
+
