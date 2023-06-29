@@ -155,11 +155,13 @@ public class UserInterface extends Interface {
         botaoBrinquedo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
+                telaEscolherBrinquedo();
             }
         });
         botaoEstabelecimento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
+                telaEscolherEstabelecimento();
             }
         });
         botaoCredito.addActionListener(new ActionListener() {
@@ -228,6 +230,163 @@ public class UserInterface extends Interface {
         painel.add(textValor);
         painel.add(labelSenha);
         painel.add(textSenha);
+        painel.add(painelBotoes);
+        contentPane.add(painel);
+        contentPane.add(Box.createVerticalStrut(15));
+        setVisible(true);
+    }
+
+    public void telaEscolherBrinquedo() {
+        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoFimCompra = new JButton("Comprar");
+        botaoFimCompra.setPreferredSize(buttonSize);
+        botaoVoltar.setPreferredSize(buttonSize);
+
+        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(botaoVoltar);
+        painelBotoes.add(botaoFimCompra);
+
+        JLabel label = new JLabel("Selecione os brinquedos que você deseja:");
+        JCheckBox checkBox1 = new JCheckBox("Item 1");
+        JCheckBox checkBox2 = new JCheckBox("Item 2");
+        JCheckBox checkBox3 = new JCheckBox("Item 3");
+
+        double valorTotal=0.00;
+        String mensagem = "Compra finalizada!\n";
+        mensagem += "Valor total da compra: R$ " + valorTotal;
+
+        String finalMensagem = mensagem;
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                opcoesCliente();
+            }
+        });
+
+        botaoFimCompra.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(contentPane, finalMensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
+                removeAllComponents();
+                opcoesCliente();
+            }
+        });
+
+
+        painel.add(label);
+        painel.add(checkBox1);
+        painel.add(checkBox2);
+        painel.add(checkBox3);
+
+        painel.add(painelBotoes);
+        contentPane.add(painel);
+        contentPane.add(Box.createVerticalStrut(15));
+        setVisible(true);
+    }
+
+    //Tela para escolher lanchonete
+    public void telaEscolherEstabelecimento() {
+
+        JLabel texto = new JLabel("Selecione um estabelecimento");
+        texto.setFont(fontTitle);
+
+        JButton botaoEscolher = new JButton("Escolher");
+        JButton botaoVoltar= new JButton("Voltar");
+        botaoEscolher.setPreferredSize(buttonSize);
+        botaoVoltar.setPreferredSize(buttonSize);
+
+        JPanel painelTexto = new JPanel();
+        JPanel painelEscolher = new JPanel();
+        JPanel painelVoltar = new JPanel();
+
+        painelTexto.add(texto);
+        painelEscolher.add(botaoEscolher);
+        painelVoltar.add(botaoVoltar);
+
+        painelTexto.setLayout(new FlowLayout(FlowLayout.CENTER,5,25));
+        painelEscolher.setLayout(new FlowLayout(FlowLayout.CENTER));
+        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+        JList<String> listaEstabelecimentos = new JList<>(items);   //Aqui o parametro que o jList receberia seria o hashMap de estabelecimentos
+        listaEstabelecimentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
+        listaEstabelecimentos.setCellRenderer(new AdmInterface.CustomListCellRenderer());
+
+        JScrollPane scrollPane = new JScrollPane(listaEstabelecimentos);
+
+
+
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                opcoesCliente();
+            }
+        });
+
+        botaoEscolher.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(contentPane, "Estabelecimento escohido!", " Escolha Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                removeAllComponents();
+                telaComprarComida();
+            }
+        });
+
+        contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
+        contentPane.add(painelTexto);
+        contentPane.add(Box.createVerticalStrut(15));
+        contentPane.add(scrollPane);
+        contentPane.add(painelEscolher);
+        contentPane.add(painelVoltar);
+
+        setVisible(true);
+    }
+
+    //Escolher comida
+    public void telaComprarComida() {
+        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoFimCompra = new JButton("Comprar");
+        botaoFimCompra.setPreferredSize(buttonSize);
+        botaoVoltar.setPreferredSize(buttonSize);
+
+        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(botaoVoltar);
+        painelBotoes.add(botaoFimCompra);
+
+        JLabel label = new JLabel("Selecione os Estabelecimento que você deseja:");
+        JCheckBox checkBox1 = new JCheckBox("Comida 1");
+        JCheckBox checkBox2 = new JCheckBox("Comida 2");
+        JCheckBox checkBox3 = new JCheckBox("Comida 3");
+        double valorTotal=0.00;
+        String mensagem = "Compra finalizada!\n\n";
+        mensagem += "Valor total da compra: R$ " + valorTotal;
+
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                telaEscolherEstabelecimento();
+            }
+        });
+
+        String finalMensagem = mensagem;
+        botaoFimCompra.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(contentPane, finalMensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
+                removeAllComponents();
+                opcoesCliente();
+            }
+        });
+
+
+        painel.add(label);
+        painel.add(checkBox1);
+        painel.add(checkBox2);
+        painel.add(checkBox3);
+
         painel.add(painelBotoes);
         contentPane.add(painel);
         contentPane.add(Box.createVerticalStrut(15));

@@ -335,7 +335,8 @@ public class AdmInterface extends Interface {
 
         JScrollPane scrollPane = new JScrollPane(listaEstabelecimentos);
 
-
+        scrollPane.setMaximumSize(new Dimension(500, 90));  //definir o tamanho do painel que ficará a lista
+        scrollPane.setMinimumSize (new Dimension (400,90));
 
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -346,16 +347,27 @@ public class AdmInterface extends Interface {
 
         botaoRemover.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(contentPane, "Estabelecimento Removido do Parque!", " Remoção de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                String selectedItem = listaEstabelecimentos.getSelectedValue();
+                int selectedIndex = listaEstabelecimentos.getSelectedIndex();
+
+                if (selectedItem != null) {
+                    JOptionPane.showMessageDialog(contentPane, selectedItem +" removido do Parque!", " Remoção de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                    //aqui chamaria a funcao que iria remover o estabelecimento do hashmap de estabelecimentos
+
+                } else {
+                    JOptionPane.showMessageDialog(contentPane, "Nenhum item selecionado!"," Remoção de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                }
+
                 removeAllComponents();
-                removerEstabelecimento();
+                removerAtracoes();
             }
         });
 
         contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
         contentPane.add(painelTexto);
         contentPane.add(Box.createVerticalStrut(15));
-        contentPane.add(scrollPane);
+        contentPane.add(scrollPane , BorderLayout.CENTER);
+        contentPane.add(Box.createVerticalStrut(15));   //espaçamento entre a lista e o botao de remover
         contentPane.add(painelRemover);
         contentPane.add(painelVoltar);
 
@@ -384,12 +396,13 @@ public class AdmInterface extends Interface {
         painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-        JList<String> listaEstabelecimentos = new JList<>(items);   //Aqui o parametro que o jList receberia seria o hashMap de estabelecimentos
-        listaEstabelecimentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
-        listaEstabelecimentos.setCellRenderer(new CustomListCellRenderer());
+        JList<String> listaBrinquedos = new JList<>(items);   //Aqui o parametro que o jList receberia seria o hashMap de estabelecimentos
+        listaBrinquedos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
+        listaBrinquedos.setCellRenderer(new CustomListCellRenderer());
 
-        JScrollPane scrollPane = new JScrollPane(listaEstabelecimentos);
-
+        JScrollPane scrollPane = new JScrollPane(listaBrinquedos);
+        scrollPane.setMaximumSize(new Dimension(500, 90));  //definir o tamanho do painel que ficará a lista
+        scrollPane.setMinimumSize (new Dimension (400,90));
 
 
         botaoVoltar.addActionListener(new ActionListener() {
@@ -401,16 +414,27 @@ public class AdmInterface extends Interface {
 
         botaoRemover.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(contentPane, "Brinquedo Removido do Parque!", " Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
+                String selectedItem = listaBrinquedos.getSelectedValue();
+                int selectedIndex = listaBrinquedos.getSelectedIndex();
+
+                if (selectedItem != null) {
+                    JOptionPane.showMessageDialog(contentPane, selectedItem +" removido do Parque!", " Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
+                    //aqui chamararia a funcao que iria remover o estabelecimento do hashmap de brinquedos
+
+                } else {
+                    JOptionPane.showMessageDialog(contentPane, "Nenhum item selecionado!"," Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
+                }
+
                 removeAllComponents();
-                removerBrinquedo();
+                removerAtracoes();
             }
         });
 
         contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
         contentPane.add(painelTexto);
         contentPane.add(Box.createVerticalStrut(15));
-        contentPane.add(scrollPane);
+        contentPane.add(scrollPane , BorderLayout.CENTER);
+        contentPane.add(Box.createVerticalStrut(15));
         contentPane.add(painelRemover);
         contentPane.add(painelVoltar);
 
