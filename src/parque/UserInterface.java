@@ -38,9 +38,11 @@ public class UserInterface extends Interface {
         JButton botaoEntrar = new JButton("Entrar");
         JButton botaoCadastrar = new JButton("Cadastrar Cliente");
 
+        JPanel painelBotoes = new JPanel();
         JPanel painelCpf = new JPanel();
         JPanel painelSenha = new JPanel();
-        JPanel painelBotoes = new JPanel();
+        //JPanel painelBotoes = new JPanel();
+
         JLabel labelCpf = new JLabel("CPF:    ");
         JLabel labelSenha = new JLabel("Senha: ");
         JTextField textCpf = new JTextField(20);

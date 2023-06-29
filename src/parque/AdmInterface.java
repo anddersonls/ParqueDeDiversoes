@@ -283,15 +283,15 @@ public class AdmInterface extends Interface {
 
     }
 
-    public void removerAtracoes() {
+    public void removerAtracoes () {
         JButton botaoRemoverBrinquedo = new JButton("Remover Brinquedo");
-        JButton botaoRemoverAtracao = new JButton("Remover Estabelecimento");
+        JButton botaoRemoverEstabelecimento = new JButton("Remover Estabelecimento");
         JButton botaoVoltar = new JButton("Voltar");
 
         JPanel painelBotoes = new JPanel();
         JPanel painelVoltar = new JPanel();
 
-        painelBotoes.add(botaoRemoverAtracao);
+        painelBotoes.add(botaoRemoverEstabelecimento);
         painelBotoes.add(botaoRemoverBrinquedo);
         painelVoltar.add(botaoVoltar);
 
@@ -301,13 +301,14 @@ public class AdmInterface extends Interface {
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
-                opcoesDeCadastro();
+                telaOpcoes();
             }
         });
 
-        botaoRemoverAtracao.addActionListener(new ActionListener() {
+        botaoRemoverEstabelecimento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //carregar a proxima pagina
+                removeAllComponents();
+                removerEstabelecimento();
             }
         });
 
@@ -317,12 +318,87 @@ public class AdmInterface extends Interface {
             }
         });
 
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
         contentPane.add(Box.createVerticalStrut(50));
         contentPane.add(painelBotoes);
         contentPane.add(painelVoltar);
         setVisible(true);
 
+    }
+
+    public void removerEstabelecimento() {
+
+        JLabel texto = new JLabel("Selecione um estabelecimento");
+        texto.setFont(fontTitle);
+
+        JButton botaoRemover = new JButton("Remover");
+        JButton botaoVoltar= new JButton("Voltar");
+        botaoRemover.setPreferredSize(buttonSize);
+        botaoVoltar.setPreferredSize(buttonSize);
+
+        JPanel painelTexto = new JPanel();
+        JPanel painelRemover = new JPanel();
+        JPanel painelVoltar = new JPanel();
+
+        painelTexto.add(texto);
+        painelRemover.add(botaoRemover);
+        painelVoltar.add(botaoVoltar);
+
+        painelTexto.setLayout(new FlowLayout(FlowLayout.CENTER,5,25));
+        painelRemover.setLayout(new FlowLayout(FlowLayout.CENTER));
+        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+        JList<String> listaEstabelecimentos = new JList<>(items);   //Aqui o parametro que o jList receberia seria o hashMap de estabelecimentos
+        listaEstabelecimentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
+        listaEstabelecimentos.setCellRenderer(new CustomListCellRenderer());
+
+        JScrollPane scrollPane = new JScrollPane(listaEstabelecimentos);
+
+
+
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                telaOpcoes();
+            }
+        });
+
+        botaoRemover.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //carregar a proxima pagina
+                //função para remover um estabelecimento do hashmap de estabelecimentos
+            }
+        });
+
+        contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
+        contentPane.add(painelTexto);
+        contentPane.add(Box.createVerticalStrut(15));
+        contentPane.add(scrollPane);
+        contentPane.add(painelRemover);
+        contentPane.add(painelVoltar);
+
+
+        setVisible(true);
+
+
+
+    }
+    //Funcao para setar a cor de seleção dos itens
+    static class CustomListCellRenderer extends DefaultListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+
+            if (isSelected) {
+                // Adicionando uma bolinha colorida ao lado do item selecionado
+                Color selectionColor = Color.GRAY; // Cor da bolinha (pode ser alterada)
+                renderer.setBackground(selectionColor);
+                renderer.setForeground(list.getForeground());
+            }
+
+            return renderer;
+        }
     }
 }
 
