@@ -158,6 +158,12 @@ public class UserInterface extends Interface {
                 JOptionPane.showMessageDialog(contentPane, "Item Adicionado ao Menu!", "Cadastro de Item do Menu", JOptionPane.INFORMATION_MESSAGE);
             }
         });
+        botaoCredito.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                telaCredito();
+            }
+        });
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
@@ -180,4 +186,49 @@ public class UserInterface extends Interface {
         setVisible(true);
 
     }
+
+    public void telaCredito() {
+        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoDepositar = new JButton("Depositar");
+        botaoDepositar.setPreferredSize(buttonSize);
+        botaoVoltar.setPreferredSize(buttonSize);
+
+        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(botaoVoltar);
+        painelBotoes.add(botaoDepositar);
+
+        JLabel labelValor = new JLabel("Valor: ");
+        JLabel labelSenha = new JLabel("Senha: ");
+        JTextField textValor = new JTextField(20);
+        JTextField textSenha = new JTextField(20);
+
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                opcoesCliente();
+            }
+        });
+
+        botaoDepositar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(contentPane, "Crédito Depositado!", "Depósito de Crédito", JOptionPane.INFORMATION_MESSAGE);
+                removeAllComponents();
+                opcoesCliente();
+            }
+        });
+
+
+        painel.add(labelValor);
+        painel.add(textValor);
+        painel.add(labelSenha);
+        painel.add(textSenha);
+        painel.add(painelBotoes);
+        contentPane.add(painel);
+        contentPane.add(Box.createVerticalStrut(15));
+        setVisible(true);
+    }
+
 }

@@ -46,6 +46,7 @@ public class Interface extends JFrame {
             cliente_button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeAllComponents();
+                    dispose();
                     UserInterface clienteInterface = new UserInterface();
                 }
             });
