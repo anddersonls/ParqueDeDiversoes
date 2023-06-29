@@ -36,14 +36,19 @@ public class UserInterface extends Interface {
 
         JButton botaoVoltar = new JButton("Voltar");
         JButton botaoEntrar = new JButton("Entrar");
-        JButton botaoCadastrar = new JButton("Cadastrar Cliente");
+        JButton botaoCadastrar = new JButton("Cadastrar");
+        botaoVoltar.setPreferredSize(buttonSize);
+        botaoEntrar.setPreferredSize(buttonSize);
+        botaoCadastrar.setPreferredSize(buttonSize);
 
         JPanel painelBotoes = new JPanel();
         JPanel painelCpf = new JPanel();
         JPanel painelSenha = new JPanel();
-        //JPanel painelBotoes = new JPanel();
+        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel labelCpf = new JLabel("CPF:    ");
+
+        JLabel labelCpf = new JLabel("CPF:     ");
         JLabel labelSenha = new JLabel("Senha: ");
         JTextField textCpf = new JTextField(20);
         JTextField textSenha = new JTextField(20);
@@ -81,17 +86,17 @@ public class UserInterface extends Interface {
             }
         });
 
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(Box.createVerticalStrut(30));
-        contentPane.add(painelCpf);
-        contentPane.add(painelSenha);
-        contentPane.add(painelBotoes);
-        contentPane.add(Box.createVerticalStrut(15));
+        painel.add(Box.createVerticalStrut(30));
+        painel.add(painelCpf);
+        painel.add(painelSenha);
+        painel.add(painelBotoes);
+        contentPane.add(painel);
+        painel.add(Box.createVerticalStrut(15));
         setVisible(true);
     }
 
     public void telaCadastrarCliente(){
-        JPanel painel = new JPanel(new GridLayout(7, 2, 10, 10));
+        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JButton botaoVoltar = new JButton("Voltar");
@@ -151,13 +156,11 @@ public class UserInterface extends Interface {
         botaoBrinquedo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
-                JOptionPane.showMessageDialog(contentPane, "Cadastro Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
-                //opcoesDeCadastro();
             }
         });
         botaoEstabelecimento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(contentPane, "Item Adicionado ao Menu!", "Cadastro de Item do Menu", JOptionPane.INFORMATION_MESSAGE);
+                removeAllComponents();
             }
         });
         botaoCredito.addActionListener(new ActionListener() {
@@ -170,7 +173,6 @@ public class UserInterface extends Interface {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
                 telaLogin();
-                //opcoesDeCadastro();
             }
         });
 

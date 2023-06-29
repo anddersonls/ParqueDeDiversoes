@@ -38,11 +38,16 @@ public class AdmInterface extends Interface {
 
         JButton botaoVoltar = new JButton("Voltar");
         JButton botaoEntrar = new JButton("Entrar");
+        botaoVoltar.setPreferredSize(buttonSize);
+        botaoEntrar.setPreferredSize(buttonSize);
 
         JPanel painelCpf = new JPanel();
         JPanel painelSenha = new JPanel();
         JPanel painelBotoes = new JPanel();
-        JLabel labelCpf = new JLabel("CPF:    ");
+        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel labelCpf = new JLabel("CPF:     ");
         JLabel labelSenha = new JLabel("Senha: ");
         JTextField textCpf = new JTextField(20);
         JTextField textSenha = new JTextField(20);
@@ -54,9 +59,9 @@ public class AdmInterface extends Interface {
         painelBotoes.add(botaoVoltar);
         painelBotoes.add(botaoEntrar);
 
-        painelCpf.setLayout(new FlowLayout(FlowLayout.CENTER));
-        painelSenha.setLayout(new FlowLayout(FlowLayout.CENTER));
-        painelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER));
+        painel.add(painelCpf);
+        painel.add(painelSenha);
+        painel.add(painelBotoes);
 
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -75,9 +80,7 @@ public class AdmInterface extends Interface {
 
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         contentPane.add(Box.createVerticalStrut(30));
-        contentPane.add(painelCpf);
-        contentPane.add(painelSenha);
-        contentPane.add(painelBotoes);
+        contentPane.add(painel);
         contentPane.add(Box.createVerticalStrut(15));
         setVisible(true);
     }
