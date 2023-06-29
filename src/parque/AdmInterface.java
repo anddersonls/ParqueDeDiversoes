@@ -29,7 +29,32 @@ public class AdmInterface extends Interface {
         contentPane.revalidate();
         contentPane.repaint();
     }
+    public JButton[] layoutDeOpcoes(String[] opcoes){
+        int i;
 
+        JPanel painel = new JPanel(new GridLayout(7, 1, 20, 10));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
+
+        JButton[] opcoesBotao = new JButton[opcoes.length];
+        painel.add(new JLabel());
+        for(i=0; i<opcoes.length-1; i++){
+            JButton botao = new JButton(opcoes[i]);
+            opcoesBotao[i] = botao;
+            painel.add(botao);
+        }
+        painel.add(new JLabel());
+
+        JPanel painelVoltar = new JPanel();
+        JButton botaoVoltar = new JButton(opcoes[i]);
+        opcoesBotao[i] = botaoVoltar;
+        painelVoltar.add(botaoVoltar);
+        painel.add(painelVoltar);
+        botaoVoltar.setPreferredSize(buttonSize);
+        contentPane.add(painel);
+
+        setVisible(true);
+        return opcoesBotao;
+    }
     public void telaLogin() {
         setTitle("Administrador");
         setSize(600, 350);
@@ -86,92 +111,59 @@ public class AdmInterface extends Interface {
     }
 
     public void telaOpcoes() {
-        JButton botaoAdicionar = new JButton("Adicionar Atração");
-        JButton botaoRemover = new JButton("Remover Atração");
-        JButton botaoVoltar = new JButton("Voltar");
+        String[] opcoes = {"Adicionar Atração", "Remover Atração", "Voltar"};
+        JButton[] opcoesBotoes = new JButton[opcoes.length];
 
-        JPanel painelBotoes = new JPanel();
-        JPanel painelVoltar = new JPanel();
+        opcoesBotoes = layoutDeOpcoes(opcoes);
 
-        painelBotoes.add(botaoAdicionar);
-        painelBotoes.add(botaoRemover);
-        painelVoltar.add(botaoVoltar);
-
-        painelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER));
-        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        botaoVoltar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                telaLogin();
-            }
-        });
-
-        botaoAdicionar.addActionListener(new ActionListener() {
+        opcoesBotoes[0].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
                 opcoesDeCadastro();
             }
         });
-        botaoRemover.addActionListener(new ActionListener() {
+        opcoesBotoes[1].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
                 removerAtracoes();
             }
         });
-
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(Box.createVerticalStrut(50));
-        contentPane.add(painelBotoes);
-        contentPane.add(painelVoltar);
-        //pack();
-        setVisible(true);
+        opcoesBotoes[2].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                telaLogin();
+            }
+        });
     }
 
     public void opcoesDeCadastro() {
-        JButton botaoCadastroBrinquedo = new JButton("Cadastrar Brinquedo");
-        JButton botaoCadastroEstabelecimento = new JButton("Cadastrar Estabelecimento");
-        JButton botaoVoltar = new JButton("Voltar");
+        String[] opcoes = {"Cadastrar Brinquedo", "Cadastrar Estabelecimento", "Voltar"};
+        JButton[] opcoesBotoes = new JButton[opcoes.length];
 
-        JPanel painelBotoes = new JPanel();
-        JPanel painelVoltar = new JPanel();
+        opcoesBotoes = layoutDeOpcoes(opcoes);
 
-        painelBotoes.add(botaoCadastroBrinquedo);
-        painelBotoes.add(botaoCadastroEstabelecimento);
-        painelVoltar.add(botaoVoltar);
-
-        painelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER));
-        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        botaoVoltar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                telaOpcoes();
-            }
-        });
-
-        botaoCadastroBrinquedo.addActionListener(new ActionListener() {
+        opcoesBotoes[0].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
                 telaCadastrarBrinquedo();
             }
         });
-        botaoCadastroEstabelecimento.addActionListener(new ActionListener() {
+        opcoesBotoes[1].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
                 telaCadastrarEstabelecimento();
             }
         });
-
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        contentPane.add(Box.createVerticalStrut(50));
-        contentPane.add(painelBotoes);
-        contentPane.add(painelVoltar);
-        setVisible(true);
+        opcoesBotoes[2].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                telaOpcoes();
+            }
+        });
     }
 
     public void telaCadastrarBrinquedo() {
-        JPanel painel = new JPanel(new GridLayout(7, 2, 10, 10));
+        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JButton botaoVoltar = new JButton("Voltar");
@@ -181,7 +173,7 @@ public class AdmInterface extends Interface {
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
-                telaOpcoes();
+                opcoesDeCadastro();
             }
         });
 
@@ -287,46 +279,31 @@ public class AdmInterface extends Interface {
     }
 
     public void removerAtracoes () {
-        JButton botaoRemoverBrinquedo = new JButton("Remover Brinquedo");
-        JButton botaoRemoverEstabelecimento = new JButton("Remover Estabelecimento");
-        JButton botaoVoltar = new JButton("Voltar");
+        String[] opcoes = {"Remover Brinquedo", "Remover Estabelecimento", "Voltar"};
+        JButton[] opcoesBotoes = new JButton[opcoes.length];
 
-        JPanel painelBotoes = new JPanel();
-        JPanel painelVoltar = new JPanel();
+        opcoesBotoes = layoutDeOpcoes(opcoes);
 
-        painelBotoes.add(botaoRemoverEstabelecimento);
-        painelBotoes.add(botaoRemoverBrinquedo);
-        painelVoltar.add(botaoVoltar);
-
-        painelBotoes.setLayout(new FlowLayout(FlowLayout.CENTER));
-        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        botaoVoltar.addActionListener(new ActionListener() {
+        opcoesBotoes[0].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
-                telaOpcoes();
+                removerBrinquedo();
             }
         });
 
-        botaoRemoverEstabelecimento.addActionListener(new ActionListener() {
+        opcoesBotoes[1].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
                 removerEstabelecimento();
             }
         });
 
-        botaoRemoverBrinquedo.addActionListener(new ActionListener() {
+        opcoesBotoes[2].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //carregar a proxima pagina
+                removeAllComponents();
+                telaOpcoes();
             }
         });
-
-        contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
-        contentPane.add(Box.createVerticalStrut(50));
-        contentPane.add(painelBotoes);
-        contentPane.add(painelVoltar);
-        setVisible(true);
-
     }
 
     public void removerEstabelecimento() {
@@ -363,14 +340,15 @@ public class AdmInterface extends Interface {
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
-                telaOpcoes();
+                removerAtracoes();
             }
         });
 
         botaoRemover.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //carregar a proxima pagina
-                //função para remover um estabelecimento do hashmap de estabelecimentos
+                JOptionPane.showMessageDialog(contentPane, "Estabelecimento Removido do Parque!", " Remoção de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                removeAllComponents();
+                removerEstabelecimento();
             }
         });
 
@@ -381,11 +359,62 @@ public class AdmInterface extends Interface {
         contentPane.add(painelRemover);
         contentPane.add(painelVoltar);
 
+        setVisible(true);
+    }
+    public void removerBrinquedo() {
+
+        JLabel texto = new JLabel("Selecione um brinquedo");
+        texto.setFont(fontTitle);
+
+        JButton botaoRemover = new JButton("Remover");
+        JButton botaoVoltar= new JButton("Voltar");
+        botaoRemover.setPreferredSize(buttonSize);
+        botaoVoltar.setPreferredSize(buttonSize);
+
+        JPanel painelTexto = new JPanel();
+        JPanel painelRemover = new JPanel();
+        JPanel painelVoltar = new JPanel();
+
+        painelTexto.add(texto);
+        painelRemover.add(botaoRemover);
+        painelVoltar.add(botaoVoltar);
+
+        painelTexto.setLayout(new FlowLayout(FlowLayout.CENTER,5,25));
+        painelRemover.setLayout(new FlowLayout(FlowLayout.CENTER));
+        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
+        JList<String> listaEstabelecimentos = new JList<>(items);   //Aqui o parametro que o jList receberia seria o hashMap de estabelecimentos
+        listaEstabelecimentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
+        listaEstabelecimentos.setCellRenderer(new CustomListCellRenderer());
+
+        JScrollPane scrollPane = new JScrollPane(listaEstabelecimentos);
+
+
+
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                removerAtracoes();
+            }
+        });
+
+        botaoRemover.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(contentPane, "Brinquedo Removido do Parque!", " Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
+                removeAllComponents();
+                removerBrinquedo();
+            }
+        });
+
+        contentPane.setLayout(new BoxLayout(contentPane,BoxLayout.Y_AXIS));
+        contentPane.add(painelTexto);
+        contentPane.add(Box.createVerticalStrut(15));
+        contentPane.add(scrollPane);
+        contentPane.add(painelRemover);
+        contentPane.add(painelVoltar);
 
         setVisible(true);
-
-
-
     }
     //Funcao para setar a cor de seleção dos itens
     static class CustomListCellRenderer extends DefaultListCellRenderer {

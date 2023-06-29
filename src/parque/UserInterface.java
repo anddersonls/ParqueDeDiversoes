@@ -106,7 +106,6 @@ public class UserInterface extends Interface {
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
-                dispose();
                 telaLogin();
             }
         });

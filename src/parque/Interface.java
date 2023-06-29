@@ -75,4 +75,5 @@ public class Interface extends JFrame {
         contentPane.revalidate();
         contentPane.repaint();
     }
+
 }
