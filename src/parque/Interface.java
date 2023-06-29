@@ -54,12 +54,14 @@ public class Interface extends JFrame {
             cliente_button.setAlignmentX(Component.CENTER_ALIGNMENT);
             label.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-            contentPane.add(Box.createVerticalStrut(100));
-            contentPane.add(label);
-            contentPane.add(Box.createVerticalStrut(15));
-            contentPane.add(adm_button);
-            contentPane.add(Box.createVerticalStrut(15));
-            contentPane.add(cliente_button);
+            JPanel painel = new JPanel();
+            painel.add(Box.createVerticalStrut(100));
+            painel.add(label);
+            painel.add(Box.createVerticalStrut(15));
+            painel.add(adm_button);
+            painel.add(Box.createVerticalStrut(15));
+            painel.add(cliente_button);
+            contentPane.add(painel);
 
             label.setFont(fontTitle);
             adm_button.setFont(fontButton);
