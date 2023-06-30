@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class AdmInterface extends Interface {
     private JPanel contentPane;
@@ -15,8 +16,14 @@ public class AdmInterface extends Interface {
     private Font fontText;
     private Font fontButton;
     private Font fontTitle;
+    private ParqueDiversoes parque;
+
+    private HashMap<String, Float> cardapio;
+
 
     public AdmInterface(ParqueDiversoes parque) {
+        this.parque = parque;
+        cardapio = new HashMap<>();
         this.buttonSize = new Dimension(100, 25);
         this.fontText = new Font("Arial", Font.PLAIN, 14);
         this.fontTitle = new Font("Arial", Font.PLAIN, 20);
@@ -123,7 +130,7 @@ public class AdmInterface extends Interface {
         setVisible(true);
     }
     private boolean verificarLogin(String cpfDigitado, String senhaDigitada) {
-        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoAdm.txt";
+        String caminhoArquivo = "/home/joaovictor/Área de Trabalho/UFMA/3º Periodo/Linguagem de Programacao 2/LP2- TrabalhoFinal/Projeto/src/Arquivos/acessoAdm.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
             String cpfArquivo = br.readLine();
@@ -197,6 +204,17 @@ public class AdmInterface extends Interface {
         JButton botaoCadastrar = new JButton("Cadastrar");
         botaoVoltar.setPreferredSize(buttonSize);
         botaoCadastrar.setPreferredSize(buttonSize);
+
+        JLabel labelNome = new JLabel("Nome: ");
+        JLabel labelCapacidade = new JLabel("Capacidade: ");
+        JLabel labelAlturaMin = new JLabel("Altura Mínima: ");
+        JLabel labelIdadeMin = new JLabel("Idade Mínima: ");
+
+        JTextField textNome = new JTextField(20);
+        JTextField textCapacidade = new JTextField(20);
+        JTextField textAlturaMin = new JTextField(20);
+        JTextField textIdadeMin = new JTextField(20);
+
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
@@ -212,16 +230,6 @@ public class AdmInterface extends Interface {
             }
         });
 
-        JLabel labelNome = new JLabel("Nome: ");
-        JLabel labelCapacidade = new JLabel("Capacidade: ");
-        JLabel labelAlturaMin = new JLabel("Altura Mínima: ");
-        JLabel labelIdadeMin = new JLabel("Idade Mínima: ");
-
-        JTextField textNome = new JTextField(20);
-        JTextField textCapacidade = new JTextField(20);
-        JTextField textAlturaMin = new JTextField(20);
-        JTextField textIdadeMin = new JTextField(20);
-
         painel.add(labelNome);
         painel.add(textNome);
         painel.add(labelCapacidade);
@@ -235,6 +243,7 @@ public class AdmInterface extends Interface {
         contentPane.add(painel);
         setVisible(true);
     }
+
 
     public void telaCadastrarEstabelecimento() {
         JPanel panel = new JPanel(new GridLayout(8, 2, 10, 10));
@@ -262,18 +271,70 @@ public class AdmInterface extends Interface {
         JButton botaoVoltar = new JButton("Voltar");
         JButton botaoCadastrar = new JButton("Cadastrar");
 
+
+        botaoSalvar.addActionListener(new ActionListener() {
+            //Botar os alimentos no hashmap cardapio
+            public void actionPerformed(ActionEvent e) {
+                String alimento = campoAlimento.getText();
+                String valor = campoValor.getText();
+
+                if (alimento.trim().isEmpty() || valor.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(contentPane, "Digite um valor válido.");
+                    removeAllComponents();
+                    telaCadastrarEstabelecimento();
+                } else {
+                    if (verificarCadastroCardapio(alimento,valor,cardapio)) {
+                        JOptionPane.showMessageDialog(contentPane, "Cadastro de Alimento Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                        removeAllComponents();
+                        telaCadastrarEstabelecimento();
+                    }
+                    else {
+                        //JOptionPane.showMessageDialog(contentPane, "Falha no Cadastro");
+                        removeAllComponents();
+                        telaCadastrarEstabelecimento();
+
+                    }
+                }
+            }
+        });
+
+
         botaoCadastrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                JOptionPane.showMessageDialog(contentPane, "Cadastro Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
-                opcoesDeCadastro();
+                //Cadastrar um novo estabelecimento e depois disso limpar o hashmap de cardapio
+
+                String nome = campoNome.getText();
+                String capacidade = campoCapacidade.getText();
+                String tipoEstabelecimento = (String) comboBoxTipo.getSelectedItem();
+
+                if (nome.trim().isEmpty() || capacidade.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(contentPane, "Digite um valor válido.");
+                    removeAllComponents();
+                    telaCadastrarEstabelecimento();
+                } else {
+                    if (verificarCadastroEstabelecimento(nome,capacidade,tipoEstabelecimento,cardapio)) {
+                        //Apos adicionar itens ao cardapio, limpar ele para quando for adicionar a outro estabelecimento
+                        cardapio.clear();
+
+                        JOptionPane.showMessageDialog(contentPane, "Cadastro Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                        removeAllComponents();
+                        opcoesDeCadastro();
+                    }
+                    else {
+                        //JOptionPane.showMessageDialog(contentPane, "Falha no Cadastro");
+                        removeAllComponents();
+                        telaCadastrarEstabelecimento();
+
+                    }
+                }
+
+
+//                removeAllComponents();
+//                JOptionPane.showMessageDialog(contentPane, "Cadastro Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+//                opcoesDeCadastro();
             }
         });
-        botaoSalvar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(contentPane, "Item Adicionado ao Menu!", "Cadastro de Item do Menu", JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
+
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
@@ -302,8 +363,46 @@ public class AdmInterface extends Interface {
 
         //pack();
         setVisible(true);
-
     }
+
+
+    private boolean verificarCadastroEstabelecimento(String nome, String capacidadeDigitada, String tipoEstabelecimento,HashMap<String,Float> cardapio){
+
+        try{
+            int capacidade = Integer.parseInt((capacidadeDigitada));
+
+            if (tipoEstabelecimento.equals("Restaurante")) {
+                Restaurante novoEstabelecimento = new Restaurante(capacidade,cardapio,nome);
+                parque.addEstabelecimento(novoEstabelecimento);
+            }if (tipoEstabelecimento.equals("Quiosque")) {
+                Quiosque novoEstabelecimento = new Quiosque(capacidade,cardapio,nome);
+                parque.addEstabelecimento(novoEstabelecimento);
+            }if (tipoEstabelecimento.equals("Lanchonete")) {
+                Lanchonete novoEstabelecimento = new Lanchonete(capacidade,cardapio,nome);
+                parque.addEstabelecimento(novoEstabelecimento);
+            }
+
+            return true;
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(AdmInterface.this, "Falha no Cadastro! Valor não numérico digitado em Capacidade, Altura ou Idade");
+        }
+        return false;
+    }
+
+    private boolean verificarCadastroCardapio(String alimento, String preco, HashMap<String,Float> cardapio){
+
+        try{
+            float valor = Float.parseFloat((preco));
+            cardapio.put(alimento,valor);
+
+
+            return true;
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(AdmInterface.this, "Falha no Cadastro! Valor não numérico digitado em Valor!");
+        }
+        return false;
+    }
+
 
     public void removerAtracoes () {
         String[] opcoes = {"Remover Brinquedo", "Remover Estabelecimento", "Voltar"};

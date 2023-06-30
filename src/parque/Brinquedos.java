@@ -25,5 +25,8 @@ public class Brinquedos extends Atracoes{
 	  public void setIdadeMin(int idadeMin) {
 		  this.idadeMin = idadeMin;
 	  }
-		  
+
+
+
+
 }

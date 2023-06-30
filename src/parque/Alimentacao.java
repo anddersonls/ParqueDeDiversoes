@@ -20,4 +20,20 @@ public abstract class Alimentacao extends Atracoes implements InterfaceAlimentac
             System.out.println("Produto: " + chave + ", Valor: " + valor);
         }
 	}
+
+	/*private boolean verificarLogin(String cpfDigitado, String senhaDigitada) {
+        String caminhoArquivo = "/home/joaovictor/Área de Trabalho/UFMA/3º Periodo/Linguagem de Programacao 2/LP2- TrabalhoFinal/Projeto/src/Arquivos/acessoAdm.txt";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            String cpfArquivo = br.readLine();
+            String senhaArquivo = br.readLine();
+
+            return cpfArquivo.equals(cpfDigitado) && senhaArquivo.equals(senhaDigitada);
+        } catch (IOException e) {
+            System.out.println("Erro ao ler o arquivo: " + e.getMessage());
+        }
+
+        return false;
+    }*/
+
 }
