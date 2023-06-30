@@ -37,4 +37,11 @@ public abstract class Pessoa {
 	  public void setCpf(int cpf) {
 	    this.cpf = cpf;
 	  }
+	  public String getSenha() {
+		return senha;
+	}
+
+	  public void setSenha(String senha) {
+		this.senha = senha;
+	}
 	}

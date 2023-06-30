@@ -112,12 +112,12 @@ public class UserInterface extends Interface {
     }
 
     private boolean verificarLogin(String cpfDigitado, String senhaDigitada) {
-       /* try{
-
-        }catch(){
-
-        }*/
-
+        long cpf = Long.parseLong(cpfDigitado);
+        for (Visitante visitante : parque.getVisitantes()) {
+            if (visitante.getCpf() == cpf && visitante.getSenha().equals(senhaDigitada)) {
+                return true;
+            }
+        }
         return false;
     }
 
