@@ -1,12 +1,16 @@
 package parque;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class UserInterface extends Interface {
@@ -73,7 +77,7 @@ public class UserInterface extends Interface {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
                 dispose();
-                interfaceInicial();
+                interfaceInicial(parque);
             }
         });
 
@@ -85,7 +89,8 @@ public class UserInterface extends Interface {
 
                 if (verificarLogin(cpfDigitado, senhaDigitada)) {
                     JOptionPane.showMessageDialog(UserInterface.this, "Login bem-sucedido!");
-                    removeAllComponents();
+                    //removeAllComponents();
+                    setVisible(false);
                     opcoesCliente();
                 } else {
                     removeAllComponents();
@@ -333,6 +338,74 @@ public class UserInterface extends Interface {
     }
 
     public void telaEscolherBrinquedo() {
+        JPanel painel = new JPanel();
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+
+        Map<Brinquedos, Float> brinquedos = parque.getBrinquedos();
+        JTable table = new JTable();
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Nome");
+        tableModel.addColumn("Valor");
+
+        for (Brinquedos brinquedo : brinquedos.keySet()) {
+            float value = brinquedos.get(brinquedo);
+            tableModel.addRow(new Object[]{brinquedo.getNome(), value});
+        }
+        table.setModel(tableModel);
+
+        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoFimCompra = new JButton("Comprar");
+        botaoFimCompra.setPreferredSize(buttonSize);
+        botaoVoltar.setPreferredSize(buttonSize);
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(botaoVoltar);
+        painelBotoes.add(botaoFimCompra);
+
+        JLabel label = new JLabel("Selecione os brinquedos que você deseja:");
+
+        contentPane.add(Box.createVerticalStrut(15));
+        contentPane.add(label);
+        contentPane.add(Box.createVerticalStrut(15));
+        contentPane.add(new JScrollPane(table), BorderLayout.CENTER);
+        contentPane.add(painelBotoes);
+        contentPane.add(Box.createVerticalStrut(15));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+        wrapperPanel.add(contentPane, BorderLayout.CENTER);
+        setContentPane(wrapperPanel);
+        //contentPane.add(painel);
+        setVisible(true);
+        /*JPanel painel = new JPanel(new GridLayout(7, 2, 10, 10));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
+
+        Map<Brinquedos, Float> brinquedos = parque.getBrinquedos();
+        JCheckBox[] checkBoxes = new JCheckBox[brinquedos.size()];
+        int i=0;
+        for (Map.Entry<Brinquedos, Float> entry : brinquedos.entrySet()) {
+            String chave = entry.getKey().getNome();
+            float valor = entry.getValue();
+
+            checkBoxes[i] = new JCheckBox(chave+": ");
+            JLabel labelValor = new JLabel(String.valueOf(valor));
+
+            painel.add(checkBoxes[i]);
+            painel.add(labelValor);
+        }
+        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoFimCompra = new JButton("Comprar");
+        botaoFimCompra.setPreferredSize(buttonSize);
+        botaoVoltar.setPreferredSize(buttonSize);
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(botaoVoltar);
+        painelBotoes.add(botaoFimCompra);
+
+        contentPane.add(painel);
+        painel.add(painelBotoes);
+        contentPane.add(Box.createVerticalStrut(15));
+        setVisible(true); */
+
+        /*
         JButton botaoVoltar = new JButton("Voltar");
         JButton botaoFimCompra = new JButton("Comprar");
         botaoFimCompra.setPreferredSize(buttonSize);
@@ -379,7 +452,7 @@ public class UserInterface extends Interface {
         painel.add(painelBotoes);
         contentPane.add(painel);
         contentPane.add(Box.createVerticalStrut(15));
-        setVisible(true);
+        setVisible(true); */
     }
 
     //Tela para escolher lanchonete

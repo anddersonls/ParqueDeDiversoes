@@ -2,6 +2,7 @@ package parque;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ParqueDiversoes {
 	private HashMap<Brinquedos, Float> brinquedos;
@@ -33,6 +34,9 @@ public class ParqueDiversoes {
 	}
 	public ArrayList<Visitante> getVisitantes() {
 		return visitantes;
+	}
+	public Map<Brinquedos, Float> getBrinquedos() {
+		return brinquedos;
 	}
 
 }

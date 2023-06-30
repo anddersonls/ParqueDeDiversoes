@@ -12,19 +12,18 @@ public class Interface extends JFrame {
         private Font fontButton;
         private Font fontTitle;
         private ParqueDiversoes parque;
-        private AdmInterface admInterface;
-        private UserInterface userInterface;
     public Interface(ParqueDiversoes parque){
             this.parque = parque;
-            this.admInterface = new AdmInterface(parque);
-            this.userInterface = new UserInterface(parque);
-            interfaceInicial();
+            interfaceInicial(parque);
         }
 
     public Interface() {
     }
 
-    public void interfaceInicial() {
+    public ParqueDiversoes getParque(){
+        return parque;
+    }
+    public void interfaceInicial(ParqueDiversoes parque) {
             this.buttonSize = new Dimension(400, 50);
             this.fontText = new Font("Arial", Font.PLAIN, 14);
             this.fontTitle = new Font("Arial", Font.PLAIN, 20);
@@ -48,14 +47,14 @@ public class Interface extends JFrame {
             adm_button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setVisible(false);
-                    admInterface = new AdmInterface(parque);
+                    AdmInterface admInterface = new AdmInterface(parque);
                     admInterface.telaLogin();
                 }
             });
             cliente_button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     setVisible(false);
-                    userInterface = new UserInterface(parque);
+                    UserInterface userInterface = new UserInterface(parque);
                     userInterface.telaLogin();
                 }
             });

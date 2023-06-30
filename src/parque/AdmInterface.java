@@ -100,7 +100,7 @@ public class AdmInterface extends Interface {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
                 dispose();
-                interfaceInicial();
+                interfaceInicial(parque);
             }
         });
 
