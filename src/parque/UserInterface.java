@@ -16,6 +16,7 @@ public class UserInterface extends Interface {
     private Font fontButton;
     private Font fontTitle;
     private ParqueDiversoes parque;
+    private long cpf;
 
     public UserInterface(ParqueDiversoes parque) {
         this.parque = parque;
@@ -51,7 +52,6 @@ public class UserInterface extends Interface {
         JPanel painelSenha = new JPanel();
         JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
 
         JLabel labelCpf = new JLabel("CPF:     ");
         JLabel labelSenha = new JLabel("Senha: ");
@@ -89,7 +89,6 @@ public class UserInterface extends Interface {
                     removeAllComponents();
                     opcoesCliente();
                 } else {
-                    JOptionPane.showMessageDialog(UserInterface.this, "CPF ou senha incorretos!");
                     removeAllComponents();
                     telaLogin();
                 }
@@ -112,12 +111,21 @@ public class UserInterface extends Interface {
     }
 
     private boolean verificarLogin(String cpfDigitado, String senhaDigitada) {
-        long cpf = Long.parseLong(cpfDigitado);
-        for (Visitante visitante : parque.getVisitantes()) {
-            if (visitante.getCpf() == cpf && visitante.getSenha().equals(senhaDigitada)) {
-                return true;
+        try{
+            long CPF = Long.parseLong(cpfDigitado);
+            if(parque.getVisitantes()!=null) {
+                for (Visitante visitante : parque.getVisitantes()) {
+                    if (visitante.getCpf() == CPF && visitante.getSenha().equals(senhaDigitada)) {
+                        this.cpf = CPF;
+                        return true;
+                    }
+                }
+                JOptionPane.showMessageDialog(UserInterface.this, "CPF ou senha incorreto(s)!");
             }
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(UserInterface.this, "Valor de CPF inválido!");
         }
+
         return false;
     }
 
@@ -194,15 +202,15 @@ public class UserInterface extends Interface {
     public boolean verificarCadastro(String nome, String cpfDigitado, String alturaDigitada, String idadeDigitada, String senha){
 
         try{
-            long cpf = Long.parseLong(cpfDigitado);
+            long CPF = Long.parseLong(cpfDigitado);
             float altura = Float.parseFloat(alturaDigitada);
             int idade = Integer.parseInt((idadeDigitada));
 
-            Visitante novoVisitante = new Visitante(nome, cpf, idade, altura, senha, 0.0F);
+            Visitante novoVisitante = new Visitante(nome, CPF, idade, altura, senha, 0.0F);
             parque.addVisitante(novoVisitante);
             return true;
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(UserInterface.this, "Falha no Cadastro! Valor não numérico digitado em CPF, Altura ou Idade" + ex.getMessage());
+            JOptionPane.showMessageDialog(UserInterface.this, "Falha no Cadastro! Valor não numérico digitado em CPF, Altura ou Idade");
         }
 
         return false;
@@ -284,12 +292,16 @@ public class UserInterface extends Interface {
 
         botaoDepositar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(contentPane, "Crédito Depositado!", "Depósito de Crédito", JOptionPane.INFORMATION_MESSAGE);
-                removeAllComponents();
-                opcoesCliente();
+                for(Visitante visitante : parque.getVisitantes()){
+                    if(visitante.getCpf() == cpf) {
+                        colocaCredito(visitante, textSenha.getText(), textValor.getText());
+                        System.out.println(visitante.getCredito());
+                        break;
+                    }
+                }
+
             }
         });
-
 
         painel.add(labelValor);
         painel.add(textValor);
@@ -299,6 +311,26 @@ public class UserInterface extends Interface {
         contentPane.add(painel);
         contentPane.add(Box.createVerticalStrut(15));
         setVisible(true);
+    }
+
+    public void colocaCredito(Visitante cliente, String senhaDigitada, String valorDigitado){
+        String senha = "";
+        senha = cliente.getSenha();
+        if(senhaDigitada.equals(senha)) {
+            try {
+                float valor = Float.parseFloat(valorDigitado);
+                JOptionPane.showMessageDialog(contentPane, "Crédito Depositado!", "Depósito de Crédito", JOptionPane.INFORMATION_MESSAGE);
+                cliente.depositarCredito(valor);
+                removeAllComponents();
+                opcoesCliente();
+            }catch(NumberFormatException ex) {
+                JOptionPane.showMessageDialog(UserInterface.this, "Falha no Deposito! Valor inválido digitado no campo valor.");
+            }
+        }else{
+            JOptionPane.showMessageDialog(contentPane, "Senha Inválida!", "Senha Incorreta", JOptionPane.INFORMATION_MESSAGE);
+            removeAllComponents();
+            telaCredito();
+        }
     }
 
     public void telaEscolherBrinquedo() {
