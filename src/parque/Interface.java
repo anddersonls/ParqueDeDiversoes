@@ -11,11 +11,16 @@ public class Interface extends JFrame {
         private Font fontText;
         private Font fontButton;
         private Font fontTitle;
-    public Interface(){
+        private ParqueDiversoes parque;
+    public Interface(ParqueDiversoes parque){
+            this.parque = parque;
             interfaceInicial();
         }
 
-        public void interfaceInicial() {
+    public Interface() {
+    }
+
+    public void interfaceInicial() {
             this.buttonSize = new Dimension(400, 50);
             this.fontText = new Font("Arial", Font.PLAIN, 14);
             this.fontTitle = new Font("Arial", Font.PLAIN, 20);
@@ -40,14 +45,14 @@ public class Interface extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     removeAllComponents();
                     dispose();
-                    AdmInterface admInterface = new AdmInterface();
+                    AdmInterface admInterface = new AdmInterface(parque);
                 }
             });
             cliente_button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     removeAllComponents();
                     dispose();
-                    UserInterface clienteInterface = new UserInterface();
+                    UserInterface clienteInterface = new UserInterface(parque);
                 }
             });
 

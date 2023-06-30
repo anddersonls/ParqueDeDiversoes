@@ -3,10 +3,12 @@ package parque;
 public class Visitante extends Pessoa{
 	private float credito;
 	private float altura;
-	
-	public Visitante (String nome, int idade, int cpf, float altura, float credito) {
-		super(nome, idade, cpf);
+	private long idade;
+
+	public Visitante (String nome, long cpf, int idade, float altura, String senha, float credito) {
+		super(nome, idade, cpf, senha);
 		this.altura = altura;
+		this.idade = idade;
 		this.credito = credito;
 	  }
 	

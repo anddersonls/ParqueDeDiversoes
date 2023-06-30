@@ -3,12 +3,14 @@ package parque;
 public abstract class Pessoa {
 	  private String nome;
 	  private int idade;
-	  private int cpf;
+	  private long cpf;
+	  private String senha;
 
-	  public Pessoa (String nome, int idade, int cpf ) {
+	  public Pessoa (String nome, int idade, long cpf , String senha) {
 		this.nome=nome;
 		this.idade=idade;
 		this.cpf=cpf;
+		this.senha=senha;
 	  }
 
 
@@ -28,7 +30,7 @@ public abstract class Pessoa {
 	    this.idade = idade;
 	  }
 
-	  public int getCpf() {
+	  public long getCpf() {
 	    return cpf;
 	  }
 

@@ -16,7 +16,7 @@ public class AdmInterface extends Interface {
     private Font fontButton;
     private Font fontTitle;
 
-    public AdmInterface() {
+    public AdmInterface(ParqueDiversoes parque) {
         this.buttonSize = new Dimension(100, 25);
         this.fontText = new Font("Arial", Font.PLAIN, 14);
         this.fontTitle = new Font("Arial", Font.PLAIN, 20);

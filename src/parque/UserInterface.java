@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 
 
 public class UserInterface extends Interface {
@@ -12,8 +15,10 @@ public class UserInterface extends Interface {
     private Font fontText;
     private Font fontButton;
     private Font fontTitle;
+    private ParqueDiversoes parque;
 
-    public UserInterface() {
+    public UserInterface(ParqueDiversoes parque) {
+        this.parque = parque;
         this.buttonSize = new Dimension(100, 25);
         this.fontText = new Font("Arial", Font.PLAIN, 14);
         this.fontTitle = new Font("Arial", Font.PLAIN, 20);
@@ -76,7 +81,18 @@ public class UserInterface extends Interface {
         botaoEntrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
-                opcoesCliente();
+                String cpfDigitado = textCpf.getText();
+                String senhaDigitada = textSenha.getText();
+
+                if (verificarLogin(cpfDigitado, senhaDigitada)) {
+                    JOptionPane.showMessageDialog(UserInterface.this, "Login bem-sucedido!");
+                    removeAllComponents();
+                    opcoesCliente();
+                } else {
+                    JOptionPane.showMessageDialog(UserInterface.this, "CPF ou senha incorretos!");
+                    removeAllComponents();
+                    telaLogin();
+                }
             }
         });
         botaoCadastrar.addActionListener(new ActionListener() {
@@ -95,9 +111,31 @@ public class UserInterface extends Interface {
         setVisible(true);
     }
 
+    private boolean verificarLogin(String cpfDigitado, String senhaDigitada) {
+       /* try{
+
+        }catch(){
+
+        }*/
+
+        return false;
+    }
+
     public void telaCadastrarCliente(){
         JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        JLabel labelNome = new JLabel("Nome: ");
+        JLabel labelCpf = new JLabel("CPF: ");
+        JLabel labelAltura = new JLabel("Altura: ");
+        JLabel labelIdade = new JLabel("Idade: ");
+        JLabel labelSenha = new JLabel("Senha: ");
+
+        JTextField textNome = new JTextField(20);
+        JTextField textCpf = new JTextField(20);
+        JTextField textAltura = new JTextField(20);
+        JTextField textIdade = new JTextField(20);
+        JTextField textSenha = new JTextField(20);
 
         JButton botaoVoltar = new JButton("Voltar");
         JButton botaoCadastrar = new JButton("Cadastrar");
@@ -112,21 +150,29 @@ public class UserInterface extends Interface {
 
         botaoCadastrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                JOptionPane.showMessageDialog(contentPane, "Cadastro Realizado com Sucesso!", "Cadastro de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
-                telaLogin();
+                String nome = textNome.getText();
+                String cpf = textCpf.getText();
+                String altura = textAltura.getText();
+                String idade = textIdade.getText();
+                String senha = textSenha.getText();
+                if (nome.trim().isEmpty() || cpf.trim().isEmpty() || altura.trim().isEmpty() || idade.trim().isEmpty() || senha.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(contentPane, "Digite um valor válido.");
+                    removeAllComponents();
+                    telaCadastrarCliente();
+                } else {
+                    if (verificarCadastro(nome, cpf, altura, idade, senha)) {
+                        JOptionPane.showMessageDialog(UserInterface.this, "Cadastro bem-sucedido!");
+                        removeAllComponents();
+                        telaLogin();
+                    } else {
+                        //JOptionPane.showMessageDialog(UserInterface.this, "Falha no Cadastro");
+                        removeAllComponents();
+                        telaCadastrarCliente();
+                    }
+                }
+
             }
         });
-
-        JLabel labelNome = new JLabel("Nome: ");
-        JLabel labelCpf = new JLabel("CPF: ");
-        JLabel labelAltura = new JLabel("Altura: ");
-        JLabel labelSenha = new JLabel("Senha: ");
-
-        JTextField textNome = new JTextField(20);
-        JTextField textCpf = new JTextField(20);
-        JTextField textAltura = new JTextField(20);
-        JTextField textSenha = new JTextField(20);
 
         painel.add(labelNome);
         painel.add(textNome);
@@ -134,6 +180,8 @@ public class UserInterface extends Interface {
         painel.add(textCpf);
         painel.add(labelAltura);
         painel.add(textAltura);
+        painel.add(labelIdade);
+        painel.add(textIdade);
         painel.add(labelSenha);
         painel.add(textSenha);
 
@@ -141,6 +189,23 @@ public class UserInterface extends Interface {
         painel.add(botaoCadastrar);
         contentPane.add(painel);
         setVisible(true);
+    }
+
+    public boolean verificarCadastro(String nome, String cpfDigitado, String alturaDigitada, String idadeDigitada, String senha){
+
+        try{
+            long cpf = Long.parseLong(cpfDigitado);
+            float altura = Float.parseFloat(alturaDigitada);
+            int idade = Integer.parseInt((idadeDigitada));
+
+            Visitante novoVisitante = new Visitante(nome, cpf, idade, altura, senha, 0.0F);
+            parque.addVisitante(novoVisitante);
+            return true;
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(UserInterface.this, "Falha no Cadastro! Valor não numérico digitado em CPF, Altura ou Idade" + ex.getMessage());
+        }
+
+        return false;
     }
 
     public void opcoesCliente() {
