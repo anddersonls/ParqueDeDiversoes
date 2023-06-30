@@ -26,7 +26,6 @@ public class UserInterface extends Interface {
         this.fontButton = new Font("Arial", Font.PLAIN, 15);
         contentPane = new JPanel();
         setContentPane(contentPane);
-        telaLogin();
     }
 
     public void removeAllComponents() {

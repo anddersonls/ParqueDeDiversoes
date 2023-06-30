@@ -29,7 +29,6 @@ public class AdmInterface extends Interface {
         this.fontButton = new Font("Arial", Font.PLAIN, 15);
         contentPane = new JPanel();
         setContentPane(contentPane);
-        telaLogin();
     }
 
     @Override
@@ -129,7 +128,7 @@ public class AdmInterface extends Interface {
         setVisible(true);
     }
     private boolean verificarLogin(String cpfDigitado, String senhaDigitada) {
-        String caminhoArquivo = "/home/joaovictor/Área de Trabalho/UFMA/3º Periodo/Linguagem de Programacao 2/LP2- TrabalhoFinal/Projeto/src/Arquivos/acessoAdm.txt";
+        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoAdm.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
             String cpfArquivo = br.readLine();
@@ -203,17 +202,6 @@ public class AdmInterface extends Interface {
         JButton botaoCadastrar = new JButton("Cadastrar");
         botaoVoltar.setPreferredSize(buttonSize);
         botaoCadastrar.setPreferredSize(buttonSize);
-
-        JLabel labelNome = new JLabel("Nome: ");
-        JLabel labelCapacidade = new JLabel("Capacidade: ");
-        JLabel labelAlturaMin = new JLabel("Altura Mínima: ");
-        JLabel labelIdadeMin = new JLabel("Idade Mínima: ");
-
-        JTextField textNome = new JTextField(20);
-        JTextField textCapacidade = new JTextField(20);
-        JTextField textAlturaMin = new JTextField(20);
-        JTextField textIdadeMin = new JTextField(20);
-
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removeAllComponents();
@@ -221,11 +209,44 @@ public class AdmInterface extends Interface {
             }
         });
 
+
+
+        JLabel labelNome = new JLabel("Nome: ");
+        JLabel labelCapacidade = new JLabel("Capacidade: ");
+        JLabel labelAlturaMin = new JLabel("Altura Mínima: ");
+        JLabel labelIdadeMin = new JLabel("Idade Mínima: ");
+        JLabel labelValor = new JLabel("Valor: ");
+
+        JTextField textNome = new JTextField(20);
+        JTextField textCapacidade = new JTextField(20);
+        JTextField textAlturaMin = new JTextField(20);
+        JTextField textIdadeMin = new JTextField(20);
+        JTextField textValor = new JTextField(20);
+
         botaoCadastrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                JOptionPane.showMessageDialog(contentPane, "Cadastro Realizado com Sucesso!", "Cadastro de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
-                telaOpcoes();
+
+                String nome = textNome.getText();
+                String capacidade = textCapacidade.getText();
+                String alturaMin = textAlturaMin.getText();
+                String idadeMin = textIdadeMin.getText();
+                String valor = textValor.getText();
+
+                if (nome.trim().isEmpty() || capacidade.trim().isEmpty() || alturaMin.trim().isEmpty() || idadeMin.trim().isEmpty() || valor.trim().isEmpty()) {
+                    JOptionPane.showMessageDialog(contentPane, "Digite um valor válido.");
+                    removeAllComponents();
+                    telaCadastrarBrinquedo();
+                } else {
+                    if (verificarCadastro(nome, capacidade, alturaMin, idadeMin, valor)) {
+                        JOptionPane.showMessageDialog(AdmInterface.this, "Cadastro bem-sucedido!");
+                        removeAllComponents();
+                        opcoesDeCadastro();
+                    } else {
+                        //JOptionPane.showMessageDialog(UserInterface.this, "Falha no Cadastro");
+                        removeAllComponents();
+                        telaCadastrarBrinquedo();
+                    }
+                }
             }
         });
 
@@ -237,12 +258,34 @@ public class AdmInterface extends Interface {
         painel.add(textAlturaMin);
         painel.add(labelIdadeMin);
         painel.add(textIdadeMin);
+        painel.add(labelValor);
+        painel.add(textValor);
+
+
         painel.add(botaoVoltar);
         painel.add(botaoCadastrar);
         contentPane.add(painel);
         setVisible(true);
     }
 
+    public boolean verificarCadastro(String nome, String capacidadeDigitada, String alturaMinDigitada, String idadeMinDigitada, String valorDigitado){
+
+        try{
+            int capacidade = Integer.parseInt((capacidadeDigitada));
+            float altura = Float.parseFloat(alturaMinDigitada);
+            int idade = Integer.parseInt((idadeMinDigitada));
+            float valor = Float.parseFloat(valorDigitado);
+
+            Brinquedos novoBrinquedo = new Brinquedos(capacidade, altura, idade, nome);
+            parque.addBrinquedo(novoBrinquedo, valor);
+
+            return true;
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(AdmInterface.this, "Falha no Cadastro! Valor não numérico digitado em Capacidade, Altura, Idade ou Valor");
+        }
+
+        return false;
+    }
 
     public void telaCadastrarEstabelecimento() {
         JPanel panel = new JPanel(new GridLayout(8, 2, 10, 10));
@@ -266,7 +309,7 @@ public class AdmInterface extends Interface {
         JLabel labelValor = new JLabel("Valor:");
         JTextField campoValor = new JTextField();
 
-        JButton botaoSalvar = new JButton("Adicionar Opcao ao Menu");
+        JButton botaoSalvar = new JButton("Salvar no Menu");
         JButton botaoVoltar = new JButton("Voltar");
         JButton botaoCadastrar = new JButton("Cadastrar");
 
@@ -284,11 +327,11 @@ public class AdmInterface extends Interface {
                 } else {
                     if (verificarCadastroCardapio(alimento,valor,cardapio)) {
                         JOptionPane.showMessageDialog(contentPane, "Cadastro de Alimento Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
-                        removeAllComponents();
-                        telaCadastrarEstabelecimento();
+                        campoAlimento.setText("");
+                        campoValor.setText("");
                     }
                     else {
-                        //JOptionPane.showMessageDialog(contentPane, "Falha no Cadastro");
+                        JOptionPane.showMessageDialog(contentPane, "Falha no Cadastro");
                         removeAllComponents();
                         telaCadastrarEstabelecimento();
 
@@ -393,7 +436,6 @@ public class AdmInterface extends Interface {
         try{
             float valor = Float.parseFloat((preco));
             cardapio.put(alimento,valor);
-
 
             return true;
         } catch (NumberFormatException ex) {
@@ -582,5 +624,3 @@ public class AdmInterface extends Interface {
         }
     }
 }
-
-

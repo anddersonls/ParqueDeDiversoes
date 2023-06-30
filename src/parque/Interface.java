@@ -12,8 +12,12 @@ public class Interface extends JFrame {
         private Font fontButton;
         private Font fontTitle;
         private ParqueDiversoes parque;
+        private AdmInterface admInterface;
+        private UserInterface userInterface;
     public Interface(ParqueDiversoes parque){
             this.parque = parque;
+            this.admInterface = new AdmInterface(parque);
+            this.userInterface = new UserInterface(parque);
             interfaceInicial();
         }
 
@@ -43,16 +47,16 @@ public class Interface extends JFrame {
             cliente_button.setPreferredSize(new Dimension(200, 50));
             adm_button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    removeAllComponents();
-                    dispose();
-                    AdmInterface admInterface = new AdmInterface(parque);
+                    setVisible(false);
+                    admInterface = new AdmInterface(parque);
+                    admInterface.telaLogin();
                 }
             });
             cliente_button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    removeAllComponents();
-                    dispose();
-                    UserInterface clienteInterface = new UserInterface(parque);
+                    setVisible(false);
+                    userInterface = new UserInterface(parque);
+                    userInterface.telaLogin();
                 }
             });
 
