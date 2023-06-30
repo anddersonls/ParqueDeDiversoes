@@ -34,4 +34,5 @@ public class ParqueDiversoes {
 	public ArrayList<Visitante> getVisitantes() {
 		return visitantes;
 	}
+
 }
