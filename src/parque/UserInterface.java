@@ -6,10 +6,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 
@@ -342,6 +340,91 @@ public class UserInterface extends Interface {
         painel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 
         Map<Brinquedos, Float> brinquedos = parque.getBrinquedos();
+        List<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+        //JTable table = new JTable();
+        DefaultTableModel tableModel = new DefaultTableModel();
+        //JCheckBox checkBox = new JCheckBox();
+        tableModel.addColumn("Nome");
+        tableModel.addColumn("Valor");
+        tableModel.addColumn("Selecionado");
+
+
+        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoFimCompra = new JButton("Comprar");
+        botaoFimCompra.setPreferredSize(buttonSize);
+        botaoVoltar.setPreferredSize(buttonSize);
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.add(botaoVoltar);
+        painelBotoes.add(botaoFimCompra);
+        JLabel label = new JLabel("Selecione os brinquedos que você deseja:");
+        contentPane.add(Box.createVerticalStrut(20));
+        contentPane.add(label);
+        contentPane.add(Box.createVerticalStrut(15));
+        botaoFimCompra.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                float valorTotal = 0.0f;
+                List<Brinquedos> brinquedosSelecionados = new ArrayList<>();
+
+                for (JCheckBox checkBox : checkBoxes) {
+                    if (checkBox.isSelected()) {
+                        String texto = checkBox.getText();
+                        String[] partes = texto.split(" - Valor: ");
+                        String nome = partes[0];
+                        float valor = Float.parseFloat(partes[1]);
+
+                        valorTotal += valor;
+
+                        // Recupera o brinquedo associado ao checkbox selecionado
+                        Brinquedos brinquedo = findBrinquedoByNome(brinquedos, nome);
+                        if (brinquedo != null) {
+                            brinquedosSelecionados.add(brinquedo);
+                        }
+                    }
+                }
+
+                // Realize as ações necessárias com os brinquedos selecionados
+
+                String mensagem = "Compra finalizada!\n";
+                mensagem += "Valor total da compra: R$ " + valorTotal;
+                JOptionPane.showMessageDialog(contentPane, mensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
+
+                removeAllComponents();
+                opcoesCliente();
+            }
+        });
+
+        for (Brinquedos brinquedo : brinquedos.keySet()) {
+            float value = brinquedos.get(brinquedo);
+            JCheckBox checkBox = new JCheckBox(brinquedo.getNome() + "      - Valor: " + value);
+            checkBoxes.add(checkBox);
+            contentPane.add(checkBox);
+        }
+        botaoVoltar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                removeAllComponents();
+                opcoesCliente();
+            }
+        });
+
+        contentPane.add(Box.createVerticalStrut(15));
+        contentPane.add(painel);
+
+        contentPane.add(Box.createVerticalStrut(15));
+        //contentPane.add(new JScrollPane(table), BorderLayout.CENTER);
+        contentPane.add(painelBotoes);
+        contentPane.add(Box.createVerticalStrut(15));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        JPanel wrapperPanel = new JPanel(new BorderLayout());
+        wrapperPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+        wrapperPanel.add(contentPane, BorderLayout.CENTER);
+        setContentPane(wrapperPanel);
+        //contentPane.add(painel);
+        setVisible(true);
+        /*
+        JPanel painel = new JPanel();
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
+
+        Map<Brinquedos, Float> brinquedos = parque.getBrinquedos();
         JTable table = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn("Nome");
@@ -375,84 +458,16 @@ public class UserInterface extends Interface {
         wrapperPanel.add(contentPane, BorderLayout.CENTER);
         setContentPane(wrapperPanel);
         //contentPane.add(painel);
-        setVisible(true);
-        /*JPanel painel = new JPanel(new GridLayout(7, 2, 10, 10));
-        painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
+        setVisible(true); */
 
-        Map<Brinquedos, Float> brinquedos = parque.getBrinquedos();
-        JCheckBox[] checkBoxes = new JCheckBox[brinquedos.size()];
-        int i=0;
-        for (Map.Entry<Brinquedos, Float> entry : brinquedos.entrySet()) {
-            String chave = entry.getKey().getNome();
-            float valor = entry.getValue();
-
-            checkBoxes[i] = new JCheckBox(chave+": ");
-            JLabel labelValor = new JLabel(String.valueOf(valor));
-
-            painel.add(checkBoxes[i]);
-            painel.add(labelValor);
+    }
+    private Brinquedos findBrinquedoByNome(Map<Brinquedos, Float> brinquedos, String nome) {
+        for (Brinquedos brinquedo : brinquedos.keySet()) {
+            if (brinquedo.getNome().equals(nome)) {
+                return brinquedo;
+            }
         }
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoFimCompra = new JButton("Comprar");
-        botaoFimCompra.setPreferredSize(buttonSize);
-        botaoVoltar.setPreferredSize(buttonSize);
-        JPanel painelBotoes = new JPanel();
-        painelBotoes.add(botaoVoltar);
-        painelBotoes.add(botaoFimCompra);
-
-        contentPane.add(painel);
-        painel.add(painelBotoes);
-        contentPane.add(Box.createVerticalStrut(15));
-        setVisible(true); */
-
-        /*
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoFimCompra = new JButton("Comprar");
-        botaoFimCompra.setPreferredSize(buttonSize);
-        botaoVoltar.setPreferredSize(buttonSize);
-
-        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
-        painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
-
-        JPanel painelBotoes = new JPanel();
-        painelBotoes.add(botaoVoltar);
-        painelBotoes.add(botaoFimCompra);
-
-        JLabel label = new JLabel("Selecione os brinquedos que você deseja:");
-        JCheckBox checkBox1 = new JCheckBox("Item 1");
-        JCheckBox checkBox2 = new JCheckBox("Item 2");
-        JCheckBox checkBox3 = new JCheckBox("Item 3");
-
-        double valorTotal=0.00;
-        String mensagem = "Compra finalizada!\n";
-        mensagem += "Valor total da compra: R$ " + valorTotal;
-
-        String finalMensagem = mensagem;
-        botaoVoltar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                opcoesCliente();
-            }
-        });
-
-        botaoFimCompra.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(contentPane, finalMensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
-                removeAllComponents();
-                opcoesCliente();
-            }
-        });
-
-
-        painel.add(label);
-        painel.add(checkBox1);
-        painel.add(checkBox2);
-        painel.add(checkBox3);
-
-        painel.add(painelBotoes);
-        contentPane.add(painel);
-        contentPane.add(Box.createVerticalStrut(15));
-        setVisible(true); */
+        return null;
     }
 
     //Tela para escolher lanchonete
