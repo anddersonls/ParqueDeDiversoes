@@ -35,7 +35,7 @@ public class ParqueDiversoes {
 	public ArrayList<Visitante> getVisitantes() {
 		return visitantes;
 	}
-	public Map<Brinquedos, Float> getBrinquedos() {
+	public HashMap<Brinquedos, Float> getBrinquedos() {
 		return brinquedos;
 	}
 

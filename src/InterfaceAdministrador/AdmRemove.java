@@ -1,6 +1,7 @@
 package InterfaceAdministrador;
 
 import parque.Alimentacao;
+import parque.Brinquedos;
 import parque.ParqueDiversoes;
 
 import javax.swing.*;
@@ -9,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class AdmRemove extends JFrame{
@@ -66,7 +68,6 @@ public class AdmRemove extends JFrame{
         String[] estabelecimentos = new String[arrayEstabelecimentos.size()];
         for (int i=0;i<arrayEstabelecimentos.size();i++) {
             estabelecimentos[i] = arrayEstabelecimentos.get(i).getNome();
-            System.out.println(estabelecimentos[i]);
         }
         JList<String> listaEstabelecimentos = new JList<>(estabelecimentos);
         listaEstabelecimentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
@@ -137,8 +138,18 @@ public class AdmRemove extends JFrame{
         painelRemover.setLayout(new FlowLayout(FlowLayout.CENTER));
         painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-        JList<String> listaBrinquedos = new JList<>(items);   //Aqui o parametro que o jList receberia seria o hashMap de estabelecimentos
+        //adicionando na lista o nome dos brinquedos
+        HashMap<Brinquedos, Float> mapBrinquedos = new HashMap<>();
+        mapBrinquedos = parque.getBrinquedos();
+        String[] brinquedos = new String[mapBrinquedos.size()];
+
+        int i=0;
+        for (HashMap.Entry<Brinquedos, Float> entry : mapBrinquedos.entrySet()) {
+            String chave = entry.getKey().getNome();
+            brinquedos[i] = chave;
+            i++;
+        }
+        JList<String> listaBrinquedos = new JList<>(brinquedos);
         listaBrinquedos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
         listaBrinquedos.setCellRenderer(new CustomListCellRenderer());
 
@@ -154,15 +165,19 @@ public class AdmRemove extends JFrame{
             }
         });
 
+        HashMap<Brinquedos, Float> finalMapBrinquedos = mapBrinquedos;
         botaoRemover.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = listaBrinquedos.getSelectedValue();
-                int selectedIndex = listaBrinquedos.getSelectedIndex();
-
                 if (selectedItem != null) {
-                    JOptionPane.showMessageDialog(painelPrincipal, selectedItem +" removido do Parque!", " Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
-                    //aqui chamararia a funcao que iria remover o estabelecimento do hashmap de brinquedos
-
+                    //chama funcao de remover o brinquedo do hashmap de estabelecimentos
+                    if (verificarERemoverBrinquedos(finalMapBrinquedos,selectedItem)){
+                        JOptionPane.showMessageDialog(painelPrincipal, selectedItem +" removido do Parque!", " Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
+                        setVisible(false);
+                        OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
+                    }else {
+                        JOptionPane.showMessageDialog(painelPrincipal, "Problema ao Remover Item"," Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(painelPrincipal, "Nenhum item selecionado!"," Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -187,7 +202,6 @@ public class AdmRemove extends JFrame{
             Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
             if (isSelected) {
-                // Adicionando uma bolinha colorida ao lado do item selecionado
                 Color selectionColor = Color.GRAY; // Cor da bolinha (pode ser alterada)
                 renderer.setBackground(selectionColor);
                 renderer.setForeground(list.getForeground());
@@ -209,11 +223,28 @@ public class AdmRemove extends JFrame{
             JOptionPane.showMessageDialog(painelPrincipal,"Problema ao Remover Estabelecimento!"+ e.getMessage(),"Remoção de Estabelecimento",JOptionPane.INFORMATION_MESSAGE);
         }
         return  false;
+
+    }public boolean verificarERemoverBrinquedos(HashMap<Brinquedos,Float> brinquedos, String selectedItem) {
+        try {
+            for (HashMap.Entry<Brinquedos, Float> entry : brinquedos.entrySet()) {
+                String chave = entry.getKey().getNome();
+                Brinquedos key = entry.getKey();
+                if (chave.equals(selectedItem)){
+                    brinquedos.remove(key);
+                    break;
+                }
+            }
+            return  true;
+        }catch(ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(painelPrincipal,"Problema ao Remover Brinquedo!"+ e.getMessage(),"Remoção de Brinquedo",JOptionPane.INFORMATION_MESSAGE);
+        }
+        return  false;
     }
     public void removeAllComponents() {
         painelPrincipal.removeAll();
         painelPrincipal.revalidate();
         painelPrincipal.repaint();
     }
+
 
 }

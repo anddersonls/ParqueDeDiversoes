@@ -112,7 +112,7 @@ public class AdmCadastra extends JFrame{
 
             return true;
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Valor não numérico digitado em Capacidade, Altura, Idade ou Valor");
+            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Valor não numérico digitado em Capacidade!");
         }
 
         return false;
@@ -241,7 +241,7 @@ public class AdmCadastra extends JFrame{
 
             return true;
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Valor não numérico digitado em Capacidade, Altura ou Idade");
+            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Valor não numérico digitado em Capacidade");
         }
         return false;
     }
