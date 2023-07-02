@@ -247,5 +247,4 @@ public class AdmRemove extends JFrame{
         painelPrincipal.repaint();
     }
 
-
 }
