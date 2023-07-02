@@ -10,6 +10,6 @@ public class App {
         parque.addBrinquedo(brinquedo1, 10f);
         parque.addBrinquedo(brinquedo2, 23.1f);
         parque.addVisitante(cliente);
-        Interface gui = new Interface(parque);
+        InterfaceInicial gui = new InterfaceInicial(parque);
     }
 }
