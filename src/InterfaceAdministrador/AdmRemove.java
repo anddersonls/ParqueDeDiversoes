@@ -224,7 +224,8 @@ public class AdmRemove extends JFrame{
         }
         return  false;
 
-    }public boolean verificarERemoverBrinquedos(HashMap<Brinquedos,Float> brinquedos, String selectedItem) {
+    }
+    public boolean verificarERemoverBrinquedos(HashMap<Brinquedos,Float> brinquedos, String selectedItem) {
         try {
             for (HashMap.Entry<Brinquedos, Float> entry : brinquedos.entrySet()) {
                 String chave = entry.getKey().getNome();
