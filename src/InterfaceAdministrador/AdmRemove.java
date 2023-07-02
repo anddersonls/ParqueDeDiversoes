@@ -1,12 +1,15 @@
 package InterfaceAdministrador;
 
+import parque.Alimentacao;
 import parque.ParqueDiversoes;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class AdmRemove extends JFrame{
     private JPanel painelPrincipal;
@@ -56,13 +59,20 @@ public class AdmRemove extends JFrame{
         painelRemover.setLayout(new FlowLayout(FlowLayout.CENTER));
         painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        String[] items = {"Item 1", "Item 2", "Item 3", "Item 4", "Item 5"};
-        JList<String> listaEstabelecimentos = new JList<>(items);   //Aqui o parametro que o jList receberia seria o hashMap de estabelecimentos
+        //adicionando na lista o nome dos estabelecimentos
+        ArrayList<Alimentacao> arrayEstabelecimentos = new ArrayList<>();
+        arrayEstabelecimentos = parque.getEstabelecimentos();
+
+        String[] estabelecimentos = new String[arrayEstabelecimentos.size()];
+        for (int i=0;i<arrayEstabelecimentos.size();i++) {
+            estabelecimentos[i] = arrayEstabelecimentos.get(i).getNome();
+            System.out.println(estabelecimentos[i]);
+        }
+        JList<String> listaEstabelecimentos = new JList<>(estabelecimentos);
         listaEstabelecimentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
         listaEstabelecimentos.setCellRenderer(new CustomListCellRenderer());
 
         JScrollPane scrollPane = new JScrollPane(listaEstabelecimentos);
-
         scrollPane.setMaximumSize(new Dimension(500, 90));  //definir o tamanho do painel que ficará a lista
         scrollPane.setMinimumSize (new Dimension (400,90));
 
@@ -73,19 +83,25 @@ public class AdmRemove extends JFrame{
             }
         });
 
+        ArrayList<Alimentacao> finalArrayEstabelecimentos = arrayEstabelecimentos;
         botaoRemover.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = listaEstabelecimentos.getSelectedValue();
                 int selectedIndex = listaEstabelecimentos.getSelectedIndex();
 
                 if (selectedItem != null) {
-                    JOptionPane.showMessageDialog(painelPrincipal, selectedItem +" removido do Parque!", " Remoção de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
-                    //aqui chamaria a funcao que iria remover o estabelecimento do hashmap de estabelecimentos
-                    setVisible(false);
-                    OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
+                    //chama funcao de remover o estabelecimento do arraylist de estabelecimentos
+                    if (verificarERemoverEstabelecimento(finalArrayEstabelecimentos,selectedItem)){
+                        JOptionPane.showMessageDialog(painelPrincipal, selectedItem +" removido do Parque!", " Remoção de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                        setVisible(false);
+                        OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
+                    }else {
+                        JOptionPane.showMessageDialog(painelPrincipal, "Problema ao Remover Item"," Remoção de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
+                    }
                 } else {
                     JOptionPane.showMessageDialog(painelPrincipal, "Nenhum item selecionado!"," Remoção de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
                 }
+
             }
         });
 
@@ -146,8 +162,7 @@ public class AdmRemove extends JFrame{
                 if (selectedItem != null) {
                     JOptionPane.showMessageDialog(painelPrincipal, selectedItem +" removido do Parque!", " Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
                     //aqui chamararia a funcao que iria remover o estabelecimento do hashmap de brinquedos
-                    setVisible(false);
-                    OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
+
                 } else {
                     JOptionPane.showMessageDialog(painelPrincipal, "Nenhum item selecionado!"," Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -180,6 +195,20 @@ public class AdmRemove extends JFrame{
 
             return renderer;
         }
+    }
+    public boolean verificarERemoverEstabelecimento(ArrayList<Alimentacao> estabelecimentos,String selectedItem) {
+        try {
+            for (int i=0;i<estabelecimentos.size();i++) {
+                if (Objects.equals(estabelecimentos.get(i).getNome(), selectedItem)) {
+                    estabelecimentos.remove(i);
+                    break;
+                }
+            }
+            return  true;
+        }catch(ArrayIndexOutOfBoundsException e) {
+            JOptionPane.showMessageDialog(painelPrincipal,"Problema ao Remover Estabelecimento!"+ e.getMessage(),"Remoção de Estabelecimento",JOptionPane.INFORMATION_MESSAGE);
+        }
+        return  false;
     }
     public void removeAllComponents() {
         painelPrincipal.removeAll();

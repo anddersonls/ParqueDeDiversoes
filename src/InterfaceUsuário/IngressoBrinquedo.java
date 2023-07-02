@@ -127,48 +127,7 @@ public class IngressoBrinquedo extends JFrame{
         wrapperPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
         wrapperPanel.add(painelPrincipal, BorderLayout.CENTER);
         setContentPane(wrapperPanel);
-        //painelPrincipal.add(painel);
         setVisible(true);
-        /*
-        JPanel painel = new JPanel();
-        painel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
-
-        Map<Brinquedos, Float> brinquedos = parque.getBrinquedos();
-        JTable table = new JTable();
-        DefaultTableModel tableModel = new DefaultTableModel();
-        tableModel.addColumn("Nome");
-        tableModel.addColumn("Valor");
-
-        for (Brinquedos brinquedo : brinquedos.keySet()) {
-            float value = brinquedos.get(brinquedo);
-            tableModel.addRow(new Object[]{brinquedo.getNome(), value});
-        }
-        table.setModel(tableModel);
-
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoFimCompra = new JButton("Comprar");
-        botaoFimCompra.setPreferredSize(buttonSize);
-        botaoVoltar.setPreferredSize(buttonSize);
-        JPanel painelBotoes = new JPanel();
-        painelBotoes.add(botaoVoltar);
-        painelBotoes.add(botaoFimCompra);
-
-        JLabel label = new JLabel("Selecione os brinquedos que você deseja:");
-
-        painelPrincipal.add(Box.createVerticalStrut(15));
-        painelPrincipal.add(label);
-        painelPrincipal.add(Box.createVerticalStrut(15));
-        painelPrincipal.add(new JScrollPane(table), BorderLayout.CENTER);
-        painelPrincipal.add(painelBotoes);
-        painelPrincipal.add(Box.createVerticalStrut(15));
-        painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
-        JPanel wrapperPanel = new JPanel(new BorderLayout());
-        wrapperPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
-        wrapperPanel.add(painelPrincipal, BorderLayout.CENTER);
-        setpainelPrincipal(wrapperPanel);
-        //painelPrincipal.add(painel);
-        setVisible(true); */
-
     }
     private Brinquedos findBrinquedoByNome(Map<Brinquedos, Float> brinquedos, String nome) {
         for (Brinquedos brinquedo : brinquedos.keySet()) {

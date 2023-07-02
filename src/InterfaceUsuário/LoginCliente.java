@@ -76,7 +76,6 @@ public class LoginCliente extends JFrame{
 
         botaoEntrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
                 String cpfDigitado = textCpf.getText();
                 String senhaDigitada = textSenha.getText();
 
@@ -85,8 +84,6 @@ public class LoginCliente extends JFrame{
                     setVisible(false);
                     OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
                     opcoesCliente.opcoes();
-                } else {
-                    JOptionPane.showMessageDialog(LoginCliente.this, "Login não identificado!");
                 }
             }
         });
