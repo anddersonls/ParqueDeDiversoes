@@ -2,6 +2,7 @@ package InterfaceUsuário;
 
 import parque.Brinquedos;
 import parque.ParqueDiversoes;
+import parque.Visitante;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,6 +10,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +28,7 @@ public class IngressoBrinquedo extends JFrame{
 
     public IngressoBrinquedo(ParqueDiversoes parque) {
         this.parque = parque;
-        this.buttonSize = new Dimension(400, 50);
+        this.buttonSize = new Dimension(100, 25);
         this.fontText = new Font("Arial", Font.PLAIN, 14);
         this.fontTitle = new Font("Arial", Font.PLAIN, 20);
         this.fontButton = new Font("Arial", Font.PLAIN, 15);
@@ -90,15 +94,10 @@ public class IngressoBrinquedo extends JFrame{
                         }
                     }
                 }
-
-                // Realize as ações necessárias com os brinquedos selecionados
-
-                String mensagem = "Compra finalizada!\n";
-                mensagem += "Valor total da compra: R$ " + valorTotal;
-                JOptionPane.showMessageDialog(painelPrincipal, mensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
-
-                setVisible(false);
-                OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
+                if(descontaValor(valorTotal)) {
+                     setVisible(false);
+                     OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
+                }
             }
         });
 
@@ -136,5 +135,30 @@ public class IngressoBrinquedo extends JFrame{
             }
         }
         return null;
+    }
+
+    public boolean descontaValor(float valor){
+            String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
+
+            try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+                String cpfArquivo = br.readLine();
+                long cpf = Long.parseLong(cpfArquivo);
+                ArrayList<Visitante> clientes = parque.getVisitantes();
+                for(Visitante visitante: clientes){
+                    if(cpf == visitante.getCpf()){
+                        if(visitante.descontarCredito(valor)){
+                            String mensagem = "Compra finalizada!\n";
+                            mensagem += "Valor total da compra: R$ " + valor;
+                            JOptionPane.showMessageDialog(painelPrincipal, mensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
+                            return true;
+                        }else{
+                            JOptionPane.showMessageDialog(painelPrincipal, "Voce nao possui credito suficiente!");
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar realiza a compra!");
+            }
+            return false;
     }
 }
