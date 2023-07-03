@@ -175,7 +175,7 @@ public class AdmCadastra extends JFrame{
                 if (nome.trim().isEmpty() || capacidade.trim().isEmpty()) {
                     JOptionPane.showMessageDialog(painelPrincipal, "Digite um valor válido.");
                 } else {
-                    if (verificarCadastroEstabelecimento(nome,capacidade,tipoEstabelecimento,cardapio)) {
+                    if (verificarCadastroEstabelecimento(nome,capacidade,tipoEstabelecimento,cardapio) && cardapio.isEmpty()==false) {
                         //cardapio.clear();
 
                         JOptionPane.showMessageDialog(painelPrincipal, "Cadastro Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
@@ -183,7 +183,12 @@ public class AdmCadastra extends JFrame{
                         OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
                     }
                     else {
-                        JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro");
+                        if(cardapio.isEmpty()){
+                            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Cardapio nao pode estar vazio.");
+
+                        }else {
+                            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro!");
+                        }
                     }
                 }
             }
@@ -214,7 +219,6 @@ public class AdmCadastra extends JFrame{
         panel.add(botaoCadastrar);
         painelPrincipal.add(panel);
 
-
         //pack();
         setVisible(true);
     }
@@ -224,7 +228,6 @@ public class AdmCadastra extends JFrame{
 
         try{
             int capacidade = Integer.parseInt((capacidadeDigitada));
-
 
             if (tipoEstabelecimento.equals("Restaurante")) {
                 Restaurante novoEstabelecimento = new Restaurante(capacidade,cardapio,nome);

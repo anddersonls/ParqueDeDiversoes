@@ -1,5 +1,6 @@
 package InterfaceUsuário;
 
+import parque.Atracoes;
 import parque.Brinquedos;
 import parque.ParqueDiversoes;
 import parque.Visitante;
@@ -14,6 +15,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +26,6 @@ public class IngressoBrinquedo extends JFrame{
     private Font fontButton;
     private Font fontTitle;
     private ParqueDiversoes parque;
-    private long cpf;
 
     public IngressoBrinquedo(ParqueDiversoes parque) {
         this.parque = parque;
@@ -52,7 +53,7 @@ public class IngressoBrinquedo extends JFrame{
         JPanel painel = new JPanel();
         painel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
 
-        Map<Brinquedos, Float> brinquedos = parque.getBrinquedos();
+        HashMap<Brinquedos, Float> brinquedos = parque.getBrinquedos();
         List<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
         //JTable table = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel();
@@ -76,27 +77,32 @@ public class IngressoBrinquedo extends JFrame{
         botaoFimCompra.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 float valorTotal = 0.0f;
-                List<Brinquedos> brinquedosSelecionados = new ArrayList<>();
+                ArrayList<Brinquedos> brinquedosSelecionados = new ArrayList<>();
 
                 for (JCheckBox checkBox : checkBoxes) {
                     if (checkBox.isSelected()) {
                         String texto = checkBox.getText();
-                        String[] partes = texto.split(" - Valor: ");
+                        String[] partes = texto.split("      - Valor: ");
+                        System.out.println(partes[0] + "a");
+                        System.out.println(partes[1]);
                         String nome = partes[0];
                         float valor = Float.parseFloat(partes[1]);
 
                         valorTotal += valor;
 
                         // Recupera o brinquedo associado ao checkbox selecionado
-                        Brinquedos brinquedo = findBrinquedoByNome(brinquedos, nome);
-                        if (brinquedo != null) {
-                            brinquedosSelecionados.add(brinquedo);
+                        for (Map.Entry<Brinquedos, Float> item : brinquedos.entrySet()) {
+                            Brinquedos objeto = item.getKey();
+                            if (objeto.getNome().equals(nome)) {
+                                brinquedosSelecionados.add(objeto);
+                            }
                         }
+                        System.out.println(brinquedosSelecionados);
                     }
-                }
-                if(descontaValor(valorTotal)) {
-                     setVisible(false);
-                     OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
+                    }
+                    if(descontaValor(valorTotal, brinquedosSelecionados)) {
+                        setVisible(false);
+                        OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
                 }
             }
         });
@@ -137,7 +143,7 @@ public class IngressoBrinquedo extends JFrame{
         return null;
     }
 
-    public boolean descontaValor(float valor){
+    public boolean descontaValor(float valor, ArrayList<Brinquedos> brinquedosSelecionados){
             String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
 
             try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
@@ -147,6 +153,9 @@ public class IngressoBrinquedo extends JFrame{
                 for(Visitante visitante: clientes){
                     if(cpf == visitante.getCpf()){
                         if(visitante.descontarCredito(valor)){
+                            for(Brinquedos brinquedo : brinquedosSelecionados){
+                                visitante.addNoHistorico(brinquedo, valor);
+                            }
                             String mensagem = "Compra finalizada!\n";
                             mensagem += "Valor total da compra: R$ " + valor;
                             JOptionPane.showMessageDialog(painelPrincipal, mensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);

@@ -1,9 +1,6 @@
 package InterfaceUsuário;
 
-import parque.Alimentacao;
-import parque.Brinquedos;
-import parque.ParqueDiversoes;
-import parque.Visitante;
+import parque.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -113,21 +110,6 @@ public class IngressoEstabelecimento extends JFrame{
         setVisible(true);
     }
 
-    public static class CustomListCellRenderer extends DefaultListCellRenderer {
-        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
-            if (isSelected) {
-                // Adicionando uma bolinha colorida ao lado do item selecionado
-                Color selectionColor = Color.GRAY; // Cor da bolinha (pode ser alterada)
-                renderer.setBackground(selectionColor);
-                renderer.setForeground(list.getForeground());
-            }
-
-            return renderer;
-        }
-    }
-
     public void telaCardapio(Alimentacao estabelecimento){
         JPanel painel = new JPanel();
         painel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
@@ -167,7 +149,7 @@ public class IngressoEstabelecimento extends JFrame{
                     for (String menu : cardapio.keySet()) {
                         if(menu.equals(valorCelula)){
                             float valor = cardapio.get(valorCelula);
-                            descontaValor(valor);
+                            descontaValor(valor, estabelecimento);
                             removeAllComponents();
                             telaEscolherEstabelecimento();
                         }
@@ -194,7 +176,7 @@ public class IngressoEstabelecimento extends JFrame{
         setVisible(true);
     }
 
-    public void descontaValor(float valor){
+    public void descontaValor(float valor, Alimentacao estabelecimento){
          String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
 
             try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
@@ -204,6 +186,7 @@ public class IngressoEstabelecimento extends JFrame{
                 for(Visitante visitante: clientes){
                     if(cpf == visitante.getCpf()){
                         if(visitante.descontarCredito(valor)){
+                            visitante.addNoHistorico(estabelecimento, valor);
                             JOptionPane.showMessageDialog(painelPrincipal, "Compra realizada com sucesso!");
                             break;
                         }else{

@@ -38,13 +38,13 @@ public class OpcoesCliente extends JFrame{
         JButton botaoBrinquedo = new JButton("Comprar Ingresso para Brinquedos");
         JButton botaoEstabelecimento = new JButton("Comprar Comida em Estabelecimentos");
         JButton botaoCredito = new JButton("Colocar Crédito");
+        JButton botaoRecibo = new JButton("Gerar Recibo");
         JButton botaoVoltar = new JButton("Voltar");
 
         botaoBrinquedo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 IngressoBrinquedo ingressoBrinquedo = new IngressoBrinquedo(parque);
-
             }
         });
         botaoEstabelecimento.addActionListener(new ActionListener() {
@@ -60,6 +60,12 @@ public class OpcoesCliente extends JFrame{
                 Credito credito = new Credito(parque);
             }
         });
+        botaoRecibo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                GerarRecibo recibo = new GerarRecibo(parque);
+            }
+        });
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
@@ -71,6 +77,7 @@ public class OpcoesCliente extends JFrame{
         panel.add(botaoBrinquedo);
         panel.add(botaoEstabelecimento);
         panel.add(botaoCredito);
+        panel.add(botaoRecibo);
         panel.add(new JLabel());
         panel.add(botaoVoltar);
 
