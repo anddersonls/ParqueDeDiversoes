@@ -94,7 +94,7 @@ public class LoginAdm extends JFrame {
         setVisible(true);
     }
     private boolean verificarLogin(String cpfDigitado, String senhaDigitada) {
-        String caminhoArquivo = "/home/joaovictor/Área de Trabalho/UFMA/3º Periodo/Linguagem de Programacao 2/LP2- TrabalhoFinal/Projeto/src/Arquivos/acessoAdm.txt";
+        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoAdm.txt";
 
         try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
             String cpfArquivo = br.readLine();

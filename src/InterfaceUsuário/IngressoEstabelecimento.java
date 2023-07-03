@@ -3,6 +3,7 @@ package InterfaceUsuário;
 import parque.Alimentacao;
 import parque.Brinquedos;
 import parque.ParqueDiversoes;
+import parque.Visitante;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -12,6 +13,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,14 +66,11 @@ public class IngressoEstabelecimento extends JFrame{
         tabela.setModel(tableModel);
 
         JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoEscolher = new JButton("Comprar");
         JButton botaoSelecionar = new JButton("Selecionar");
-        botaoEscolher.setPreferredSize(buttonSize);
         botaoVoltar.setPreferredSize(buttonSize);
         botaoSelecionar.setPreferredSize(buttonSize);
         JPanel painelBotoes = new JPanel();
         painelBotoes.add(botaoVoltar);
-        painelBotoes.add(botaoEscolher);
         painelBotoes.add(botaoSelecionar);
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -89,6 +91,8 @@ public class IngressoEstabelecimento extends JFrame{
                         }
 
                     }
+                }else{
+                    JOptionPane.showMessageDialog(painelPrincipal, "Selecione um item!");
                 }
             }
         });
@@ -107,129 +111,9 @@ public class IngressoEstabelecimento extends JFrame{
         wrapperPanel.add(painelPrincipal, BorderLayout.CENTER);
         setContentPane(wrapperPanel);
         setVisible(true);
-        /*
-        JLabel texto = new JLabel("Selecione um estabelecimento");
-        texto.setFont(fontTitle);
-
-        JButton botaoEscolher = new JButton("Escolher");
-        JButton botaoVoltar = new JButton("Voltar");
-        botaoEscolher.setPreferredSize(buttonSize);
-        botaoVoltar.setPreferredSize(buttonSize);
-
-        JPanel painelTexto = new JPanel();
-        JPanel painelEscolher = new JPanel();
-        JPanel painelVoltar = new JPanel();
-
-        painelTexto.add(texto);
-        painelEscolher.add(botaoEscolher);
-        painelVoltar.add(botaoVoltar);
-
-        painelTexto.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 25));
-        painelEscolher.setLayout(new FlowLayout(FlowLayout.CENTER));
-        painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        DefaultListModel<Alimentacao> listModel = new DefaultListModel<>();
-
-        for (Alimentacao estabelecimento : parque.getEstabelecimentos()) {
-            listModel.addElement(estabelecimento);
-        }
-
-        JList<Alimentacao> listaEstabelecimentos = new JList<>(listModel);
-        listaEstabelecimentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        listaEstabelecimentos.setCellRenderer(new DefaultListCellRenderer() {
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
-                                                          boolean isSelected, boolean cellHasFocus) {
-                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if (value instanceof Alimentacao) {
-                    Alimentacao estabelecimento = (Alimentacao) value;
-                    setText(estabelecimento.getNome());
-                }
-                return this;
-            }
-        });
-
-        JScrollPane scrollPane = new JScrollPane(listaEstabelecimentos);
-
-        botaoVoltar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
-            }
-        });
-
-
-        botaoEscolher.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Alimentacao estabelecimentoSelecionado = listaEstabelecimentos.getSelectedValue();
-                if (estabelecimentoSelecionado != null) {
-                    JOptionPane.showMessageDialog(painelPrincipal, "Estabelecimento escolhido!", "Escolha Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
-                    removeAllComponents();
-                    telaComprarComida(estabelecimentoSelecionado);
-                } else {
-                    JOptionPane.showMessageDialog(painelPrincipal, "Selecione um estabelecimento!", "Escolha Estabelecimento", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-        });
-
-        painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
-        painelPrincipal.add(painelTexto);
-        painelPrincipal.add(Box.createVerticalStrut(15));
-        painelPrincipal.add(scrollPane);
-        painelPrincipal.add(painelEscolher);
-        painelPrincipal.add(painelVoltar);
-
-        setVisible(true); */
     }
-    //Escolher comida
-    public void telaComprarComida(Alimentacao estabelecimentoSelecionado) {
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoFimCompra = new JButton("Comprar");
-        botaoFimCompra.setPreferredSize(buttonSize);
-        botaoVoltar.setPreferredSize(buttonSize);
 
-        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
-        painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
-
-        JPanel painelBotoes = new JPanel();
-        painelBotoes.add(botaoVoltar);
-        painelBotoes.add(botaoFimCompra);
-
-        JLabel label = new JLabel("Selecione os Estabelecimento que você deseja:");
-        JCheckBox checkBox1 = new JCheckBox("Comida 1");
-        JCheckBox checkBox2 = new JCheckBox("Comida 2");
-        JCheckBox checkBox3 = new JCheckBox("Comida 3");
-        double valorTotal=0.00;
-        String mensagem = "Compra finalizada!\n\n";
-        mensagem += "Valor total da compra: R$ " + valorTotal;
-
-        botaoVoltar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                telaEscolherEstabelecimento();
-            }
-        });
-
-        String finalMensagem = mensagem;
-        botaoFimCompra.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(painelPrincipal, finalMensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
-                setVisible(false);
-                OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
-            }
-        });
-
-        painel.add(label);
-        painel.add(checkBox1);
-        painel.add(checkBox2);
-        painel.add(checkBox3);
-
-        painel.add(painelBotoes);
-        painelPrincipal.add(painel);
-        painelPrincipal.add(Box.createVerticalStrut(15));
-        setVisible(true);
-    }
     public static class CustomListCellRenderer extends DefaultListCellRenderer {
-        @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             Component renderer = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 
@@ -262,16 +146,35 @@ public class IngressoEstabelecimento extends JFrame{
         tabela.setModel(tableModel);
 
         JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoEscolher = new JButton("Comprar");
-        botaoEscolher.setPreferredSize(buttonSize);
+        JButton botaoComprar = new JButton("Selecionar");
         botaoVoltar.setPreferredSize(buttonSize);
+        botaoComprar.setPreferredSize(buttonSize);
         JPanel painelBotoes = new JPanel();
         painelBotoes.add(botaoVoltar);
-        painelBotoes.add(botaoEscolher);
+        painelBotoes.add(botaoComprar);
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                removeAllComponents();
-                telaEscolherEstabelecimento();
+                setVisible(false);
+                OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
+            }
+        });
+        botaoComprar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int linhaSelecionada = tabela.getSelectedRow();
+                int colunaSelecionada = 0;
+                if (linhaSelecionada != -1) {
+                    Object valorCelula = tabela.getValueAt(linhaSelecionada, colunaSelecionada);
+                    for (String menu : cardapio.keySet()) {
+                        if(menu.equals(valorCelula)){
+                            float valor = cardapio.get(valorCelula);
+                            descontaValor(valor);
+                            removeAllComponents();
+                            telaEscolherEstabelecimento();
+                        }
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(painelPrincipal, "Selecione um item!");
+                }
             }
         });
 
@@ -290,4 +193,26 @@ public class IngressoEstabelecimento extends JFrame{
         setContentPane(wrapperPanel);
         setVisible(true);
     }
+
+    public void descontaValor(float valor){
+         String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
+
+            try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+                String cpfArquivo = br.readLine();
+                long cpf = Long.parseLong(cpfArquivo);
+                ArrayList<Visitante> clientes = parque.getVisitantes();
+                for(Visitante visitante: clientes){
+                    if(cpf == visitante.getCpf()){
+                        if(visitante.descontarCredito(valor)){
+                            JOptionPane.showMessageDialog(painelPrincipal, "Compra realizada com sucesso!");
+                            break;
+                        }else{
+                            JOptionPane.showMessageDialog(painelPrincipal, "Voce nao possui credito suficiente!");
+                        }
+                    }
+                }
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar realiza a compra!");
+            }
+        }
 }

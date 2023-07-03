@@ -6,7 +6,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 public class LoginCliente extends JFrame{
@@ -109,7 +111,7 @@ public class LoginCliente extends JFrame{
             if(parque.getVisitantes()!=null) {
                 for (Visitante visitante : parque.getVisitantes()) {
                     if (visitante.getCpf() == CPF && visitante.getSenha().equals(senhaDigitada)) {
-                        this.cpf = CPF;
+                        salvaCPF(cpfDigitado);
                         return true;
                     }
                 }
@@ -120,5 +122,14 @@ public class LoginCliente extends JFrame{
         }
 
         return false;
+    }
+
+    public void salvaCPF(String CPF){
+        String nomeArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
+            writer.write(CPF);
+        } catch (IOException e) {
+            System.out.println("Erro ao escrever no arquivo: " + e.getMessage());
+        }
     }
 }

@@ -32,7 +32,11 @@ public class Visitante extends Pessoa{
 		this.credito += deposito;
 	}
 	
-	public void descontarCredito() {
-		this.credito -= credito;
+	public boolean descontarCredito(float valor) {
+		if (credito - valor >= 0) {
+			this.credito -= valor;
+			return true;
+		}
+		return false;
 	}
 }

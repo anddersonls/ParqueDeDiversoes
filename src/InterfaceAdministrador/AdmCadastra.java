@@ -16,10 +16,8 @@ public class AdmCadastra extends JFrame{
     private Font fontTitle;
     private ParqueDiversoes parque;
 
-    private HashMap<String, Float> cardapio;
     public AdmCadastra(ParqueDiversoes parque) {
         this.parque = parque;
-        cardapio = new HashMap<>();
         this.buttonSize = new Dimension(100, 25);
         this.fontText = new Font("Arial", Font.PLAIN, 14);
         this.fontTitle = new Font("Arial", Font.PLAIN, 20);
@@ -121,13 +119,13 @@ public class AdmCadastra extends JFrame{
     public void telaCadastrarEstabelecimento() {
         JPanel panel = new JPanel(new GridLayout(8, 2, 10, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        HashMap<String, Float> cardapio = new HashMap<>();
 
         JLabel labelNome = new JLabel("Nome:");
         JLabel labelCapacidade = new JLabel("Capacidade:");
         JLabel labelMenu = new JLabel("Menu:");
         JLabel labelAlimento = new JLabel("Alimento:");
         JLabel labelValor = new JLabel("Valor:");
-
 
         JTextField campoNome = new JTextField(20);
         JTextField campoCapacidade = new JTextField(20);
@@ -178,8 +176,7 @@ public class AdmCadastra extends JFrame{
                     JOptionPane.showMessageDialog(painelPrincipal, "Digite um valor válido.");
                 } else {
                     if (verificarCadastroEstabelecimento(nome,capacidade,tipoEstabelecimento,cardapio)) {
-                        //Apos adicionar itens ao cardapio, limpar ele para quando for adicionar a outro estabelecimento
-                        cardapio.clear();
+                        //cardapio.clear();
 
                         JOptionPane.showMessageDialog(painelPrincipal, "Cadastro Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
                         setVisible(false);
@@ -227,6 +224,7 @@ public class AdmCadastra extends JFrame{
 
         try{
             int capacidade = Integer.parseInt((capacidadeDigitada));
+
 
             if (tipoEstabelecimento.equals("Restaurante")) {
                 Restaurante novoEstabelecimento = new Restaurante(capacidade,cardapio,nome);

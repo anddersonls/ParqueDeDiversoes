@@ -7,6 +7,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Credito extends JFrame{
     private JPanel painelPrincipal;
@@ -15,11 +19,10 @@ public class Credito extends JFrame{
     private Font fontButton;
     private Font fontTitle;
     private ParqueDiversoes parque;
-    private long cpf;
 
     public Credito(ParqueDiversoes parque){
         this.parque = parque;
-        this.buttonSize = new Dimension(400, 50);
+        this.buttonSize = new Dimension(100, 25);
         this.fontText = new Font("Arial", Font.PLAIN, 14);
         this.fontTitle = new Font("Arial", Font.PLAIN, 20);
         this.fontButton = new Font("Arial", Font.PLAIN, 15);
@@ -29,16 +32,9 @@ public class Credito extends JFrame{
 
         painelPrincipal = new JPanel();
         setContentPane(painelPrincipal);
-        painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
 
         setLocationRelativeTo(null);
         telaCredito();
-    }
-
-    public void removeAllComponents() {
-        painelPrincipal.removeAll();
-        painelPrincipal.revalidate();
-        painelPrincipal.repaint();
     }
     public void telaCredito() {
         JButton botaoVoltar = new JButton("Voltar");
@@ -68,9 +64,8 @@ public class Credito extends JFrame{
         botaoDepositar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 for(Visitante visitante : parque.getVisitantes()){
-                    if(visitante.getCpf() == cpf) {
+                    if(visitante.getCpf() == pegaCpf()) {
                         colocaCredito(visitante, textSenha.getText(), textValor.getText());
-                        System.out.println(visitante.getCredito());
                         break;
                     }
                 }
@@ -104,6 +99,20 @@ public class Credito extends JFrame{
         }else{
             JOptionPane.showMessageDialog(painelPrincipal, "Senha Inválida!", "Senha Incorreta", JOptionPane.INFORMATION_MESSAGE);
         }
+    }
+
+    public long pegaCpf() {
+        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            String cpfArquivo = br.readLine();
+            long cpf = Long.parseLong(cpfArquivo);
+            return cpf;
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar colocar credito!");
+        }
+
+        return -1;
     }
 
 }
