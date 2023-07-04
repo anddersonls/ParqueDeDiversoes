@@ -15,7 +15,7 @@ public class OpcoesAdm extends TelaBase {
     }
 
     public void telaOpcoes() {
-        String[] opcoes = {"Adicionar Atração", "Remover Atração", "Gerar Relatório", "Voltar"};
+        String[] opcoes = {"Adicionar Atração", "Remover Atração", "Gerar Relatório", ""};
         JButton[] opcoesBotoes = new JButton[opcoes.length];
 
         opcoesBotoes = layoutDeOpcoes(opcoes);
@@ -46,7 +46,7 @@ public class OpcoesAdm extends TelaBase {
     }
 
     public void opcoesDeCadastro() {
-        String[] opcoes = {"Cadastrar Brinquedo", "Cadastrar Estabelecimento", "Voltar"};
+        String[] opcoes = {"Cadastrar Brinquedo", "Cadastrar Estabelecimento", ""};
         JButton[] opcoesBotoes = new JButton[opcoes.length];
 
         opcoesBotoes = layoutDeOpcoes(opcoes);
@@ -73,7 +73,7 @@ public class OpcoesAdm extends TelaBase {
         });
     }
     public void opcoesRemover () {
-        String[] opcoes = {"Remover Brinquedo", "Remover Estabelecimento", "Voltar"};
+        String[] opcoes = {"Remover Brinquedo", "Remover Estabelecimento", ""};
         JButton[] opcoesBotoes = new JButton[opcoes.length];
 
         opcoesBotoes = layoutDeOpcoes(opcoes);
@@ -120,6 +120,7 @@ public class OpcoesAdm extends TelaBase {
 
         JPanel painelVoltar = new JPanel();
         JButton botaoVoltar = new JButton(opcoes[i]);
+        botaoVoltar.setIcon(voltarIconRed);
         opcoesBotao[i] = botaoVoltar;
         painelVoltar.add(botaoVoltar);
         painel.add(painelVoltar);

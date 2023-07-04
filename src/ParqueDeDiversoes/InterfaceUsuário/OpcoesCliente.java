@@ -22,7 +22,7 @@ public class OpcoesCliente extends TelaBase {
         JButton botaoEstabelecimento = new JButton("Comprar Comida em Estabelecimentos");
         JButton botaoCredito = new JButton("Colocar Crédito");
         JButton botaoRecibo = new JButton("Gerar Recibo");
-        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoVoltar = new JButton();
 
         botaoBrinquedo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -55,7 +55,7 @@ public class OpcoesCliente extends TelaBase {
                 LoginCliente loginCliente = new LoginCliente(parque);
             }
         });
-
+        botaoVoltar.setIcon(voltarIconRed);
         panel.add(new JLabel());
         panel.add(botaoBrinquedo);
         panel.add(botaoEstabelecimento);

@@ -19,7 +19,7 @@ public class LoginAdm extends TelaBase {
         telaLogin();
     }
     public void telaLogin() {
-        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoVoltar = new JButton();
         JButton botaoEntrar = new JButton("Entrar");
         botaoVoltar.setPreferredSize(buttonSize);
         botaoEntrar.setPreferredSize(buttonSize);
@@ -68,6 +68,7 @@ public class LoginAdm extends TelaBase {
                 }
             }
         });
+        botaoVoltar.setIcon(voltarIconRed);
 
         painelPrincipal.add(painel);
         setVisible(true);

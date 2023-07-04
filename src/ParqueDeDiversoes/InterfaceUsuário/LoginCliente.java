@@ -20,7 +20,7 @@ public class LoginCliente extends TelaBase {
         telaLogin();
     }
     public void telaLogin() {
-        JButton botaoVoltar = new JButton("Voltar");
+        JButton botaoVoltar = new JButton();
         JButton botaoEntrar = new JButton("Entrar");
         JButton botaoCadastrar = new JButton("Cadastrar");
         botaoVoltar.setPreferredSize(buttonSize);
@@ -71,7 +71,7 @@ public class LoginCliente extends TelaBase {
                 Cadastro cadastro = new Cadastro(parque);
             }
         });
-
+        botaoVoltar.setIcon(voltarIconRed);
         painel.add(Box.createVerticalStrut(30));
         painel.add(painelCpf);
         painel.add(painelSenha);

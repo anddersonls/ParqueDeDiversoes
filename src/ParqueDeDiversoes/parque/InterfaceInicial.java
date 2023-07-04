@@ -15,23 +15,23 @@ public class InterfaceInicial extends TelaBase {
         interfaceInicial();
     }
     public void interfaceInicial() {
-        JLabel label = new JLabel("  Bem-Vindo ao sistema do Democracy Park!");
+        JLabel label = new JLabel("     Seja Bem Vindo ao Sistema do PlayGround");
         JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         JPanel painelBotoes = new JPanel();
-        JButton adm_button = new JButton("Administrador");
-        JButton cliente_button = new JButton("Cliente");
-        adm_button.setPreferredSize(bigButton);
-        cliente_button.setPreferredSize(bigButton);
-        painelBotoes.add(adm_button);
-        painelBotoes.add(cliente_button);
-        adm_button.addActionListener(new ActionListener() {
+        JButton admButton = new JButton("Administrador");
+        JButton clienteButton = new JButton("Cliente");
+        admButton.setPreferredSize(bigButton);
+        clienteButton.setPreferredSize(bigButton);
+        painelBotoes.add(admButton);
+        painelBotoes.add(clienteButton);
+        admButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 LoginAdm admInterface = new LoginAdm(parque);
             }
         });
-        cliente_button.addActionListener(new ActionListener() {
+        clienteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 LoginCliente userInterface = new LoginCliente(parque);
@@ -41,11 +41,18 @@ public class InterfaceInicial extends TelaBase {
         painel.add(new JLabel());
         painel.add(label);
         painel.add(painelBotoes);
-        painelPrincipal.add(painel);
 
+        painelBotoes.setBackground(corDeFundo);
+        painel.setBackground(corDeFundo);
+        painelPrincipal.setBackground(corDeFundo);
+
+        clienteButton.setIcon(clienteIconRed);
+        admButton.setIcon(clienteIconRed);
+
+        painelPrincipal.add(painel);
         label.setFont(fontTitle);
-        adm_button.setFont(fontButton);
-        cliente_button.setFont(fontButton);
+        admButton.setFont(fontButton);
+        clienteButton.setFont(fontButton);
         setVisible(true);
     }
 }
