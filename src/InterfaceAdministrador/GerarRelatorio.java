@@ -31,12 +31,16 @@ public class GerarRelatorio extends JFrame{
         String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/recibo.txt";
 
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo, true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo));
             for(Visitante cliente: clientes) {
                 HashMap<Atracoes, Float> historico = cliente.getHistorico();
-                // Cria um BufferedWriter para escrever no arquivo
 
-                // Percorre o HashMap e escreve os dados no arquivo
+                writer.write("Cliente: " + cliente.getNome());
+                writer.newLine();
+                writer.write("CPF: " + cliente.getCpf());
+                writer.newLine();
+                writer.write("Atrações Visitados e Valor Gasto:");
+                writer.newLine();
                 for (Map.Entry<Atracoes, Float> entry : historico.entrySet()) {
                     String nome = entry.getKey().getNome();
                     float valor = entry.getValue();
@@ -44,9 +48,10 @@ public class GerarRelatorio extends JFrame{
                     System.out.println(linha);
                     writer.write(linha);
                     writer.newLine();
-                    writer.flush();
+
                 }
-                // Fecha o BufferedWriter
+                writer.newLine();
+                writer.flush();
             }
                 JOptionPane.showMessageDialog(painelPrincipal, "Relatório gerado!", "Recibo", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {

@@ -4,8 +4,6 @@ import parque.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +13,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class IngressoEstabelecimento extends JFrame{
     private JPanel painelPrincipal;
@@ -24,7 +21,6 @@ public class IngressoEstabelecimento extends JFrame{
     private Font fontButton;
     private Font fontTitle;
     private ParqueDiversoes parque;
-    private long cpf;
 
     public IngressoEstabelecimento(ParqueDiversoes parque) {
         this.parque = parque;
@@ -49,7 +45,6 @@ public class IngressoEstabelecimento extends JFrame{
         painelPrincipal.repaint();
     }
     public void telaEscolherEstabelecimento() {
-        final HashMap<String, Float>[] cardapio = new HashMap[]{new HashMap<>()};
         JTable tabela = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn("Nome");
@@ -108,9 +103,6 @@ public class IngressoEstabelecimento extends JFrame{
     }
 
     public void telaCardapio(Alimentacao estabelecimento){
-        JPanel painel = new JPanel();
-        painel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
-
         JTable tabela = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn("Comida");

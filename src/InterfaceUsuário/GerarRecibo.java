@@ -24,7 +24,7 @@ public class GerarRecibo extends JFrame{
     private ParqueDiversoes parque;
     public GerarRecibo(ParqueDiversoes parque) {
         this.parque = parque;
-        this.buttonSize = new Dimension(400, 50);
+        this.buttonSize = new Dimension(100, 25);
         this.fontText = new Font("Arial", Font.PLAIN, 14);
         this.fontTitle = new Font("Arial", Font.PLAIN, 20);
         this.fontButton = new Font("Arial", Font.PLAIN, 15);
@@ -69,9 +69,11 @@ public class GerarRecibo extends JFrame{
                 }
             });
             tabela.setModel(tableModel);
-
+            painelPrincipal.add(Box.createVerticalStrut(15));
             painelPrincipal.add(new JScrollPane(tabela), BorderLayout.CENTER);
+            painelPrincipal.add(Box.createVerticalStrut(15));
             painelPrincipal.add(painelBotao);
+            painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
             JPanel wrapperPanel = new JPanel(new BorderLayout());
             wrapperPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
             wrapperPanel.add(painelPrincipal, BorderLayout.CENTER);
