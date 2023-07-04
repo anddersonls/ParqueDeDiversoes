@@ -32,11 +32,8 @@ public class OpcoesAdm extends JFrame{
         telaOpcoes();
     }
 
-    public OpcoesAdm() {
-    }
-
     public void telaOpcoes() {
-        String[] opcoes = {"Adicionar Atração", "Remover Atração", "Voltar"};
+        String[] opcoes = {"Adicionar Atração", "Remover Atração", "Gerar Relatório", "Voltar"};
         JButton[] opcoesBotoes = new JButton[opcoes.length];
 
         opcoesBotoes = layoutDeOpcoes(opcoes);
@@ -54,6 +51,13 @@ public class OpcoesAdm extends JFrame{
             }
         });
         opcoesBotoes[2].addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               // removeAllComponents();
+                GerarRelatorio relatorio = new GerarRelatorio(parque);
+                //opcoesRemover();
+            }
+        });
+        opcoesBotoes[3].addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
                 LoginAdm loginAdm = new LoginAdm(parque);
@@ -133,7 +137,6 @@ public class OpcoesAdm extends JFrame{
             opcoesBotao[i] = botao;
             painel.add(botao);
         }
-        painel.add(new JLabel());
 
         JPanel painelVoltar = new JPanel();
         JButton botaoVoltar = new JButton(opcoes[i]);

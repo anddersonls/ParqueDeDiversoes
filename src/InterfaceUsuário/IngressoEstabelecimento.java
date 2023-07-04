@@ -49,9 +49,6 @@ public class IngressoEstabelecimento extends JFrame{
         painelPrincipal.repaint();
     }
     public void telaEscolherEstabelecimento() {
-        JPanel painel = new JPanel();
-        painel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
-
         final HashMap<String, Float>[] cardapio = new HashMap[]{new HashMap<>()};
         JTable tabela = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel();

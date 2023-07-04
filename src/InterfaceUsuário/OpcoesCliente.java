@@ -1,5 +1,6 @@
 package InterfaceUsuário;
 
+import InterfaceAdministrador.GerarRelatorio;
 import parque.ParqueDiversoes;
 
 import javax.swing.*;

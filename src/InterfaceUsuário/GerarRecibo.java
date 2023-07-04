@@ -5,10 +5,12 @@ import parque.ParqueDiversoes;
 import parque.Visitante;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,32 +40,45 @@ public class GerarRecibo extends JFrame{
     }
 
     public void telaGeraRecibo() {
-        ArrayList<Visitante> clientes = parque.getVisitantes();
+        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
 
-        // Define o caminho do arquivo de saída
-        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/recibo.txt";
-
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo, true));
-            for(Visitante cliente: clientes) {
-                HashMap<Atracoes, Float> historico = cliente.getHistorico();
-                // Cria um BufferedWriter para escrever no arquivo
-
-                // Percorre o HashMap e escreve os dados no arquivo
-                for (Map.Entry<Atracoes, Float> entry : historico.entrySet()) {
-                    String nome = entry.getKey().getNome();
-                    float valor = entry.getValue();
-                    String linha = nome + ": " + valor;
-                    System.out.println(linha);
-                    writer.write(linha);
-                    writer.newLine();
-                    writer.flush();
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            JTable tabela = new JTable();
+            DefaultTableModel tableModel = new DefaultTableModel();
+            tableModel.addColumn("Nome");
+            tableModel.addColumn("Valor Gasto");
+            String cpfArquivo = br.readLine();
+            long cpf = Long.parseLong(cpfArquivo);
+            ArrayList<Visitante> clientes = parque.getVisitantes();
+            for(Visitante visitante: clientes){
+                if(cpf == visitante.getCpf()){
+                    HashMap<Atracoes, Float> historico = visitante.getHistorico();
+                    for (Map.Entry<Atracoes, Float> entry : historico.entrySet()) {
+                        tableModel.addRow(new Object[]{entry.getKey().getNome(), entry.getValue()});
+                    }
                 }
-                // Fecha o BufferedWriter
             }
-                JOptionPane.showMessageDialog(painelPrincipal, "Relatório gerado!", "Recibo", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(painelPrincipal, "Não foi possível gerar o recibo!", "Recibo", JOptionPane.INFORMATION_MESSAGE);
-            }
+            JButton botaoVoltar = new JButton("Voltar");
+            JPanel painelBotao = new JPanel();
+            painelBotao.add(botaoVoltar);
+            botaoVoltar.setPreferredSize(buttonSize);
+            botaoVoltar.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setVisible(false);
+                    OpcoesCliente opcao = new OpcoesCliente(parque);
+                }
+            });
+            tabela.setModel(tableModel);
+
+            painelPrincipal.add(new JScrollPane(tabela), BorderLayout.CENTER);
+            painelPrincipal.add(painelBotao);
+            JPanel wrapperPanel = new JPanel(new BorderLayout());
+            wrapperPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+            wrapperPanel.add(painelPrincipal, BorderLayout.CENTER);
+            setContentPane(wrapperPanel);
+            setVisible(true);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar gerar o recibo!");
+        }
     }
 }
