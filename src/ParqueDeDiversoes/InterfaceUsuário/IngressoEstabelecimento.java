@@ -18,6 +18,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class IngressoEstabelecimento extends TelaBase {
     public IngressoEstabelecimento(ParqueDiversoes parque) {
@@ -60,12 +61,13 @@ public class IngressoEstabelecimento extends TelaBase {
                 if (linhaSelecionada != -1) {
                     Object valorCelula = tabela.getValueAt(linhaSelecionada, colunaSelecionada);
                     for (Estabelecimento estabelecimento : parque.getEstabelecimentos()) {
-                        if(estabelecimento.getNome().equals(valorCelula)){
-                            removeAllComponents();
-                            telaCardapio(estabelecimento);
+                        if (estabelecimento.getNome().equals(valorCelula)) {
+                            if (verificaRestricao(estabelecimento)) {
+                                removeAllComponents();
+                                telaCardapio(estabelecimento);
+                            }
                         }
-
-                    }
+                        }
                 }else{
                     JOptionPane.showMessageDialog(painelPrincipal, "Selecione um item!");
                 }
@@ -151,38 +153,66 @@ public class IngressoEstabelecimento extends TelaBase {
         setVisible(true);
     }
 
-    public void descontaValor(float valor, Estabelecimento estabelecimento){
+    public long pegaCPF(){
         String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoCliente.txt";
 
-            try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
-                String cpfArquivo = br.readLine();
-                long cpf = Long.parseLong(cpfArquivo);
-                ArrayList<Cliente> clientes = parque.getVisitantes();
-                for(Cliente cliente : clientes){
-                    if(cpf == cliente.getCpf()){
-                        //criando dependencia - so pode comprar comida em estabelecimentos se ja tiver visitado brinquedos
-                        boolean possuiBrinquedo = false;
-                        for (Atracoes atracao : cliente.getHistorico().keySet()) {
-                            if (atracao instanceof Brinquedos) {
-                                possuiBrinquedo = true;
-                                break;
-                            }
-                        }
-                        if (possuiBrinquedo) {
-                            if(cliente.descontarCredito(valor)){
-                                cliente.addNoHistorico(estabelecimento, valor);
-                                JOptionPane.showMessageDialog(painelPrincipal, "Compra realizada com sucesso!");
-                                break;
-                            }else{
-                                JOptionPane.showMessageDialog(painelPrincipal, "Voce não possui credito suficiente! Voce tem R$ "+ cliente.getCredito());
-                            }
-                        }else {
-                            JOptionPane.showMessageDialog(painelPrincipal, "Falha na compra! Você ainda não frequentou brinquedos!");
-                        }
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            String cpfArquivo = br.readLine();
+            long cpf = Long.parseLong(cpfArquivo);
+            return cpf;
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(painelPrincipal, "Falha no acesso do cliente!");
+        }
+        return -1;
+    }
+
+    public void descontaValor(float valor, Estabelecimento estabelecimento){
+        long cpf = pegaCPF();
+        ArrayList<Cliente> clientes = parque.getVisitantes();
+        for(Cliente cliente : clientes){
+            if(cpf == cliente.getCpf()){
+                //criando dependencia - so pode comprar comida em estabelecimentos se ja tiver visitado brinquedos
+                boolean possuiBrinquedo = false;
+                for (Atracoes atracao : cliente.getHistorico().keySet()) {
+                    if (atracao instanceof Brinquedos) {
+                        possuiBrinquedo = true;
+                        break;
                     }
                 }
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar realizar a compra!");
+                if (possuiBrinquedo) {
+                    if(cliente.descontarCredito(valor)){
+                        cliente.addNoHistorico(estabelecimento, valor);
+                        JOptionPane.showMessageDialog(painelPrincipal, "Compra realizada com sucesso!");
+                        break;
+                    }else{
+                        JOptionPane.showMessageDialog(painelPrincipal, "Voce não possui credito suficiente! Voce tem R$ "+ cliente.getCredito());
+                    }
+                }else {
+                    JOptionPane.showMessageDialog(painelPrincipal, "Falha na compra! Você ainda não frequentou brinquedos!");
+                }
             }
         }
+    }
+
+    public boolean verificaRestricao(Estabelecimento estabelecimento){
+        long cpf = pegaCPF();
+        String nomeEstabelecimento = estabelecimento.getRestricao();
+        ArrayList<Cliente> clientes = parque.getVisitantes();
+        for(Cliente cliente : clientes) {
+            if (cpf == cliente.getCpf()) {
+                if(nomeEstabelecimento.equals("Sem restrição")){
+                    return true;
+                }
+                for (Map.Entry<Atracoes, Float> item : cliente.getHistorico().entrySet()) {
+                    Atracoes objeto = item.getKey();
+                    if (objeto.getNome().equals(nomeEstabelecimento)) {
+                        return true;
+                    }
+                }
+                }
+            }
+
+        JOptionPane.showMessageDialog(painelPrincipal, "Restrição não atendida: " + nomeEstabelecimento, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
+        return false;
+    }
 }

@@ -4,10 +4,8 @@ import java.util.HashMap;
 
 public abstract class Estabelecimento extends Atracoes implements InterfaceAlimentacao {
 	private HashMap<String, Float> cardapio;
-
-	
-	public Estabelecimento(int capacidade, HashMap<String, Float> cardapio, String nome){
-		super(capacidade, nome);
+	public Estabelecimento(int capacidade, HashMap<String, Float> cardapio, String nome, String restricao){
+		super(capacidade, nome, restricao);
 		this.cardapio = cardapio;
 	}
 
