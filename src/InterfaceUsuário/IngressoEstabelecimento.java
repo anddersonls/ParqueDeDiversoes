@@ -137,6 +137,8 @@ public class IngressoEstabelecimento extends JFrame{
                     Object valorCelula = tabela.getValueAt(linhaSelecionada, colunaSelecionada);
                     for (String menu : cardapio.keySet()) {
                         if(menu.equals(valorCelula)){
+
+
                             float valor = cardapio.get(valorCelula);
                             descontaValor(valor, estabelecimento);
                             removeAllComponents();
@@ -166,7 +168,7 @@ public class IngressoEstabelecimento extends JFrame{
     }
 
     public void descontaValor(float valor, Alimentacao estabelecimento){
-         String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
+         String caminhoArquivo = "/home/joaovictor/Área de Trabalho/UFMA/3º Periodo/Linguagem de Programacao 2/LP2- TrabalhoFinal/Projeto/src/Arquivos/acessoCliente.txt";
 
             try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
                 String cpfArquivo = br.readLine();
@@ -174,17 +176,29 @@ public class IngressoEstabelecimento extends JFrame{
                 ArrayList<Visitante> clientes = parque.getVisitantes();
                 for(Visitante visitante: clientes){
                     if(cpf == visitante.getCpf()){
-                        if(visitante.descontarCredito(valor)){
-                            visitante.addNoHistorico(estabelecimento, valor);
-                            JOptionPane.showMessageDialog(painelPrincipal, "Compra realizada com sucesso!");
-                            break;
-                        }else{
-                            JOptionPane.showMessageDialog(painelPrincipal, "Voce nao possui credito suficiente!");
+                        //criando dependencia - so pode comprar comida em estabelecimentos se ja tiver visitado brinquedos
+                        boolean possuiBrinquedo = false;
+                        for (Atracoes atracao : visitante.getHistorico().keySet()) {
+                            if (atracao instanceof Brinquedos) {
+                                possuiBrinquedo = true;
+                                break;
+                            }
+                        }
+                        if (possuiBrinquedo) {
+                            if(visitante.descontarCredito(valor)){
+                                visitante.addNoHistorico(estabelecimento, valor);
+                                JOptionPane.showMessageDialog(painelPrincipal, "Compra realizada com sucesso!");
+                                break;
+                            }else{
+                                JOptionPane.showMessageDialog(painelPrincipal, "Voce não possui credito suficiente! Voce tem R$ "+visitante.getCredito());
+                            }
+                        }else {
+                            JOptionPane.showMessageDialog(painelPrincipal, "Falha na compra! Você ainda não frequentou brinquedos!");
                         }
                     }
                 }
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar realiza a compra!");
+                JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar realizar a compra!");
             }
         }
 }

@@ -125,7 +125,7 @@ public class LoginCliente extends JFrame{
     }
 
     public void salvaCPF(String CPF){
-        String nomeArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
+        String nomeArquivo = "/home/joaovictor/Área de Trabalho/UFMA/3º Periodo/Linguagem de Programacao 2/LP2- TrabalhoFinal/Projeto/src/Arquivos/acessoCliente.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
             writer.write(CPF);
         } catch (IOException e) {

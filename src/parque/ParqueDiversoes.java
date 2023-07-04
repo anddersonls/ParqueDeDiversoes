@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Map;
 
+
 public class ParqueDiversoes {
 	private HashMap<Brinquedos, Float> brinquedos;
 	private ArrayList<Alimentacao> estabelecimentos;
@@ -13,6 +14,7 @@ public class ParqueDiversoes {
 		brinquedos = new HashMap<>();
 		estabelecimentos = new ArrayList<>();
 		visitantes = new ArrayList<>();
+
 	}
 
 	public float getValorBrinquedo(Brinquedos brinquedo){

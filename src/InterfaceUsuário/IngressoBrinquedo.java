@@ -144,7 +144,7 @@ public class IngressoBrinquedo extends JFrame{
     }
 
     public boolean descontaValor(float valor, ArrayList<Brinquedos> brinquedosSelecionados){
-            String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/acessoCliente.txt";
+            String caminhoArquivo = "/home/joaovictor/Área de Trabalho/UFMA/3º Periodo/Linguagem de Programacao 2/LP2- TrabalhoFinal/Projeto/src/Arquivos/acessoCliente.txt";
 
             try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
                 String cpfArquivo = br.readLine();
@@ -156,17 +156,17 @@ public class IngressoBrinquedo extends JFrame{
                             for(Brinquedos brinquedo : brinquedosSelecionados){
                                 visitante.addNoHistorico(brinquedo, valor);
                             }
-                            String mensagem = "Compra finalizada!\n";
-                            mensagem += "Valor total da compra: R$ " + valor;
-                            JOptionPane.showMessageDialog(painelPrincipal, mensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
+                                String mensagem = "Compra finalizada!\n";
+                                mensagem += "Valor total da compra: R$ " + valor;
+                                JOptionPane.showMessageDialog(painelPrincipal, mensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
                             return true;
                         }else{
-                            JOptionPane.showMessageDialog(painelPrincipal, "Voce nao possui credito suficiente!");
+                            JOptionPane.showMessageDialog(painelPrincipal, "Voce nao possui credito suficiente! Voce tem R$ "+visitante.getCredito());
                         }
                     }
                 }
             } catch (IOException e) {
-                JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar realiza a compra!");
+                JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar realizar a compra!");
             }
             return false;
     }

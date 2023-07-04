@@ -28,7 +28,7 @@ public class GerarRelatorio extends JFrame{
         ArrayList<Visitante> clientes = parque.getVisitantes();
 
         // Define o caminho do arquivo de saída
-        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/Arquivos/recibo.txt";
+        String caminhoArquivo = "/home/joaovictor/Área de Trabalho/UFMA/3º Periodo/Linguagem de Programacao 2/LP2- TrabalhoFinal/Projeto/src/Arquivos/recibo.txt";
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo));
