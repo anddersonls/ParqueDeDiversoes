@@ -2,7 +2,7 @@ package ParqueDeDiversoes.InterfaceUsuário;
 
 import ParqueDeDiversoes.TelaBase;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
-import ParqueDeDiversoes.parque.Visitante;
+import ParqueDeDiversoes.parque.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,9 +44,9 @@ public class Credito extends TelaBase {
 
         botaoDepositar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                for(Visitante visitante : parque.getVisitantes()){
-                    if(visitante.getCpf() == pegaCpf()) {
-                        colocaCredito(visitante, textSenha.getText(), textValor.getText());
+                for(Cliente cliente : parque.getVisitantes()){
+                    if(cliente.getCpf() == pegaCpf()) {
+                        colocaCredito(cliente, textSenha.getText(), textValor.getText());
                         break;
                     }
                 }
@@ -64,7 +64,7 @@ public class Credito extends TelaBase {
         setVisible(true);
     }
 
-    public void colocaCredito(Visitante cliente, String senhaDigitada, String valorDigitado){
+    public void colocaCredito(Cliente cliente, String senhaDigitada, String valorDigitado){
         String senha = "";
         senha = cliente.getSenha();
         if(senhaDigitada.equals(senha)) {

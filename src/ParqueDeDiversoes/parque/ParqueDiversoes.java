@@ -6,13 +6,13 @@ import java.util.ArrayList;
 
 public class ParqueDiversoes {
 	private HashMap<Brinquedos, Float> brinquedos;
-	private ArrayList<Alimentacao> estabelecimentos;
-	private ArrayList<Visitante> visitantes;
+	private ArrayList<Estabelecimento> estabelecimentos;
+	private ArrayList<Cliente> clientes;
 
 	public ParqueDiversoes(){
 		brinquedos = new HashMap<>();
 		estabelecimentos = new ArrayList<>();
-		visitantes = new ArrayList<>();
+		clientes = new ArrayList<>();
 
 	}
 
@@ -24,17 +24,17 @@ public class ParqueDiversoes {
 		brinquedos.put(brinquedo, valor);
 	}
 	
-	public void addEstabelecimento(Alimentacao estabelecimento) {
+	public void addEstabelecimento(Estabelecimento estabelecimento) {
 		estabelecimentos.add(estabelecimento);
 	}
-	public ArrayList<Alimentacao> getEstabelecimentos() {
+	public ArrayList<Estabelecimento> getEstabelecimentos() {
 		return estabelecimentos;
 	}
-	public void addVisitante(Visitante visitante) {
-		visitantes.add(visitante);
+	public void addVisitante(Cliente cliente) {
+		clientes.add(cliente);
 	}
-	public ArrayList<Visitante> getVisitantes() {
-		return visitantes;
+	public ArrayList<Cliente> getVisitantes() {
+		return clientes;
 	}
 	public HashMap<Brinquedos, Float> getBrinquedos() {
 		return brinquedos;

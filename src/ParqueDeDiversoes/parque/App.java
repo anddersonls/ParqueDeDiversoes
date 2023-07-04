@@ -8,8 +8,8 @@ public class App {
     public static void main(String[] args) {
         // Criar uma instância da interface gráfica
         ParqueDiversoes parque = new ParqueDiversoes();
-        Visitante cliente = new Visitante("anderson", 123L, 10, 1.72F, "123", 100.0f);
-        Brinquedos brinquedo1 = new Brinquedos(10, 3, 4, "roda");
+        Cliente cliente = new Cliente("anderson", 123L, 10, 3f, "123", 100.0f);
+        Brinquedos brinquedo1 = new Brinquedos(10, 3f, 4, "roda");
         Brinquedos brinquedo2 = new Brinquedos(34, 6.12f, 4, "aaaaa");
         HashMap<String, Float> cardapio1 = new HashMap<>();
         cardapio1.put("arroz", 93F);

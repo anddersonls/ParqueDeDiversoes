@@ -4,7 +4,7 @@ import ParqueDeDiversoes.TelaBase;
 import ParqueDeDiversoes.parque.Atracoes;
 import ParqueDeDiversoes.parque.Brinquedos;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
-import ParqueDeDiversoes.parque.Visitante;
+import ParqueDeDiversoes.parque.Cliente;
 
 import javax.swing.*;
 import java.io.BufferedWriter;
@@ -22,14 +22,14 @@ public class GerarRelatorio extends TelaBase {
     }
 
     public void telaGeraRecibo() {
-        ArrayList<Visitante> clientes = parque.getVisitantes();
+        ArrayList<Cliente> clientes = parque.getVisitantes();
 
         // Define o caminho do arquivo de saída
         String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/recibo.txt";
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo));
-            for(Visitante cliente: clientes) {
+            for(Cliente cliente: clientes) {
                 HashMap<Atracoes, Float> historico = cliente.getHistorico();
 
                 writer.write("Cliente: " + cliente.getNome());

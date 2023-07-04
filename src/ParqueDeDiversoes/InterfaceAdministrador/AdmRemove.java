@@ -1,7 +1,7 @@
 package ParqueDeDiversoes.InterfaceAdministrador;
 
 import ParqueDeDiversoes.TelaBase;
-import ParqueDeDiversoes.parque.Alimentacao;
+import ParqueDeDiversoes.parque.Estabelecimento;
 import ParqueDeDiversoes.parque.Brinquedos;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
 
@@ -41,7 +41,7 @@ public class AdmRemove extends TelaBase {
         painelVoltar.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         //adicionando na lista o nome dos estabelecimentos
-        ArrayList<Alimentacao> arrayEstabelecimentos = new ArrayList<>();
+        ArrayList<Estabelecimento> arrayEstabelecimentos = new ArrayList<>();
         arrayEstabelecimentos = parque.getEstabelecimentos();
 
         String[] estabelecimentos = new String[arrayEstabelecimentos.size()];
@@ -63,7 +63,7 @@ public class AdmRemove extends TelaBase {
             }
         });
 
-        ArrayList<Alimentacao> finalArrayEstabelecimentos = arrayEstabelecimentos;
+        ArrayList<Estabelecimento> finalArrayEstabelecimentos = arrayEstabelecimentos;
         botaoRemover.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String selectedItem = listaEstabelecimentos.getSelectedValue();
@@ -190,7 +190,7 @@ public class AdmRemove extends TelaBase {
             return renderer;
         }
     }
-    public boolean verificarERemoverEstabelecimento(ArrayList<Alimentacao> estabelecimentos,String selectedItem) {
+    public boolean verificarERemoverEstabelecimento(ArrayList<Estabelecimento> estabelecimentos, String selectedItem) {
         try {
             for (int i=0;i<estabelecimentos.size();i++) {
                 if (Objects.equals(estabelecimentos.get(i).getNome(), selectedItem)) {

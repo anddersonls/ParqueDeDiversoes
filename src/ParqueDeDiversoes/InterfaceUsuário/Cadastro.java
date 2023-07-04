@@ -2,7 +2,7 @@ package ParqueDeDiversoes.InterfaceUsuário;
 
 import ParqueDeDiversoes.TelaBase;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
-import ParqueDeDiversoes.parque.Visitante;
+import ParqueDeDiversoes.parque.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,8 +88,8 @@ public class Cadastro extends TelaBase {
             float altura = Float.parseFloat(alturaDigitada);
             int idade = Integer.parseInt((idadeDigitada));
 
-            Visitante novoVisitante = new Visitante(nome, CPF, idade, altura, senha, 0.0F);
-            parque.addVisitante(novoVisitante);
+            Cliente novoCliente = new Cliente(nome, CPF, idade, altura, senha, 0.0F);
+            parque.addVisitante(novoCliente);
             return true;
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Valor não numérico digitado em CPF, Altura ou Idade");

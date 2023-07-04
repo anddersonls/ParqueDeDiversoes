@@ -2,10 +2,10 @@ package ParqueDeDiversoes.InterfaceUsuário;
 
 import ParqueDeDiversoes.TelaBase;
 import ParqueDeDiversoes.parque.Atracoes;
-import ParqueDeDiversoes.parque.Alimentacao;
+import ParqueDeDiversoes.parque.Estabelecimento;
 import ParqueDeDiversoes.parque.Brinquedos;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
-import ParqueDeDiversoes.parque.Visitante;
+import ParqueDeDiversoes.parque.Cliente;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -35,7 +35,7 @@ public class IngressoEstabelecimento extends TelaBase {
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn("Nome");
 
-        for (Alimentacao estabelecimento : parque.getEstabelecimentos()) {
+        for (Estabelecimento estabelecimento : parque.getEstabelecimentos()) {
             tableModel.addRow(new Object[]{estabelecimento.getNome()});
         }
         tabela.setModel(tableModel);
@@ -59,7 +59,7 @@ public class IngressoEstabelecimento extends TelaBase {
                 int colunaSelecionada = 0;
                 if (linhaSelecionada != -1) {
                     Object valorCelula = tabela.getValueAt(linhaSelecionada, colunaSelecionada);
-                    for (Alimentacao estabelecimento : parque.getEstabelecimentos()) {
+                    for (Estabelecimento estabelecimento : parque.getEstabelecimentos()) {
                         if(estabelecimento.getNome().equals(valorCelula)){
                             removeAllComponents();
                             telaCardapio(estabelecimento);
@@ -88,7 +88,7 @@ public class IngressoEstabelecimento extends TelaBase {
         setVisible(true);
     }
 
-    public void telaCardapio(Alimentacao estabelecimento){
+    public void telaCardapio(Estabelecimento estabelecimento){
         JTable tabela = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel();
         tableModel.addColumn("Comida");
@@ -123,8 +123,6 @@ public class IngressoEstabelecimento extends TelaBase {
                     Object valorCelula = tabela.getValueAt(linhaSelecionada, colunaSelecionada);
                     for (String menu : cardapio.keySet()) {
                         if(menu.equals(valorCelula)){
-
-
                             float valor = cardapio.get(valorCelula);
                             descontaValor(valor, estabelecimento);
                             removeAllComponents();
@@ -153,30 +151,30 @@ public class IngressoEstabelecimento extends TelaBase {
         setVisible(true);
     }
 
-    public void descontaValor(float valor, Alimentacao estabelecimento){
+    public void descontaValor(float valor, Estabelecimento estabelecimento){
         String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoCliente.txt";
 
             try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
                 String cpfArquivo = br.readLine();
                 long cpf = Long.parseLong(cpfArquivo);
-                ArrayList<Visitante> clientes = parque.getVisitantes();
-                for(Visitante visitante: clientes){
-                    if(cpf == visitante.getCpf()){
+                ArrayList<Cliente> clientes = parque.getVisitantes();
+                for(Cliente cliente : clientes){
+                    if(cpf == cliente.getCpf()){
                         //criando dependencia - so pode comprar comida em estabelecimentos se ja tiver visitado brinquedos
                         boolean possuiBrinquedo = false;
-                        for (Atracoes atracao : visitante.getHistorico().keySet()) {
+                        for (Atracoes atracao : cliente.getHistorico().keySet()) {
                             if (atracao instanceof Brinquedos) {
                                 possuiBrinquedo = true;
                                 break;
                             }
                         }
                         if (possuiBrinquedo) {
-                            if(visitante.descontarCredito(valor)){
-                                visitante.addNoHistorico(estabelecimento, valor);
+                            if(cliente.descontarCredito(valor)){
+                                cliente.addNoHistorico(estabelecimento, valor);
                                 JOptionPane.showMessageDialog(painelPrincipal, "Compra realizada com sucesso!");
                                 break;
                             }else{
-                                JOptionPane.showMessageDialog(painelPrincipal, "Voce não possui credito suficiente! Voce tem R$ "+visitante.getCredito());
+                                JOptionPane.showMessageDialog(painelPrincipal, "Voce não possui credito suficiente! Voce tem R$ "+ cliente.getCredito());
                             }
                         }else {
                             JOptionPane.showMessageDialog(painelPrincipal, "Falha na compra! Você ainda não frequentou brinquedos!");

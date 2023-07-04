@@ -2,11 +2,11 @@ package ParqueDeDiversoes.parque;
 
 import java.util.HashMap;
 
-public abstract class Alimentacao extends Atracoes implements InterfaceAlimentacao {
+public abstract class Estabelecimento extends Atracoes implements InterfaceAlimentacao {
 	private HashMap<String, Float> cardapio;
 
 	
-	public Alimentacao(int capacidade, HashMap<String, Float> cardapio, String nome){
+	public Estabelecimento(int capacidade, HashMap<String, Float> cardapio, String nome){
 		super(capacidade, nome);
 		this.cardapio = cardapio;
 	}

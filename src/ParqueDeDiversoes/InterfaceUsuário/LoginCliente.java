@@ -3,7 +3,7 @@ package ParqueDeDiversoes.InterfaceUsuário;
 import ParqueDeDiversoes.TelaBase;
 import ParqueDeDiversoes.parque.InterfaceInicial;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
-import ParqueDeDiversoes.parque.Visitante;
+import ParqueDeDiversoes.parque.Cliente;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,7 +62,6 @@ public class LoginCliente extends TelaBase {
                     JOptionPane.showMessageDialog(LoginCliente.this, "Login bem-sucedido!");
                     setVisible(false);
                     OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
-                    opcoesCliente.opcoes();
                 }
             }
         });
@@ -85,8 +84,8 @@ public class LoginCliente extends TelaBase {
         try{
             long CPF = Long.parseLong(cpfDigitado);
             if(parque.getVisitantes()!=null) {
-                for (Visitante visitante : parque.getVisitantes()) {
-                    if (visitante.getCpf() == CPF && visitante.getSenha().equals(senhaDigitada)) {
+                for (Cliente cliente : parque.getVisitantes()) {
+                    if (cliente.getCpf() == CPF && cliente.getSenha().equals(senhaDigitada)) {
                         salvaCPF(cpfDigitado);
                         return true;
                     }
@@ -101,7 +100,7 @@ public class LoginCliente extends TelaBase {
     }
 
     public void salvaCPF(String CPF){
-        String nomeArquivo = "/home/joaovictor/Área de Trabalho/UFMA/3º Periodo/Linguagem de Programacao 2/LP2- TrabalhoFinal/Projeto/src/Arquivos/acessoCliente.txt";
+        String nomeArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoCliente.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
             writer.write(CPF);
         } catch (IOException e) {

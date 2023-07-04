@@ -3,7 +3,7 @@ package ParqueDeDiversoes.InterfaceUsuário;
 import ParqueDeDiversoes.TelaBase;
 import ParqueDeDiversoes.parque.Brinquedos;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
-import ParqueDeDiversoes.parque.Visitante;
+import ParqueDeDiversoes.parque.Cliente;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -75,12 +75,13 @@ public class IngressoBrinquedo extends TelaBase {
                                 brinquedosSelecionados.add(objeto);
                             }
                         }
-                        System.out.println(brinquedosSelecionados);
                     }
-                    }
-                    if(descontaValor(valorTotal, brinquedosSelecionados)) {
+                }
+                if(verificaIdadeEAlturaa(brinquedosSelecionados)) {
+                    if (descontaValor(valorTotal, brinquedosSelecionados)) {
                         setVisible(false);
                         OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
+                    }
                 }
             }
         });
@@ -119,19 +120,19 @@ public class IngressoBrinquedo extends TelaBase {
             try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
                 String cpfArquivo = br.readLine();
                 long cpf = Long.parseLong(cpfArquivo);
-                ArrayList<Visitante> clientes = parque.getVisitantes();
-                for(Visitante visitante: clientes){
-                    if(cpf == visitante.getCpf()){
-                        if(visitante.descontarCredito(valor)){
+                ArrayList<Cliente> clientes = parque.getVisitantes();
+                for(Cliente cliente : clientes){
+                    if(cpf == cliente.getCpf()){
+                        if(cliente.descontarCredito(valor)){
                             for(Brinquedos brinquedo : brinquedosSelecionados){
-                                visitante.addNoHistorico(brinquedo, valor);
+                                cliente.addNoHistorico(brinquedo, valor);
                             }
                                 String mensagem = "Compra finalizada!\n";
                                 mensagem += "Valor total da compra: R$ " + valor;
                                 JOptionPane.showMessageDialog(painelPrincipal, mensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
                             return true;
                         }else{
-                            JOptionPane.showMessageDialog(painelPrincipal, "Voce nao possui credito suficiente! Voce tem R$ "+visitante.getCredito());
+                            JOptionPane.showMessageDialog(painelPrincipal, "Voce nao possui credito suficiente! Voce tem R$ "+ cliente.getCredito());
                         }
                     }
                 }
@@ -139,5 +140,32 @@ public class IngressoBrinquedo extends TelaBase {
                 JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar realizar a compra!");
             }
             return false;
+    }
+
+    public boolean verificaIdadeEAlturaa(ArrayList<Brinquedos> brinquedosSelecionados){
+        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoCliente.txt";
+        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+            String cpfArquivo = br.readLine();
+            long cpf = Long.parseLong(cpfArquivo);
+            ArrayList<Cliente> clientes = parque.getVisitantes();
+            for(Cliente cliente : clientes) {
+                if (cpf == cliente.getCpf()) {
+                    for (Brinquedos brinquedo : brinquedosSelecionados) {
+                        if (brinquedo.getAlturaMin() > cliente.getAltura()) {
+                            JOptionPane.showMessageDialog(painelPrincipal, "Voce nao possui a altura minima para ir nesse brinquedo!", "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
+                            return false;
+                        }
+                        if (brinquedo.getIdadeMin() > cliente.getIdade()) {
+                            JOptionPane.showMessageDialog(painelPrincipal, "Voce nao possui a idade minima para ir nesse brinquedo!", "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(painelPrincipal, "Falha ao tentar realizar a compra!");
+        }
+        return false;
     }
 }

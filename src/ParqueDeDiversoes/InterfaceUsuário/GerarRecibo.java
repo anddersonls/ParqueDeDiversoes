@@ -4,7 +4,7 @@ import ParqueDeDiversoes.TelaBase;
 import ParqueDeDiversoes.parque.Atracoes;
 import ParqueDeDiversoes.parque.Brinquedos;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
-import ParqueDeDiversoes.parque.Visitante;
+import ParqueDeDiversoes.parque.Cliente;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,10 +34,10 @@ public class GerarRecibo extends TelaBase {
             tableModel.addColumn("Valor Gasto");
             String cpfArquivo = br.readLine();
             long cpf = Long.parseLong(cpfArquivo);
-            ArrayList<Visitante> clientes = parque.getVisitantes();
-            for(Visitante visitante: clientes){
-                if(cpf == visitante.getCpf()) {
-                    HashMap<Atracoes, Float> historico = visitante.getHistorico();
+            ArrayList<Cliente> clientes = parque.getVisitantes();
+            for(Cliente cliente : clientes){
+                if(cpf == cliente.getCpf()) {
+                    HashMap<Atracoes, Float> historico = cliente.getHistorico();
                     if (historico.isEmpty()) {
                         JOptionPane.showMessageDialog(painelPrincipal, "Voce ainda nao visitou as atracoes do parque!");
                         OpcoesCliente opcao = new OpcoesCliente(parque);

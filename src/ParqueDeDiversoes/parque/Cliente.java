@@ -2,13 +2,13 @@ package ParqueDeDiversoes.parque;
 
 import java.util.HashMap;
 
-public class Visitante extends Pessoa{
+public class Cliente extends Pessoa{
 	private float credito;
 	private float altura;
 	private long idade;
 	private HashMap<Atracoes, Float> historico;
 
-	public Visitante (String nome, long cpf, int idade, float altura, String senha, float credito) {
+	public Cliente(String nome, long cpf, int idade, float altura, String senha, float credito) {
 		super(nome, idade, cpf, senha);
 		this.altura = altura;
 		this.idade = idade;
