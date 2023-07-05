@@ -39,8 +39,12 @@ public class LoginCliente extends TelaBase {
 
         JLabel labelCpf = new JLabel("CPF:    ");
         JLabel labelSenha = new JLabel("Senha: ");
+        labelSenha.setFont(fontButton);
+        labelCpf.setFont(fontButton);
         JTextField textCpf = new JTextField(20);
+        textCpf.setFont(fontButton);
         JPasswordField textSenha = new JPasswordField(20);
+        textSenha.setFont(fontButton);
 
         painelCpf.add(labelCpf);
         painelCpf.add(textCpf);
@@ -80,7 +84,15 @@ public class LoginCliente extends TelaBase {
         botaoEntrar.setIcon(loginIconRed);
         botaoCadastrar.setIcon(cadastrarIconRed);
 
-        painel.add(Box.createVerticalStrut(30));
+        Dimension textFieldSize = textCpf.getPreferredSize();
+        textFieldSize.height = 30;
+        textCpf.setPreferredSize(textFieldSize);
+        textFieldSize = textSenha.getPreferredSize();
+        textFieldSize.height = 30;
+        textSenha.setPreferredSize(textFieldSize);
+
+        painel.add(new JLabel());
+        painel.add(new JLabel());
         painel.add(painelCpf);
         painel.add(painelSenha);
         painel.add(painelBotoes);
@@ -98,10 +110,10 @@ public class LoginCliente extends TelaBase {
                         return true;
                     }
                 }
-                JOptionPane.showMessageDialog(LoginCliente.this, "CPF ou senha incorreto(s)!");
+                JOptionPane.showMessageDialog(LoginCliente.this, "CPF ou senha incorreto(s)!", "Erro no Login", JOptionPane.ERROR_MESSAGE);
             }
         }catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(LoginCliente.this, "Valor de CPF inválido!");
+            JOptionPane.showMessageDialog(LoginCliente.this, "Valor de CPF inválido!", "Erro no Login", JOptionPane.ERROR_MESSAGE);
         }
 
         return false;

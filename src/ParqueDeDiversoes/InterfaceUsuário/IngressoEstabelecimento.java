@@ -77,11 +77,14 @@ public class IngressoEstabelecimento extends TelaBase {
             }
         });
 
-        JLabel label = new JLabel("      Selecione o estabelecimento que você deseja olhar o menu:");
+        JLabel label = new JLabel("                  Selecione o estabelecimento que você deseja olhar o menu:");
         botaoVoltar.setIcon(voltarIconRed);
+        label.setFont(fontButton);
         botaoSelecionar.setIcon(adicionarIconRed);
+        tabela.setFont(fontText);
+        tabela.getTableHeader().setFont(fontText);
         painelPrincipal.add(Box.createVerticalStrut(15));
-        painelPrincipal.add(label);
+        painelPrincipal.add(label, BorderLayout.CENTER);
         painelPrincipal.add(Box.createVerticalStrut(15));
         painelPrincipal.add(new JScrollPane(tabela), BorderLayout.CENTER);
         painelPrincipal.add(painelBotoes);
@@ -117,8 +120,8 @@ public class IngressoEstabelecimento extends TelaBase {
         painelBotoes.add(botaoComprar);
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
+                removeAllComponents();
+                telaEscolherEstabelecimento();
             }
         });
         botaoComprar.addActionListener(new ActionListener() {
@@ -141,12 +144,14 @@ public class IngressoEstabelecimento extends TelaBase {
             }
         });
 
-        JLabel label = new JLabel("     Selecione do menu a comida que você deseja comprar:");
-
+        JLabel label = new JLabel("                  Selecione do menu a comida que você deseja comprar:");
+        label.setFont(fontButton);
+        tabela.setFont(fontText);
+        tabela.getTableHeader().setFont(fontText);
         botaoVoltar.setIcon(voltarIconRed);
         botaoComprar.setIcon(comprarIconRed);
         painelPrincipal.add(Box.createVerticalStrut(15));
-        painelPrincipal.add(label);
+        painelPrincipal.add(label, BorderLayout.CENTER);
         painelPrincipal.add(Box.createVerticalStrut(15));
         painelPrincipal.add(new JScrollPane(tabela), BorderLayout.CENTER);
         painelPrincipal.add(painelBotoes);

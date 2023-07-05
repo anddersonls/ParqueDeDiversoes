@@ -1,10 +1,7 @@
 package ParqueDeDiversoes.InterfaceUsuário;
 
 import ParqueDeDiversoes.TelaBase;
-import ParqueDeDiversoes.parque.Atracoes;
-import ParqueDeDiversoes.parque.Brinquedos;
-import ParqueDeDiversoes.parque.ParqueDiversoes;
-import ParqueDeDiversoes.parque.Cliente;
+import ParqueDeDiversoes.parque.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -27,7 +24,7 @@ public class GerarRecibo extends TelaBase {
         try (BufferedReader br = new BufferedReader(new FileReader(acessoCliente))) {
             JTable tabela = new JTable();
             DefaultTableModel tableModel = new DefaultTableModel();
-            tableModel.addColumn("Tipo Atração");
+            tableModel.addColumn("Tipo Estabelecimento");
             tableModel.addColumn("Nome");
             tableModel.addColumn("Valor Gasto");
             String cpfArquivo = br.readLine();
@@ -40,11 +37,17 @@ public class GerarRecibo extends TelaBase {
                         JOptionPane.showMessageDialog(painelPrincipal, "Voce ainda nao visitou as atracoes do parque!");
                         OpcoesCliente opcao = new OpcoesCliente(parque);
                     } else {
-                        for (Map.Entry<Atracoes, Float> entry : historico.entrySet()) {
-                            if (entry.getKey() instanceof Brinquedos) {
-                                tableModel.addRow(new Object[]{"Brinquedo", entry.getKey().getNome(), entry.getValue()});
+                        for (Map.Entry<Atracoes, Float> atracao : historico.entrySet()) {
+                            if (atracao.getKey() instanceof Brinquedos) {
+                                tableModel.addRow(new Object[]{"Brinquedo", atracao.getKey().getNome(), atracao.getValue()});
                             } else {
-                                tableModel.addRow(new Object[]{"Estabelecimento", entry.getKey().getNome(), entry.getValue()});
+                                if(atracao.getKey() instanceof Quiosque) {
+                                    tableModel.addRow(new Object[]{"Quiosque", atracao.getKey().getNome(),atracao.getValue()});
+                                }else if(atracao.getKey() instanceof Restaurante) {
+                                    tableModel.addRow(new Object[]{"Restaurante", atracao.getKey().getNome(), atracao.getValue()});
+                                }else{
+                                    tableModel.addRow(new Object[]{"Lanchonete", atracao.getKey().getNome(), atracao.getValue()});
+                                }
                             }
                         }
                         JButton botaoVoltar = new JButton();
@@ -59,7 +62,8 @@ public class GerarRecibo extends TelaBase {
                         });
                         botaoVoltar.setIcon(voltarIconRed);
                         tabela.setModel(tableModel);
-                        painelPrincipal.setBackground(corDeFundo);
+                        tabela.setFont(fontText);
+                        tabela.getTableHeader().setFont(fontText);
                         painelPrincipal.add(Box.createVerticalStrut(15));
                         painelPrincipal.add(new JScrollPane(tabela), BorderLayout.CENTER);
                         painelPrincipal.add(Box.createVerticalStrut(15));

@@ -35,10 +35,12 @@ public class LoginAdm extends TelaBase {
         painel.setBackground(corDeFundo);
         painelPrincipal.setBackground(corDeFundo);
 
-        JLabel labelCpf = new JLabel("CPF:     ");
+        JLabel labelCpf = new JLabel("CPF:    ");
         JLabel labelSenha = new JLabel("Senha: ");
         JTextField textCpf = new JTextField(20);
         JPasswordField textSenha = new JPasswordField(20);
+        textCpf.setFont(fontButton);
+        textSenha.setFont(fontButton);
 
         painelCpf.add(labelCpf);
         painelCpf.add(textCpf);
@@ -48,7 +50,8 @@ public class LoginAdm extends TelaBase {
         painelBotoes.add(botaoEntrar);
 
         botaoVoltar.setIcon(voltarIconRed);
-        painel.add(Box.createVerticalStrut(30));
+        painel.add(new JLabel());
+        painel.add(new JLabel());
         painel.add(painelCpf);
         painel.add(painelSenha);
         painel.add(painelBotoes);
@@ -70,12 +73,21 @@ public class LoginAdm extends TelaBase {
                     setVisible(false);
                     OpcoesAdm opcoes = new OpcoesAdm(parque);
                 } else {
-                    JOptionPane.showMessageDialog(LoginAdm.this, "CPF ou senha incorretos!");
+                    JOptionPane.showMessageDialog(LoginAdm.this, "CPF ou senha incorretos!", "Erro no Login", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
         botaoVoltar.setIcon(voltarIconRed);
         botaoEntrar.setIcon(loginIconRed);
+
+        labelCpf.setFont(fontButton);
+        labelSenha.setFont(fontButton);
+        Dimension textFieldSize = textCpf.getPreferredSize();
+        textFieldSize.height = 30;
+        textCpf.setPreferredSize(textFieldSize);
+        textFieldSize = textSenha.getPreferredSize();
+        textFieldSize.height = 30;
+        textSenha.setPreferredSize(textFieldSize);
 
         painelPrincipal.add(painel);
         setVisible(true);

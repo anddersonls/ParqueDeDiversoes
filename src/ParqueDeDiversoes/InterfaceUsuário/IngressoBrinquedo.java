@@ -8,7 +8,6 @@ import ParqueDeDiversoes.parque.Cliente;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,7 +45,8 @@ public class IngressoBrinquedo extends TelaBase {
         painelBotoes.add(botaoVoltar);
         painelBotoes.add(botaoFimCompra);
         JLabel label = new JLabel("Selecione os brinquedos que você deseja:");
-        painelPrincipal.add(Box.createVerticalStrut(20));
+        label.setFont(fontButton);
+        painelPrincipal.add(Box.createVerticalStrut(30));
         painelPrincipal.add(label);
         painelPrincipal.add(Box.createVerticalStrut(15));
         botaoFimCompra.addActionListener(new ActionListener() {
@@ -85,6 +85,7 @@ public class IngressoBrinquedo extends TelaBase {
         for (Brinquedos brinquedo : brinquedos.keySet()) {
             float value = brinquedos.get(brinquedo);
             JCheckBox checkBox = new JCheckBox(brinquedo.getNome() + " - Valor: " + value);
+            checkBox.setFont(fontText);
             checkBoxes.add(checkBox);
             painelPrincipal.add(checkBox);
         }
@@ -102,7 +103,7 @@ public class IngressoBrinquedo extends TelaBase {
         painelPrincipal.add(painel);
 
         painelPrincipal.add(Box.createVerticalStrut(15));
-        //painelPrincipal.add(new JScrollPane(table), BorderLayout.CENTER);
+
         painelPrincipal.add(painelBotoes);
         painelPrincipal.add(Box.createVerticalStrut(15));
         painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
@@ -132,8 +133,7 @@ public class IngressoBrinquedo extends TelaBase {
                     for(Brinquedos brinquedo : brinquedosSelecionados){
                         cliente.addNoHistorico(brinquedo, valor);
                     }
-                    String mensagem = "Compra finalizada!\n";
-                    mensagem += "Valor total da compra: R$ " + valor;
+                    String mensagem = "Compra finalizada!\n" + "Valor total da compra: R$ " + valor;
                     JOptionPane.showMessageDialog(painelPrincipal, mensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
                     return true;
                     }else{

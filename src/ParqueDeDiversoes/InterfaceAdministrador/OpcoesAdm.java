@@ -106,14 +106,16 @@ public class OpcoesAdm extends TelaBase {
     public JButton[] layoutDeOpcoes(String[] opcoes){
         int i;
 
-        JPanel painel = new JPanel(new GridLayout(7, 1, 20, 10));
+        JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
 
         JButton[] opcoesBotao = new JButton[opcoes.length];
         painel.add(new JLabel());
+        painel.add(new JLabel());
         for(i=0; i<opcoes.length-1; i++){
             JButton botao = new JButton(opcoes[i]);
             botao.setPreferredSize(new Dimension(250, 40));
+            botao.setFont(fontText);
             opcoesBotao[i] = botao;
             painel.add(botao);
         }
@@ -129,6 +131,7 @@ public class OpcoesAdm extends TelaBase {
         painelVoltar.add(botaoVoltar);
         painel.add(painelVoltar);
         botaoVoltar.setPreferredSize(buttonSize);
+
         painelPrincipal.add(painel);
 
         setVisible(true);

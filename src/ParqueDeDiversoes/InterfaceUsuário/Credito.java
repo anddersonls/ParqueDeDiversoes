@@ -32,8 +32,12 @@ public class Credito extends TelaBase {
 
         JLabel labelValor = new JLabel("Valor: ");
         JLabel labelSenha = new JLabel("Senha: ");
+        labelValor.setFont(fontText);
+        labelSenha.setFont(fontText);
         JTextField textValor = new JTextField(20);
         JPasswordField textSenha = new JPasswordField(20);
+        textValor.setFont(fontButton);
+        textSenha.setFont(fontButton);
 
         botaoVoltar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -55,6 +59,7 @@ public class Credito extends TelaBase {
         });
         botaoVoltar.setIcon(voltarIconRed);
         botaoDepositar.setIcon(depositarIconRed);
+        painel.add(new JLabel());
         painel.add(labelValor);
         painel.add(textValor);
         painel.add(labelSenha);
@@ -76,10 +81,10 @@ public class Credito extends TelaBase {
                 setVisible(false);
                 OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
             }catch(NumberFormatException ex) {
-                JOptionPane.showMessageDialog(painelPrincipal, "Falha no Deposito! Valor inválido digitado no campo valor.");
+                JOptionPane.showMessageDialog(painelPrincipal, "Falha no Deposito! Valor inválido digitado no campo valor.", "Erro no Deposito", JOptionPane.ERROR_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(painelPrincipal, "Senha Inválida!", "Senha Incorreta", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(painelPrincipal, "Senha Inválida!", "Senha Inválida", JOptionPane.ERROR_MESSAGE);
         }
     }
 

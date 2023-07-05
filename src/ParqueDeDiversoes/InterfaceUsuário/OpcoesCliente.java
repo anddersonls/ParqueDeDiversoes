@@ -24,6 +24,10 @@ public class OpcoesCliente extends TelaBase {
         JButton botaoCredito = new JButton("Colocar Crédito");
         JButton botaoRecibo = new JButton("Gerar Recibo");
         JButton botaoVoltar = new JButton();
+        botaoBrinquedo.setFont(fontButton);
+        botaoEstabelecimento.setFont(fontButton);
+        botaoCredito.setFont(fontButton);
+        botaoRecibo.setFont(fontButton);
 
         botaoBrinquedo.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -64,7 +68,7 @@ public class OpcoesCliente extends TelaBase {
         panel.add(botaoCredito);
         panel.add(botaoRecibo);
         panel.add(new JLabel());
-        panel.add(botaoVoltar);
+        panel.add(new JPanel().add(botaoVoltar));
 
         painelPrincipal.add(panel);
 

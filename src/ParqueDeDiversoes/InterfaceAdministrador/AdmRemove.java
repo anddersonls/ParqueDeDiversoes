@@ -53,7 +53,7 @@ public class AdmRemove extends TelaBase {
         JList<String> listaEstabelecimentos = new JList<>(estabelecimentos);
         listaEstabelecimentos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
         listaEstabelecimentos.setCellRenderer(new CustomListCellRenderer());
-
+        listaEstabelecimentos.setFont(fontText);
         JScrollPane scrollPane = new JScrollPane(listaEstabelecimentos);
         scrollPane.setMaximumSize(new Dimension(500, 90));  //definir o tamanho do painel que ficará a lista
         scrollPane.setMinimumSize (new Dimension (400,90));
@@ -133,6 +133,7 @@ public class AdmRemove extends TelaBase {
             i++;
         }
         JList<String> listaBrinquedos = new JList<>(brinquedos);
+        listaBrinquedos.setFont(fontText);
         listaBrinquedos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // Configuração do modo de seleção
         listaBrinquedos.setCellRenderer(new CustomListCellRenderer());
 

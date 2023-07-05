@@ -24,7 +24,7 @@ public class TelaBase extends JFrame{
             //DEFINIÇÕES PADRÃO
             this.bigButton = new Dimension(200, 50);
             this.buttonSize = new Dimension(70, 30);
-            this.fontText = new Font("Times New Roman", Font.PLAIN, 14);
+            this.fontText = new Font("Times New Roman", Font.BOLD, 15);
             this.fontTitle = new Font("Times New Roman", Font.BOLD, 20);
             this.fontButton = new Font("Times New Roman", Font.PLAIN, 18);
             this.corDeFundo = Color.LIGHT_GRAY;

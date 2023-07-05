@@ -1,6 +1,5 @@
 package ParqueDeDiversoes.parque;
 
-import ParqueDeDiversoes.InterfaceUsuário.LoginCliente;
 import ParqueDeDiversoes.TelaBase;
 
 import javax.swing.*;
@@ -8,8 +7,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Agradecimentos extends TelaBase {
-    public Agradecimentos(ParqueDiversoes parque){
+public class Equipe extends TelaBase {
+    public Equipe(ParqueDiversoes parque){
         super(parque);
         tela();
     }
@@ -28,9 +27,9 @@ public class Agradecimentos extends TelaBase {
         icones.setBackground(corDeFundo);
 
         JPanel labels = new JPanel();
-        JLabel labelAnderson = new JLabel("  Anderson               ");
+        JLabel labelAnderson = new JLabel(" Anderson                ");
         JLabel labelSabryna = new JLabel("Sabryna                   ");
-        JLabel labelVito = new JLabel(" Vito       ");
+        JLabel labelVito = new JLabel("  Vito      ");
         labels.add(labelAnderson);
         labels.add(labelSabryna);
         labels.add(labelVito);

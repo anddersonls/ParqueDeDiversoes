@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,7 +43,8 @@ public class AdmCadastra extends TelaBase {
         JTextField textIdadeMin = new JTextField(20);
         JTextField textValor = new JTextField(20);
 
-         JComboBox<String> opcoesRestricoes= opcoesDeRestricao();
+        JComboBox<String> opcoesRestricoes= opcoesDeRestricao();
+        opcoesRestricoes.setFont(fontText);
         botaoCadastrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -60,7 +60,7 @@ public class AdmCadastra extends TelaBase {
                 } else {
                     if(verificaNome(nome)) {
                         if (verificarCadastro(nome, capacidade, alturaMin, idadeMin, valor, restricao)) {
-                            JOptionPane.showMessageDialog(painelPrincipal, "Cadastro bem-sucedido!");
+                            JOptionPane.showMessageDialog(painelPrincipal, "Cadastro bem sucedido!");
                             setVisible(false);
                             OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
                         } else {
@@ -70,6 +70,17 @@ public class AdmCadastra extends TelaBase {
                 }
             }
         });
+        labelNome.setFont(fontText);
+        labelCapacidade.setFont(fontText);
+        labelRestricao.setFont(fontText);
+        labelValor.setFont(fontText);
+        labelAlturaMin.setFont(fontText);
+        labelIdadeMin.setFont(fontText);
+        textNome.setFont(fontText);
+        textCapacidade.setFont(fontText);
+        textAlturaMin.setFont(fontText);
+        textIdadeMin.setFont(fontText);
+        textValor.setFont(fontText);
 
         painel.add(labelNome);
         painel.add(textNome);
@@ -163,12 +174,15 @@ public class AdmCadastra extends TelaBase {
         JTextField campoValor = new JTextField(20);
 
         JComboBox<String> opcoesRestricoes = opcoesDeRestricao();
+        opcoesRestricoes.setFont(fontText);
 
         JLabel labelTipo = new JLabel("Tipo:");
         String[] opcoesEstabelecimento = {"Restaurante", "Quiosque", "Lanchonete"};
         JComboBox<String> comboBoxTipo = new JComboBox<>(opcoesEstabelecimento);
+        comboBoxTipo.setFont(fontText);
 
         JButton botaoSalvar = new JButton("Salvar no Menu");
+        botaoSalvar.setFont(fontText);
         JButton botaoVoltar = new JButton();
         JButton botaoCadastrar = new JButton();
 
@@ -216,9 +230,6 @@ public class AdmCadastra extends TelaBase {
                     else {
                         if(cardapio.isEmpty()){
                             JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Cardapio nao pode estar vazio.");
-
-                        }else {
-                            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro!");
                         }
                     }
                 }
@@ -233,6 +244,19 @@ public class AdmCadastra extends TelaBase {
         });
         botaoCadastrar.setIcon(adicionarIconRed);
         botaoVoltar.setIcon(voltarIconRed);
+
+        labelNome.setFont(fontText);
+        labelCapacidade.setFont(fontText);
+        labelRestricao.setFont(fontText);
+        labelMenu.setFont(fontText);
+        labelAlimento.setFont(fontText);
+        labelValor.setFont(fontText);
+        labelTipo.setFont(fontText);
+        campoNome.setFont(fontText);
+        campoCapacidade.setFont(fontText);
+        campoAlimento.setFont(fontText);
+        campoValor.setFont(fontText);
+
         painel.add(labelNome);
         painel.add(campoNome);
         painel.add(labelCapacidade);

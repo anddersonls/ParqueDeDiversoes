@@ -57,7 +57,7 @@ public class Cadastro extends TelaBase {
                         setVisible(false);
                         LoginCliente loginCliente = new LoginCliente(parque);
                     } else {
-                        JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro.");
+                        JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro.", "Erro no Cadastro", JOptionPane.ERROR_MESSAGE);
                     }
                 }
 
@@ -68,6 +68,20 @@ public class Cadastro extends TelaBase {
         botaoCadastrar.setIcon(adicionarIconRed);
         painel.setBackground(corDeFundo);
         painelPrincipal.setBackground(corDeFundo);
+
+        labelNome.setFont(fontButton);
+        textNome.setFont(fontText);
+        labelCpf.setFont(fontButton);
+        textCpf.setFont(fontText);
+        labelAltura.setFont(fontButton);
+        textAltura.setFont(fontText);
+        labelIdade.setFont(fontButton);
+        textIdade.setFont(fontText);
+        labelSenha.setFont(fontButton);
+        textSenha.setFont(fontText);
+
+        painel.add(new JLabel());
+        painel.add(new JLabel());
         painel.add(labelNome);
         painel.add(textNome);
         painel.add(labelCpf);
@@ -96,7 +110,7 @@ public class Cadastro extends TelaBase {
             parque.addVisitante(novoCliente);
             return true;
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Valor não numérico digitado em CPF, Altura ou Idade");
+            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Valor não numérico digitado em CPF, Altura ou Idade", "Erro no Cadastro", JOptionPane.ERROR_MESSAGE);
         }
 
         return false;

@@ -44,7 +44,7 @@ public class InterfaceInicial extends TelaBase {
         agradecimentosButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                Agradecimentos agradecimentos = new Agradecimentos(parque);
+                Equipe equipe = new Equipe(parque);
             }
         });
 
