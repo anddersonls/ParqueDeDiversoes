@@ -57,6 +57,11 @@ public class AdmCadastra extends TelaBase {
 
                 if (nome.trim().isEmpty() || capacidade.trim().isEmpty() || alturaMin.trim().isEmpty() || idadeMin.trim().isEmpty() || valor.trim().isEmpty()) {
                     JOptionPane.showMessageDialog(painelPrincipal, "Digite um valor válido.");
+                    textNome.setText("");
+                    textCapacidade.setText("");
+                    textAlturaMin.setText("");
+                    textIdadeMin.setText("");
+                    textValor.setText("");
                 } else {
                     if(verificaNome(nome)) {
                         if (verificarCadastro(nome, capacidade, alturaMin, idadeMin, valor, restricao)) {
@@ -64,7 +69,11 @@ public class AdmCadastra extends TelaBase {
                             setVisible(false);
                             OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
                         } else {
-                            JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro");
+                            textNome.setText("");
+                            textCapacidade.setText("");
+                            textAlturaMin.setText("");
+                            textIdadeMin.setText("");
+                            textValor.setText("");
                         }
                     }
                 }
@@ -221,8 +230,6 @@ public class AdmCadastra extends TelaBase {
                     JOptionPane.showMessageDialog(painelPrincipal, "Digite um valor válido.");
                 } else {
                     if (verificarCadastroEstabelecimento(nome,capacidade,tipoEstabelecimento,cardapio, restricao) && cardapio.isEmpty()==false) {
-                        //cardapio.clear();
-
                         JOptionPane.showMessageDialog(painelPrincipal, "Cadastro Realizado com Sucesso!", "Cadastro de Estabelecimento", JOptionPane.INFORMATION_MESSAGE);
                         setVisible(false);
                         OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
@@ -231,6 +238,10 @@ public class AdmCadastra extends TelaBase {
                         if(cardapio.isEmpty()){
                             JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Cardapio nao pode estar vazio.");
                         }
+                        campoAlimento.setText("");
+                        campoValor.setText("");
+                        campoCapacidade.setText("");
+                        campoNome.setText("");
                     }
                 }
             }

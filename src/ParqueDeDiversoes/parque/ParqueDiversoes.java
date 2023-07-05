@@ -30,7 +30,7 @@ public class ParqueDiversoes {
 	public ArrayList<Estabelecimento> getEstabelecimentos() {
 		return estabelecimentos;
 	}
-	public void addVisitante(Cliente cliente) {
+	public void addCliente(Cliente cliente) {
 		clientes.add(cliente);
 	}
 	public ArrayList<Cliente> getVisitantes() {

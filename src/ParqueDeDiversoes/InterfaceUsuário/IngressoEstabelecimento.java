@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -189,12 +190,13 @@ public class IngressoEstabelecimento extends TelaBase {
                     }
                 }
                 if (possuiBrinquedo) {
+                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
                     if(cliente.descontarCredito(valor)){
                         cliente.addNoHistorico(estabelecimento, valor);
-                        JOptionPane.showMessageDialog(painelPrincipal, "Compra realizada com sucesso!");
+                        JOptionPane.showMessageDialog(painelPrincipal, "Compra realizada com sucesso! Voce tem R$ "+ decimalFormat.format(cliente.getCredito()));
                         break;
                     }else{
-                        JOptionPane.showMessageDialog(painelPrincipal, "Voce não possui credito suficiente! Voce tem R$ "+ cliente.getCredito());
+                        JOptionPane.showMessageDialog(painelPrincipal, "Voce não possui credito suficiente! Voce tem R$ "+ decimalFormat.format(cliente.getCredito()));
                     }
                 }else {
                     JOptionPane.showMessageDialog(painelPrincipal, "Falha na compra! Você ainda não frequentou brinquedos!");

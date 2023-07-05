@@ -15,7 +15,7 @@ public class InterfaceInicial extends TelaBase {
         interfaceInicial();
     }
     public void interfaceInicial() {
-        JLabel label = new JLabel("     Seja Bem Vindo ao Sistema do PlayGround");
+        JLabel label = new JLabel("    Seja Bem Vindo ao Sistema do Bonini's Park");
         JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         JPanel painelBotoes = new JPanel();

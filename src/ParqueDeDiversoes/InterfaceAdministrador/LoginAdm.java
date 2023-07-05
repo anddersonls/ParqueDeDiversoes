@@ -73,6 +73,8 @@ public class LoginAdm extends TelaBase {
                     setVisible(false);
                     OpcoesAdm opcoes = new OpcoesAdm(parque);
                 } else {
+                    textCpf.setText("");
+                    textSenha.setText("");
                     JOptionPane.showMessageDialog(LoginAdm.this, "CPF ou senha incorretos!", "Erro no Login", JOptionPane.ERROR_MESSAGE);
                 }
             }

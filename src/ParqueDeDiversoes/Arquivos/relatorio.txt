@@ -1,4 +1,14 @@
 Cliente: anderson
 CPF: 123
 Atrações Visitadas e Valor Gasto:
+Estabelecimento: Cidade Olimpica - 45.8
+Brinquedo: Carrossel - 23.1
+
+Cliente: 1
+CPF: 1
+Atrações Visitadas e Valor Gasto:
+Estabelecimento: Cidade Olimpica - 45.8
+Estabelecimento: Restaurante Universitário - 24.6
+Brinquedo: Roda Gigante - 10.0
+Brinquedo: Carrossel - 23.1
 

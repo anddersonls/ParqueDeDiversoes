@@ -50,7 +50,7 @@ public class Credito extends TelaBase {
             public void actionPerformed(ActionEvent e) {
                 for(Cliente cliente : parque.getVisitantes()){
                     if(cliente.getCpf() == pegaCpf()) {
-                        colocaCredito(cliente, textSenha.getText(), textValor.getText());
+                        colocaCredito(cliente, textSenha.getText(), textValor.getText(), textValor, textSenha);
                         break;
                     }
                 }
@@ -70,7 +70,7 @@ public class Credito extends TelaBase {
         setVisible(true);
     }
 
-    public void colocaCredito(Cliente cliente, String senhaDigitada, String valorDigitado){
+    public void colocaCredito(Cliente cliente, String senhaDigitada, String valorDigitado, JTextField tvalor, JTextField tsenha){
         String senha = "";
         senha = cliente.getSenha();
         if(senhaDigitada.equals(senha)) {
@@ -81,9 +81,13 @@ public class Credito extends TelaBase {
                 setVisible(false);
                 OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
             }catch(NumberFormatException ex) {
+                tsenha.setText("");
+                tvalor.setText("");
                 JOptionPane.showMessageDialog(painelPrincipal, "Falha no Deposito! Valor inválido digitado no campo valor.", "Erro no Deposito", JOptionPane.ERROR_MESSAGE);
             }
         }else{
+            tsenha.setText("");
+            tvalor.setText("");
             JOptionPane.showMessageDialog(painelPrincipal, "Senha Inválida!", "Senha Inválida", JOptionPane.ERROR_MESSAGE);
         }
     }

@@ -1,13 +1,9 @@
 package ParqueDeDiversoes;
-
-import ParqueDeDiversoes.InterfaceAdministrador.LoginAdm;
-import ParqueDeDiversoes.InterfaceUsuário.LoginCliente;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class TelaBase extends JFrame{
     protected ParqueDiversoes parque;
@@ -16,8 +12,8 @@ public class TelaBase extends JFrame{
     protected Font fontText, fontButton, fontTitle;
     protected Color corDeFundo;
     protected ImageIcon admIconRed, clienteIconRed, voltarIconRed, loginIconRed, lixeiraIconRed,
-            adicionarIconRed, comprarIconRed, cadastrarIconRed, depositarIconRed, imagemGrupoRed,
-            andersonIconRed, sabrynaIconRed, vitoIconRed;
+            adicionarIconRed, comprarIconRed, cadastrarIconRed, depositarIconRed,
+            andersonIconRed, sabrynaIconRed, vitoIconRed, boniniIconRed;
     protected String acessoAdm, acessoCliente, acessoRelatorio;
         public TelaBase(ParqueDiversoes parque){
             this.parque = parque;
@@ -56,13 +52,15 @@ public class TelaBase extends JFrame{
             this.sabrynaIconRed = new ImageIcon(sabrynaIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
             ImageIcon vitoIcon = new ImageIcon("C:\\Users\\ander\\Documents\\Java_Projects\\ParqueDeDiversoes\\src\\ParqueDeDiversoes\\Imagens\\vito.png");
             this.vitoIconRed = new ImageIcon(vitoIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+            ImageIcon boniniIcon = new ImageIcon("C:\\Users\\ander\\Documents\\Java_Projects\\ParqueDeDiversoes\\src\\ParqueDeDiversoes\\Imagens\\bonini.png");
+            this.boniniIconRed = new ImageIcon(boniniIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
 
             //PATH ARQUIVOS
             this.acessoAdm = "C:\\Users\\ander\\Documents\\Java_Projects\\ParqueDeDiversoes\\src\\ParqueDeDiversoes\\Arquivos\\acessoAdm.txt";
             this.acessoCliente = "C:\\Users\\ander\\Documents\\Java_Projects\\ParqueDeDiversoes\\src\\ParqueDeDiversoes\\Arquivos\\acessoCliente.txt";
             this.acessoRelatorio = "C:\\Users\\ander\\Documents\\Java_Projects\\ParqueDeDiversoes\\src\\ParqueDeDiversoes\\Arquivos\\relatorio.txt";
 
-            setTitle("PlayGround");
+            setTitle("Bonini's Park");
             setSize(800, 500);
             setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

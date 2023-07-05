@@ -45,7 +45,6 @@ public class GerarRelatorio extends TelaBase {
                     String nome = entry.getKey().getNome();
                     float valor = entry.getValue();
                     String linha = tipoAtracao + ": " +nome + " - " + valor;
-                    System.out.println(linha);
                     writer.write(linha);
                     writer.newLine();
 

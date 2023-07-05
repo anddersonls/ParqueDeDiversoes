@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -133,7 +134,8 @@ public class IngressoBrinquedo extends TelaBase {
                     for(Brinquedos brinquedo : brinquedosSelecionados){
                         cliente.addNoHistorico(brinquedo, valor);
                     }
-                    String mensagem = "Compra finalizada!\n" + "Valor total da compra: R$ " + valor;
+                    DecimalFormat decimalFormat = new DecimalFormat("0.00");
+                    String mensagem = "Compra finalizada!\n" + "Valor total da compra: R$ " + valor + "\nVoce tem R$ "+ decimalFormat.format(cliente.getCredito());
                     JOptionPane.showMessageDialog(painelPrincipal, mensagem, "Escolha de brinquedos", JOptionPane.INFORMATION_MESSAGE);
                     return true;
                     }else{

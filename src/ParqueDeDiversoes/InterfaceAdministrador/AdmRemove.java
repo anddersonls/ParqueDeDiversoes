@@ -157,7 +157,6 @@ public class AdmRemove extends TelaBase {
                     //chama funcao de remover o brinquedo do hashmap de estabelecimentos
                     if (verificarERemoverBrinquedos(finalMapBrinquedos,selectedItem)){
                         JOptionPane.showMessageDialog(painelPrincipal, selectedItem +" removido do Parque!", " Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
-                        JOptionPane.showMessageDialog(painelPrincipal, selectedItem +" removido do Parque!", " Remoção de Brinquedo", JOptionPane.INFORMATION_MESSAGE);
                         setVisible(false);
                         OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
                     }else {

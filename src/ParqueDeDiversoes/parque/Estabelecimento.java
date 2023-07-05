@@ -2,7 +2,7 @@ package ParqueDeDiversoes.parque;
 
 import java.util.HashMap;
 
-public abstract class Estabelecimento extends Atracoes implements InterfaceAlimentacao {
+public abstract class Estabelecimento extends Atracoes {
 	private HashMap<String, Float> cardapio;
 	public Estabelecimento(int capacidade, HashMap<String, Float> cardapio, String nome, String restricao){
 		super(capacidade, nome, restricao);
@@ -11,9 +11,5 @@ public abstract class Estabelecimento extends Atracoes implements InterfaceAlime
 
 	public HashMap<String, Float> getCardapio() {
 		return cardapio;
-	}
-	@Override
-	public void mostrarMenu(){
-		System.out.println("a");
 	}
 }

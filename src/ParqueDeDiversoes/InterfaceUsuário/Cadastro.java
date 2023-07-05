@@ -57,7 +57,11 @@ public class Cadastro extends TelaBase {
                         setVisible(false);
                         LoginCliente loginCliente = new LoginCliente(parque);
                     } else {
-                        JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro.", "Erro no Cadastro", JOptionPane.ERROR_MESSAGE);
+                        textCpf.setText("");
+                        textNome.setText("");
+                        textAltura.setText("");
+                        textIdade.setText("");
+                        textSenha.setText("");
                     }
                 }
 
@@ -107,7 +111,7 @@ public class Cadastro extends TelaBase {
             int idade = Integer.parseInt((idadeDigitada));
 
             Cliente novoCliente = new Cliente(nome, CPF, idade, altura, senha, 0.0F);
-            parque.addVisitante(novoCliente);
+            parque.addCliente(novoCliente);
             return true;
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(painelPrincipal, "Falha no Cadastro! Valor não numérico digitado em CPF, Altura ou Idade", "Erro no Cadastro", JOptionPane.ERROR_MESSAGE);

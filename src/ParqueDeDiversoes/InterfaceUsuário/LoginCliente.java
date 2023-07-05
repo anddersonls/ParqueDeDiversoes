@@ -70,6 +70,9 @@ public class LoginCliente extends TelaBase {
                     JOptionPane.showMessageDialog(LoginCliente.this, "Login bem sucedido!");
                     setVisible(false);
                     OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
+                }else{
+                    textCpf.setText("");
+                    textSenha.setText("");
                 }
             }
         });

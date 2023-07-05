@@ -20,19 +20,23 @@ public class Equipe extends TelaBase {
         JLabel iconAnderson = new JLabel(andersonIconRed);
         JLabel iconSabryna = new JLabel(sabrynaIconRed);
         JLabel iconVito = new JLabel(vitoIconRed);
+        JLabel iconBonini = new JLabel(boniniIconRed);
         JPanel icones = new JPanel();
         icones.add(iconAnderson);
         icones.add(iconSabryna);
         icones.add(iconVito);
+        icones.add(iconBonini);
         icones.setBackground(corDeFundo);
 
         JPanel labels = new JPanel();
-        JLabel labelAnderson = new JLabel(" Anderson                ");
-        JLabel labelSabryna = new JLabel("Sabryna                   ");
-        JLabel labelVito = new JLabel("  Vito      ");
+        JLabel labelAnderson = new JLabel("Anderson                ");
+        JLabel labelSabryna = new JLabel("Sabryna                     ");
+        JLabel labelVito = new JLabel("Vito                     ");
+        JLabel labelBonini = new JLabel("Bonini   ");
         labels.add(labelAnderson);
         labels.add(labelSabryna);
         labels.add(labelVito);
+        labels.add(labelBonini);
         labels.setBackground(corDeFundo);
 
         JButton botaoVoltar = new JButton();
@@ -50,7 +54,7 @@ public class Equipe extends TelaBase {
         JPanel painelBotoes = new JPanel();
         painelBotoes.setBackground(corDeFundo);
         painelBotoes.add(botaoVoltar);
-        JLabel equipe = new JLabel("           <Equipe Desenvolvedora>");
+        JLabel equipe = new JLabel("                      <Equipe Desenvolvedora>");
         equipe.setFont(fontTitle);
         painel.add(equipe);
         painel.add(icones);
