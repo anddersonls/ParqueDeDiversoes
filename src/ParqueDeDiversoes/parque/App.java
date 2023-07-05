@@ -1,7 +1,12 @@
 package ParqueDeDiversoes.parque;
 
+import ParqueDeDiversoes.InterfaceUsuário.OpcoesCliente;
 import ParqueDeDiversoes.TelaBase;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 
 public class App {
@@ -24,5 +29,40 @@ public class App {
         parque.addVisitante(cliente);
         TelaBase telabase = new TelaBase(parque);
         InterfaceInicial gui = new InterfaceInicial(parque);
+    }
+
+    public static class Agradecimentos extends TelaBase {
+        private ParqueDiversoes parque;
+        public Agradecimentos(ParqueDiversoes parque){
+            super(parque);
+            this.parque = parque;
+            tela();
+        }
+        public void tela(){
+            JButton botaoVoltar = new JButton();
+            botaoVoltar.setPreferredSize(buttonSize);
+
+            JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
+            painel.setBorder(BorderFactory.createEmptyBorder(10, 130, 10, 130));
+
+            JPanel painelBotoes = new JPanel();
+            painelBotoes.add(botaoVoltar);
+
+            JLabel labelEquipe = new JLabel("Equipe Desenvolvedora: ");
+
+            botaoVoltar.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    setVisible(false);
+                    OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
+                }
+            });
+
+            botaoVoltar.setIcon(voltarIconRed);
+            painel.add(labelEquipe);
+            painel.add(painelBotoes);
+            painelPrincipal.add(painel);
+            painelPrincipal.add(Box.createVerticalStrut(15));
+            setVisible(true);
+        }
     }
 }

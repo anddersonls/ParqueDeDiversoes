@@ -20,7 +20,7 @@ public class LoginAdm extends TelaBase {
     }
     public void telaLogin() {
         JButton botaoVoltar = new JButton();
-        JButton botaoEntrar = new JButton("Entrar");
+        JButton botaoEntrar = new JButton();
         botaoVoltar.setPreferredSize(buttonSize);
         botaoEntrar.setPreferredSize(buttonSize);
 
@@ -29,6 +29,11 @@ public class LoginAdm extends TelaBase {
         JPanel painelBotoes = new JPanel();
         JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        painelBotoes.setBackground(corDeFundo);
+        painelCpf.setBackground(corDeFundo);
+        painelSenha.setBackground(corDeFundo);
+        painel.setBackground(corDeFundo);
+        painelPrincipal.setBackground(corDeFundo);
 
         JLabel labelCpf = new JLabel("CPF:     ");
         JLabel labelSenha = new JLabel("Senha: ");
@@ -42,6 +47,7 @@ public class LoginAdm extends TelaBase {
         painelBotoes.add(botaoVoltar);
         painelBotoes.add(botaoEntrar);
 
+        botaoVoltar.setIcon(voltarIconRed);
         painel.add(Box.createVerticalStrut(30));
         painel.add(painelCpf);
         painel.add(painelSenha);
@@ -60,7 +66,7 @@ public class LoginAdm extends TelaBase {
                 String senhaDigitada = textSenha.getText();
 
                 if (verificarLogin(cpfDigitado, senhaDigitada)) {
-                    JOptionPane.showMessageDialog(LoginAdm.this, "Login bem-sucedido!");
+                    JOptionPane.showMessageDialog(LoginAdm.this, "Login bem sucedido!");
                     setVisible(false);
                     OpcoesAdm opcoes = new OpcoesAdm(parque);
                 } else {
@@ -69,14 +75,13 @@ public class LoginAdm extends TelaBase {
             }
         });
         botaoVoltar.setIcon(voltarIconRed);
+        botaoEntrar.setIcon(loginIconRed);
 
         painelPrincipal.add(painel);
         setVisible(true);
     }
     private boolean verificarLogin(String cpfDigitado, String senhaDigitada) {
-        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoAdm.txt";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(acessoAdm))) {
             String cpfArquivo = br.readLine();
             String senhaArquivo = br.readLine();
 

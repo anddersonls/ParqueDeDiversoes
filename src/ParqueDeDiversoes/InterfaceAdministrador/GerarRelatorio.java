@@ -18,17 +18,14 @@ public class GerarRelatorio extends TelaBase {
 
     public GerarRelatorio(ParqueDiversoes parque) {
         super(parque);
-        telaGeraRecibo();
+        gerarRelatorio();
     }
 
-    public void telaGeraRecibo() {
+    public void gerarRelatorio() {
         ArrayList<Cliente> clientes = parque.getVisitantes();
 
-        // Define o caminho do arquivo de saída
-        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/recibo.txt";
-
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(caminhoArquivo));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(acessoRelatorio));
             for(Cliente cliente: clientes) {
                 HashMap<Atracoes, Float> historico = cliente.getHistorico();
 

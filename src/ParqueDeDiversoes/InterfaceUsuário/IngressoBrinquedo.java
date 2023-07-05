@@ -38,8 +38,8 @@ public class IngressoBrinquedo extends TelaBase {
         HashMap<Brinquedos, Float> brinquedos = parque.getBrinquedos();
         List<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoFimCompra = new JButton("Comprar");
+        JButton botaoVoltar = new JButton();
+        JButton botaoFimCompra = new JButton();
         botaoFimCompra.setPreferredSize(buttonSize);
         botaoVoltar.setPreferredSize(buttonSize);
         JPanel painelBotoes = new JPanel();
@@ -95,6 +95,9 @@ public class IngressoBrinquedo extends TelaBase {
             }
         });
 
+        botaoVoltar.setIcon(voltarIconRed);
+        botaoFimCompra.setIcon(comprarIconRed);
+
         painelPrincipal.add(Box.createVerticalStrut(15));
         painelPrincipal.add(painel);
 
@@ -110,9 +113,7 @@ public class IngressoBrinquedo extends TelaBase {
         setVisible(true);
     }
     public long pegaCPF(){
-        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoCliente.txt";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(acessoCliente))) {
             String cpfArquivo = br.readLine();
             long cpf = Long.parseLong(cpfArquivo);
             return cpf;

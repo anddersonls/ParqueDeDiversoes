@@ -13,7 +13,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 public class LoginCliente extends TelaBase {
     public LoginCliente(ParqueDiversoes parque) {
         super(parque);
@@ -21,8 +20,8 @@ public class LoginCliente extends TelaBase {
     }
     public void telaLogin() {
         JButton botaoVoltar = new JButton();
-        JButton botaoEntrar = new JButton("Entrar");
-        JButton botaoCadastrar = new JButton("Cadastrar");
+        JButton botaoEntrar = new JButton();
+        JButton botaoCadastrar = new JButton();
         botaoVoltar.setPreferredSize(buttonSize);
         botaoEntrar.setPreferredSize(buttonSize);
         botaoCadastrar.setPreferredSize(buttonSize);
@@ -32,8 +31,13 @@ public class LoginCliente extends TelaBase {
         JPanel painelSenha = new JPanel();
         JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        painelBotoes.setBackground(corDeFundo);
+        painelCpf.setBackground(corDeFundo);
+        painelSenha.setBackground(corDeFundo);
+        painel.setBackground(corDeFundo);
+        painelPrincipal.setBackground(corDeFundo);
 
-        JLabel labelCpf = new JLabel("CPF:     ");
+        JLabel labelCpf = new JLabel("CPF:    ");
         JLabel labelSenha = new JLabel("Senha: ");
         JTextField textCpf = new JTextField(20);
         JPasswordField textSenha = new JPasswordField(20);
@@ -59,7 +63,7 @@ public class LoginCliente extends TelaBase {
                 String senhaDigitada = textSenha.getText();
 
                 if (verificarLogin(cpfDigitado, senhaDigitada)) {
-                    JOptionPane.showMessageDialog(LoginCliente.this, "Login bem-sucedido!");
+                    JOptionPane.showMessageDialog(LoginCliente.this, "Login bem sucedido!");
                     setVisible(false);
                     OpcoesCliente opcoesCliente = new OpcoesCliente(parque);
                 }
@@ -71,7 +75,11 @@ public class LoginCliente extends TelaBase {
                 Cadastro cadastro = new Cadastro(parque);
             }
         });
+        
         botaoVoltar.setIcon(voltarIconRed);
+        botaoEntrar.setIcon(loginIconRed);
+        botaoCadastrar.setIcon(cadastrarIconRed);
+
         painel.add(Box.createVerticalStrut(30));
         painel.add(painelCpf);
         painel.add(painelSenha);
@@ -100,8 +108,7 @@ public class LoginCliente extends TelaBase {
     }
 
     public void salvaCPF(String CPF){
-        String nomeArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoCliente.txt";
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(nomeArquivo))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(acessoCliente))) {
             writer.write(CPF);
         } catch (IOException e) {
             System.out.println("Erro ao escrever no arquivo: " + e.getMessage());

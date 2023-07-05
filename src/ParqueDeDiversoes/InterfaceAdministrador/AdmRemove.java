@@ -1,6 +1,7 @@
 package ParqueDeDiversoes.InterfaceAdministrador;
 
 import ParqueDeDiversoes.TelaBase;
+import ParqueDeDiversoes.parque.Atracoes;
 import ParqueDeDiversoes.parque.Estabelecimento;
 import ParqueDeDiversoes.parque.Brinquedos;
 import ParqueDeDiversoes.parque.ParqueDiversoes;
@@ -11,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class AdmRemove extends TelaBase {
@@ -23,8 +25,8 @@ public class AdmRemove extends TelaBase {
         JLabel texto = new JLabel("Selecione um estabelecimento");
         texto.setFont(fontTitle);
 
-        JButton botaoRemover = new JButton("Remover");
-        JButton botaoVoltar= new JButton("Voltar");
+        JButton botaoRemover = new JButton();
+        JButton botaoVoltar= new JButton();
         botaoRemover.setPreferredSize(buttonSize);
         botaoVoltar.setPreferredSize(buttonSize);
 
@@ -85,6 +87,8 @@ public class AdmRemove extends TelaBase {
             }
         });
 
+        botaoRemover.setIcon(lixeiraIconRed);
+        botaoVoltar.setIcon(voltarIconRed);
         painelPrincipal.setLayout(new BoxLayout(painelPrincipal,BoxLayout.Y_AXIS));
         painelPrincipal.add(painelTexto);
         painelPrincipal.add(Box.createVerticalStrut(15));
@@ -100,8 +104,8 @@ public class AdmRemove extends TelaBase {
         JLabel texto = new JLabel("Selecione um brinquedo");
         texto.setFont(fontTitle);
 
-        JButton botaoRemover = new JButton("Remover");
-        JButton botaoVoltar= new JButton("Voltar");
+        JButton botaoRemover = new JButton();
+        JButton botaoVoltar= new JButton();
         botaoRemover.setPreferredSize(buttonSize);
         botaoVoltar.setPreferredSize(buttonSize);
 
@@ -165,6 +169,8 @@ public class AdmRemove extends TelaBase {
             }
         });
 
+        botaoRemover.setIcon(lixeiraIconRed);
+        botaoVoltar.setIcon(voltarIconRed);
         painelPrincipal.setLayout(new BoxLayout(painelPrincipal,BoxLayout.Y_AXIS));
         painelPrincipal.add(painelTexto);
         painelPrincipal.add(Box.createVerticalStrut(15));
@@ -172,10 +178,9 @@ public class AdmRemove extends TelaBase {
         painelPrincipal.add(Box.createVerticalStrut(15));
         painelPrincipal.add(painelRemover);
         painelPrincipal.add(painelVoltar);
-
         setVisible(true);
     }
-    //Funcao para setar a cor de seleção dos itens
+
     public static class CustomListCellRenderer extends DefaultListCellRenderer {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
@@ -194,6 +199,7 @@ public class AdmRemove extends TelaBase {
         try {
             for (int i=0;i<estabelecimentos.size();i++) {
                 if (Objects.equals(estabelecimentos.get(i).getNome(), selectedItem)) {
+                    tiraRestricao(estabelecimentos.get(i));
                     estabelecimentos.remove(i);
                     break;
                 }
@@ -211,6 +217,7 @@ public class AdmRemove extends TelaBase {
                 String chave = entry.getKey().getNome();
                 Brinquedos key = entry.getKey();
                 if (chave.equals(selectedItem)){
+                    tiraRestricao(entry.getKey());
                     brinquedos.remove(key);
                     break;
                 }
@@ -221,10 +228,18 @@ public class AdmRemove extends TelaBase {
         }
         return  false;
     }
-    public void removeAllComponents() {
-        painelPrincipal.removeAll();
-        painelPrincipal.revalidate();
-        painelPrincipal.repaint();
+
+    public void tiraRestricao(Atracoes atracao) {
+        for(Estabelecimento estabelecimento: parque.getEstabelecimentos()){
+            if(estabelecimento.getRestricao().equals(atracao.getNome())){
+                estabelecimento.setRestricao("Sem restrição");
+            }
+        }
+        for(Map.Entry<Brinquedos, Float> brinquedo: parque.getBrinquedos().entrySet()){
+            if(brinquedo.getKey().getRestricao().equals(atracao.getNome())){
+                brinquedo.getKey().setRestricao("Sem restrição");
+            }
+        }
     }
 
 }

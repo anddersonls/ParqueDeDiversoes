@@ -24,9 +24,7 @@ public class GerarRecibo extends TelaBase {
     }
 
     public void telaGeraRecibo() {
-        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoCliente.txt";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(acessoCliente))) {
             JTable tabela = new JTable();
             DefaultTableModel tableModel = new DefaultTableModel();
             tableModel.addColumn("Tipo Atração");
@@ -49,7 +47,7 @@ public class GerarRecibo extends TelaBase {
                                 tableModel.addRow(new Object[]{"Estabelecimento", entry.getKey().getNome(), entry.getValue()});
                             }
                         }
-                        JButton botaoVoltar = new JButton("Voltar");
+                        JButton botaoVoltar = new JButton();
                         JPanel painelBotao = new JPanel();
                         painelBotao.add(botaoVoltar);
                         botaoVoltar.setPreferredSize(buttonSize);
@@ -59,14 +57,16 @@ public class GerarRecibo extends TelaBase {
                                 OpcoesCliente opcao = new OpcoesCliente(parque);
                             }
                         });
+                        botaoVoltar.setIcon(voltarIconRed);
                         tabela.setModel(tableModel);
+                        painelPrincipal.setBackground(corDeFundo);
                         painelPrincipal.add(Box.createVerticalStrut(15));
                         painelPrincipal.add(new JScrollPane(tabela), BorderLayout.CENTER);
                         painelPrincipal.add(Box.createVerticalStrut(15));
                         painelPrincipal.add(painelBotao);
                         painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
                         JPanel wrapperPanel = new JPanel(new BorderLayout());
-                        wrapperPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+                        wrapperPanel.setBorder(new EmptyBorder(0, 30, 0, 30));
                         wrapperPanel.add(painelPrincipal, BorderLayout.CENTER);
                         setContentPane(wrapperPanel);
                         setVisible(true);

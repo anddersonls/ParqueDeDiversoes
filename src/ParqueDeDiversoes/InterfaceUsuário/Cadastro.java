@@ -31,8 +31,8 @@ public class Cadastro extends TelaBase {
         JTextField textIdade = new JTextField(20);
         JTextField textSenha = new JTextField(20);
 
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoCadastrar = new JButton("Cadastrar");
+        JButton botaoVoltar = new JButton();
+        JButton botaoCadastrar = new JButton();
         botaoVoltar.setPreferredSize(buttonSize);
         botaoCadastrar.setPreferredSize(buttonSize);
         botaoVoltar.addActionListener(new ActionListener() {
@@ -64,6 +64,10 @@ public class Cadastro extends TelaBase {
             }
         });
 
+        botaoVoltar.setIcon(voltarIconRed);
+        botaoCadastrar.setIcon(adicionarIconRed);
+        painel.setBackground(corDeFundo);
+        painelPrincipal.setBackground(corDeFundo);
         painel.add(labelNome);
         painel.add(textNome);
         painel.add(labelCpf);

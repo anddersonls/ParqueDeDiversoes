@@ -18,13 +18,13 @@ public class Credito extends TelaBase {
         telaCredito();
     }
     public void telaCredito() {
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoDepositar = new JButton("Depositar");
+        JButton botaoVoltar = new JButton();
+        JButton botaoDepositar = new JButton();
         botaoDepositar.setPreferredSize(buttonSize);
         botaoVoltar.setPreferredSize(buttonSize);
 
         JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
-        painel.setBorder(BorderFactory.createEmptyBorder(10, 150, 10, 150));
+        painel.setBorder(BorderFactory.createEmptyBorder(10, 130, 10, 130));
 
         JPanel painelBotoes = new JPanel();
         painelBotoes.add(botaoVoltar);
@@ -53,7 +53,8 @@ public class Credito extends TelaBase {
 
             }
         });
-
+        botaoVoltar.setIcon(voltarIconRed);
+        botaoDepositar.setIcon(depositarIconRed);
         painel.add(labelValor);
         painel.add(textValor);
         painel.add(labelSenha);
@@ -83,9 +84,7 @@ public class Credito extends TelaBase {
     }
 
     public long pegaCpf() {
-        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoCliente.txt";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(acessoCliente))) {
             String cpfArquivo = br.readLine();
             long cpf = Long.parseLong(cpfArquivo);
             return cpf;

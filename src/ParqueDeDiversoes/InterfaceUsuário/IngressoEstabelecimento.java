@@ -1,11 +1,7 @@
 package ParqueDeDiversoes.InterfaceUsuário;
 
 import ParqueDeDiversoes.TelaBase;
-import ParqueDeDiversoes.parque.Atracoes;
-import ParqueDeDiversoes.parque.Estabelecimento;
-import ParqueDeDiversoes.parque.Brinquedos;
-import ParqueDeDiversoes.parque.ParqueDiversoes;
-import ParqueDeDiversoes.parque.Cliente;
+import ParqueDeDiversoes.parque.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -34,15 +30,22 @@ public class IngressoEstabelecimento extends TelaBase {
     public void telaEscolherEstabelecimento() {
         JTable tabela = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.addColumn("Tipo Estabelecimento");
         tableModel.addColumn("Nome");
 
         for (Estabelecimento estabelecimento : parque.getEstabelecimentos()) {
-            tableModel.addRow(new Object[]{estabelecimento.getNome()});
+            if(estabelecimento instanceof Quiosque) {
+                tableModel.addRow(new Object[]{"Quiosque", estabelecimento.getNome()});
+            }else if(estabelecimento instanceof Restaurante) {
+                tableModel.addRow(new Object[]{"Restaurante", estabelecimento.getNome()});
+            }else{
+                tableModel.addRow(new Object[]{"Lanchonete", estabelecimento.getNome()});
+            }
         }
         tabela.setModel(tableModel);
 
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoSelecionar = new JButton("Selecionar");
+        JButton botaoVoltar = new JButton();
+        JButton botaoSelecionar = new JButton();
         botaoVoltar.setPreferredSize(buttonSize);
         botaoSelecionar.setPreferredSize(buttonSize);
         JPanel painelBotoes = new JPanel();
@@ -57,7 +60,7 @@ public class IngressoEstabelecimento extends TelaBase {
         botaoSelecionar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int linhaSelecionada = tabela.getSelectedRow();
-                int colunaSelecionada = 0;
+                int colunaSelecionada = 1;
                 if (linhaSelecionada != -1) {
                     Object valorCelula = tabela.getValueAt(linhaSelecionada, colunaSelecionada);
                     for (Estabelecimento estabelecimento : parque.getEstabelecimentos()) {
@@ -74,8 +77,9 @@ public class IngressoEstabelecimento extends TelaBase {
             }
         });
 
-        JLabel label = new JLabel("Selecione o estabelecimento que você deseja olhar o menu:");
-
+        JLabel label = new JLabel("      Selecione o estabelecimento que você deseja olhar o menu:");
+        botaoVoltar.setIcon(voltarIconRed);
+        botaoSelecionar.setIcon(adicionarIconRed);
         painelPrincipal.add(Box.createVerticalStrut(15));
         painelPrincipal.add(label);
         painelPrincipal.add(Box.createVerticalStrut(15));
@@ -84,7 +88,7 @@ public class IngressoEstabelecimento extends TelaBase {
         painelPrincipal.add(Box.createVerticalStrut(15));
         painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
         JPanel wrapperPanel = new JPanel(new BorderLayout());
-        wrapperPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+        wrapperPanel.setBorder(new EmptyBorder(0, 30, 0, 30));
         wrapperPanel.add(painelPrincipal, BorderLayout.CENTER);
         setContentPane(wrapperPanel);
         setVisible(true);
@@ -104,8 +108,8 @@ public class IngressoEstabelecimento extends TelaBase {
 
         tabela.setModel(tableModel);
 
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoComprar = new JButton("Selecionar");
+        JButton botaoVoltar = new JButton();
+        JButton botaoComprar = new JButton();
         botaoVoltar.setPreferredSize(buttonSize);
         botaoComprar.setPreferredSize(buttonSize);
         JPanel painelBotoes = new JPanel();
@@ -137,8 +141,10 @@ public class IngressoEstabelecimento extends TelaBase {
             }
         });
 
-        JLabel label = new JLabel("Selecione do menu a comida que você deseja comprar:");
+        JLabel label = new JLabel("     Selecione do menu a comida que você deseja comprar:");
 
+        botaoVoltar.setIcon(voltarIconRed);
+        botaoComprar.setIcon(comprarIconRed);
         painelPrincipal.add(Box.createVerticalStrut(15));
         painelPrincipal.add(label);
         painelPrincipal.add(Box.createVerticalStrut(15));
@@ -147,16 +153,14 @@ public class IngressoEstabelecimento extends TelaBase {
         painelPrincipal.add(Box.createVerticalStrut(15));
         painelPrincipal.setLayout(new BoxLayout(painelPrincipal, BoxLayout.Y_AXIS));
         JPanel wrapperPanel = new JPanel(new BorderLayout());
-        wrapperPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+        wrapperPanel.setBorder(new EmptyBorder(0, 30, 0, 30));
         wrapperPanel.add(painelPrincipal, BorderLayout.CENTER);
         setContentPane(wrapperPanel);
         setVisible(true);
     }
 
     public long pegaCPF(){
-        String caminhoArquivo = "C:/Users/ander/Documents/Java_Projects/ParqueDeDiversoes/src/ParqueDeDiversoes/Arquivos/acessoCliente.txt";
-
-        try (BufferedReader br = new BufferedReader(new FileReader(caminhoArquivo))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(acessoCliente))) {
             String cpfArquivo = br.readLine();
             long cpf = Long.parseLong(cpfArquivo);
             return cpf;

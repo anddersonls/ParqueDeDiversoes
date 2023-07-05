@@ -17,7 +17,8 @@ public class OpcoesCliente extends TelaBase {
     public void opcoes() {
         JPanel panel = new JPanel(new GridLayout(7, 1, 20, 10));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 100, 10, 100));
-
+        panel.setBackground(corDeFundo);
+        painelPrincipal.setBackground(corDeFundo);
         JButton botaoBrinquedo = new JButton("Comprar Ingresso para Brinquedos");
         JButton botaoEstabelecimento = new JButton("Comprar Comida em Estabelecimentos");
         JButton botaoCredito = new JButton("Colocar Crédito");
@@ -56,6 +57,7 @@ public class OpcoesCliente extends TelaBase {
             }
         });
         botaoVoltar.setIcon(voltarIconRed);
+        botaoVoltar.setPreferredSize(buttonSize);
         panel.add(new JLabel());
         panel.add(botaoBrinquedo);
         panel.add(botaoEstabelecimento);

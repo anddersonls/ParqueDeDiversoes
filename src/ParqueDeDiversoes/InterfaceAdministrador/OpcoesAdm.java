@@ -118,8 +118,12 @@ public class OpcoesAdm extends TelaBase {
             painel.add(botao);
         }
 
+        painel.setBackground(corDeFundo);
         JPanel painelVoltar = new JPanel();
         JButton botaoVoltar = new JButton(opcoes[i]);
+        painel.setBackground(corDeFundo);
+        painelVoltar.setBackground(corDeFundo);
+        painelPrincipal.setBackground(corDeFundo);
         botaoVoltar.setIcon(voltarIconRed);
         opcoesBotao[i] = botaoVoltar;
         painelVoltar.add(botaoVoltar);

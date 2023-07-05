@@ -20,8 +20,8 @@ public class AdmCadastra extends TelaBase {
         JPanel painel = new JPanel(new GridLayout(7, 1, 10, 10));
         painel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoCadastrar = new JButton("Cadastrar");
+        JButton botaoVoltar = new JButton();
+        JButton botaoCadastrar = new JButton();
         botaoVoltar.setPreferredSize(buttonSize);
         botaoCadastrar.setPreferredSize(buttonSize);
         botaoVoltar.addActionListener(new ActionListener() {
@@ -84,7 +84,8 @@ public class AdmCadastra extends TelaBase {
         painel.add(labelValor);
         painel.add(textValor);
 
-
+        botaoVoltar.setIcon(voltarIconRed);
+        botaoCadastrar.setIcon(adicionarIconRed);
         painel.add(botaoVoltar);
         painel.add(botaoCadastrar);
         painelPrincipal.add(painel);
@@ -168,8 +169,8 @@ public class AdmCadastra extends TelaBase {
         JComboBox<String> comboBoxTipo = new JComboBox<>(opcoesEstabelecimento);
 
         JButton botaoSalvar = new JButton("Salvar no Menu");
-        JButton botaoVoltar = new JButton("Voltar");
-        JButton botaoCadastrar = new JButton("Cadastrar");
+        JButton botaoVoltar = new JButton();
+        JButton botaoCadastrar = new JButton();
 
         botaoSalvar.addActionListener(new ActionListener() {
             //Botar os alimentos no hashmap cardapio
@@ -230,7 +231,8 @@ public class AdmCadastra extends TelaBase {
                 OpcoesAdm opcoesAdm = new OpcoesAdm(parque);
             }
         });
-
+        botaoCadastrar.setIcon(adicionarIconRed);
+        botaoVoltar.setIcon(voltarIconRed);
         painel.add(labelNome);
         painel.add(campoNome);
         painel.add(labelCapacidade);
